@@ -1,0 +1,135 @@
+.font-size-10{
+    font-size: 16px;
+}
+
+.fade-target{
+    transition: opacity .2s ease-in-out, transform .1s ease-in-out, color .2s ease-in-out;
+    opacity : 30%;
+    color: #7fc0ff;
+    transform: scale(1, 1);
+    padding-left: 10px;
+}
+
+.fade-controller:hover .fade-target {
+    opacity: 100%;
+    color: #1890ff;
+    transform: scale(2, 2);
+}
+
+.roboto-title-text {
+    font-family: 'Roboto Slab', serif;
+    font-size: 40px;
+    mix-blend-mode: difference;
+}
+
+.roboto-nav-text {
+    font-family: 'Roboto Slab', serif;
+    font-size: 28px;
+}
+
+.w-75 {
+    width: 7.5rem !important;
+}
+
+.project-card-title {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.user-circle {
+    width: 45px;
+    height: 45px;
+    background: #191c20;
+    color: #ffffff;
+}
+
+.user-online {
+    box-shadow: 0 0 0 2px #0be881;
+}
+
+.user-inactive {
+    box-shadow: 0 0 0 2px #ffcf00;
+    opacity: 75%;
+}
+
+.user-offline {
+    box-shadow: 0 0 0 1px #ff4d4f;
+    opacity: 50%;
+}
+
+.fab-wrapper {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+}
+
+.fab {
+    width: 60px;
+    height: 60px;
+    border-radius: 100%;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 10%);
+}
+
+.fab span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    font-size: 36px;
+}
+
+
+@media (min-width: 769px) {
+    .fab-wrapper {
+        bottom: 35px;
+        right: 35px;
+    }
+    .fab {
+        width: 70px;
+        height: 70px;
+        box-shadow: 5px 5px 5px rgba(0, 0, 0, 10%);
+    }
+    .fab span {
+        font-size: 48px;
+    }
+    .roboto-title-text {
+        font-size: 60px;
+    }
+}
+
+@media (min-width: 1600px) {
+    .fab-wrapper {
+        bottom: 55px;
+        right: 55px;
+    }
+    .fab {
+        width: 90px;
+        height: 90px;
+        box-shadow: 10px 10px 5px rgba(0, 0, 0, 10%);
+    }
+    .fab span {
+        font-size: 48px;
+    }
+    .roboto-title-text {
+        font-size: 80px;
+    }
+}
+
+@media (min-width: 1920px) {
+    .fab-wrapper {
+        bottom: 70px;
+        right: 70px;
+    }
+    .fab {
+        width: 100px;
+        height: 100px;
+        box-shadow: 15px 15px 5px rgba(0, 0, 0, 10%);
+    }
+    .fab span {
+        font-size: 48px;
+    }
+    .roboto-title-text {
+        font-size: 100px;
+    }
+}

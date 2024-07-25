@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <meta name="viewport" content="width=device-width" />
+    <title>emerald</title>
+    <link href="https://cdn.jsdelivr.net/npm/halfmoon@1.1.1/css/halfmoon-variables.min.css" rel="stylesheet" />
+</head>
+<body class="with-custom-webkit-scrollbars with-custom-css-scrollbars" data-dm-shortcut-enabled="true" data-sidebar-shortcut-enabled="true" data-set-preferred-mode-onload="true">
+
+<div class="page-wrapper with-navbar with-sidebar">
+
+    <div class="content-wrapper">
+
+        <h2>test api call</h2>
+
+        <div class="form-row row-eq-spacing">
+            <input type="text" class="form-control w-500 m-5" placeholder="input api call here" id="apiCallInput">
+            <button class="btn btn-primary m-5" type="button" onclick="runCall()">run</button>
+            <button class="btn m-5" type="button" onclick="clearLog()">clear log</button>
+        </div>
+
+        <p><code class="code" id="statusText">...</code></p>
+
+        <div id="waveform" class="w-500"></div>
+    </div>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/halfmoon@1.1.1/js/halfmoon.min.js"></script>
+<script src="https://unpkg.com/wavesurfer.js"></script>
+
+
+
+
+<script>
+
+    var wavesurfer = WaveSurfer.create({
+        container: '#waveform',
+        waveColor: '#D9DCFF',
+        progressColor: '#4353FF',
+        cursorColor: '#4353FF',
+        barWidth: 3,
+        barRadius: 3,
+        cursorWidth: 1,
+        height: 100,
+        barGap: 3
+    });
+
+    wavesurfer.load('audio.mp3');
+
+    function runCall() {
+        const apiCallInput = document.getElementById('apiCallInput');
+
+        addLog("\nrunning @ " + Date.now());
+
+        let apiCall = apiCallInput.value;
+
+        addLog('API request: ' + apiCall);
+        apiPostString(
+            apiCall,
+            function() {
+                addLog('API response: ' + this.responseText);
+        });
+    }
+
+    function addLog(logMessageString) {
+        const statusText = document.getElementById('statusText');
+        let currentContent = statusText.innerText;
+        statusText.innerText = currentContent + "\n" + logMessageString;
+    }
+
+    function clearLog() {
+        const statusText = document.getElementById('statusText');
+        statusText.innerText = "...";
+    }
+
+    function apiPostString(payloadString, onLoadFunction) {
+        const apiEntrypoint = '../api/call.php';
+
+        const request = new XMLHttpRequest();
+        request.onload = onLoadFunction;
+        request.open("POST", apiEntrypoint);
+        request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        request.send(payloadString);
+    }
+
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,6 @@
+{
+    "sql_host": "localhost",
+    "sql_db_name": "tracklink",
+    "sql_username": "root",
+    "sql_password": "root"
+}

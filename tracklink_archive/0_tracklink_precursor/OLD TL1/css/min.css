@@ -1,0 +1,52 @@
+#login-brand-card-header {
+    font-size: 41px;
+    letter-spacing: -3.6px;
+    word-spacing: -3px;
+    font-weight: 700;
+    font-style: italic;
+    font-variant: normal;
+    text-transform: none;
+    margin: 0px 0px 0px 0px;
+}
+
+#login-version-card-mini {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    margin: 0px 0px 0px 0px;
+}
+
+#nav-brand-text {
+    font-size: 30px;
+    letter-spacing: -3.6px;
+    word-spacing: -3px;
+    font-weight: 700;
+    font-style: italic;
+    font-variant: normal;
+    text-transform: none;
+    margin: 0px 0px 0px 0px;
+}
+
+#nav-version {
+    font-size: 10px;
+    letter-spacing: 0.5px;
+    padding: 3px 5px 3px 5px;
+    margin-top: 5px;
+}
+
+.profileEmblem {
+    color: rgb(204, 204, 204);
+    margin: 7px 0px 0px 0px;
+}
+
+.profileEmblem:link {
+    color: rgb(204, 204, 204);
+}
+.profileEmblem:visited {
+    color: rgb(204, 204, 204);
+}
+.profileEmblem:hover {
+    color: rgb(204, 204, 204);
+}
+.profileEmblem:active {
+    color: rgb(204, 204, 204);
+}
