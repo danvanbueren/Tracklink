@@ -1,0 +1,23 @@
+services:
+  frontend_main:
+    container_name: frontend_main
+    build: ./frontend_main
+    environment:
+      CHOKIDAR_USEPOLLING: true # create-ui-app <= 5.x
+      WATCHPACK_POLLING: true # create-ui-app >= 5.x
+      FAST_REFRESH: false
+      WDS_SOCKET_PORT: 3000 # The mapped port on your host machine
+    ports:
+      - "80:3000"
+    volumes:
+      - ./frontend_main:/app
+      - /app/node_modules
+    networks:
+      - backend_network
+
+volumes:
+  pgdata:
+
+networks:
+  backend_network:
+    driver: bridge
