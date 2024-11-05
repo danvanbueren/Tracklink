@@ -4,18 +4,13 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
-import {Box, createTheme, CssBaseline, ThemeProvider} from "@mui/material";
+import {Box, CssBaseline, ThemeProvider} from "@mui/material";
 import * as React from "react";
 import {LeftToggleProvider} from "@/context/contextToggleVerboseNav";
 import {RightToggleProvider} from "@/context/contextToggleVerboseFriends";
 import AppWrapper from "@/components/AppWrapper";
 import {NavigationProvider} from "@/context/contextNavigation";
-
-const darkTheme = createTheme({
-    palette: {
-        mode: 'dark',
-    },
-});
+import Theme from "@/utils/theme";
 
 // Replace this with authentication logic to control whether app layout is displayed or fallback to external site
 const auth = true;
@@ -29,7 +24,7 @@ export default function RootLayout({ children }) {
             <meta name='description' content='Tracklink'/>
         </head>
         <body>
-        <ThemeProvider theme={darkTheme}>
+        <ThemeProvider theme={Theme}>
             <CssBaseline/>
             <Box
                 sx={{

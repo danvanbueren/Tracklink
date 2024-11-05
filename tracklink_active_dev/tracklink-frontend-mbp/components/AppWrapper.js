@@ -1,5 +1,3 @@
-'use client';
-
 import * as React from "react";
 
 import Box from "@mui/material/Box";
@@ -17,7 +15,8 @@ export default function AppWrapper({ children }) {
             {/* Full container */}
             <Box
                 sx={{
-                    minWidth: '100vw',
+                    minWidth: '70rem',
+                    width: '100vw',
                     maxWidth: '100vw',
 
                     minHeight: '100vh',
@@ -48,7 +47,7 @@ export default function AppWrapper({ children }) {
                             size='auto'
                             sx={{
 
-                                overflowY: 'auto',
+                                //overflowY: 'auto',
                             }}
                         >
                             <Nav />

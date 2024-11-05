@@ -5,19 +5,23 @@ import {Box, Button, Tooltip} from "@mui/material";
 import BrokenImageIcon from '@mui/icons-material/BrokenImage';
 import CloseFullscreenIcon from '@mui/icons-material/CloseFullscreen';
 import OpenInFullIcon from '@mui/icons-material/OpenInFull';
+import {useNavigation} from "@/context/contextNavigation";
 
-export default function BigButton({ icon, text, onClick, isToggled, isToggleController, isActive }) {
+export default function BigButton({ icon, text, onClick, isToggled, isToggleController, href }) {
+
+    // Routing
+    const { currentPage } = useNavigation();
 
     // Default values if props not passed
     if (icon === undefined)
-        icon = <BrokenImageIcon fontSize="large" />
+        icon = <BrokenImageIcon fontSize="inherit" />
     if (text === undefined)
         text = 'Broken'
 
 
     // Override icon and text if it's a toggle controller
     if (isToggleController) {
-        icon = <BrokenImageIcon fontSize="large" />;
+        icon = <BrokenImageIcon fontSize="inherit" />;
         text = 'Toggle';
     }
 
@@ -36,7 +40,7 @@ export default function BigButton({ icon, text, onClick, isToggled, isToggleCont
     let boxSxBgColor = '';
     let boxSxColor = '';
 
-    if(isActive) {
+    if(currentPage === href) {
         // Solid blue button with black icon
         buttonSxHover = {
             '& .child-to-hover': {
@@ -111,14 +115,16 @@ export default function BigButton({ icon, text, onClick, isToggled, isToggleCont
 
                             transition: 'background-color 0.3s ease',
 
+                            fontSize: '2rem',
+
                         }}
                     >
                         {!isToggleController
                             ? icon
                             : (
                                 isToggled
-                                    ? <CloseFullscreenIcon fontSize='large' />
-                                    : <OpenInFullIcon fontSize='large' />
+                                    ? <CloseFullscreenIcon fontSize="inherit" />
+                                    : <OpenInFullIcon fontSize="inherit" />
                             )
                         }
                     </Box>

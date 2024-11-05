@@ -1,8 +1,11 @@
 import * as React from "react";
 
-import {Avatar, Box, Button, Tooltip} from "@mui/material";
+import {Box, Button, Tooltip} from "@mui/material";
 import {useRightToggle} from "@/context/contextToggleVerboseFriends";
 import {useNavigation} from "@/context/contextNavigation";
+import PersonIcon from '@mui/icons-material/Person';
+import {grey} from "@mui/material/colors";
+import Image from "next/image";
 
 export default function FriendElement({ name, imagePath, size }) {
 
@@ -23,35 +26,100 @@ export default function FriendElement({ name, imagePath, size }) {
 
 
     if (size === undefined)
-        size = 55;
+        size = '2.9rem';
 
     return (
         <>
-            <Box>
-                <Tooltip
-                    title={name}
-                    placement="left"
-                    PopperProps={{
-                        sx: {
-                            '&[data-popper-placement]': {
-                                opacity: tooltipOpacity,
-                            },
+            <Tooltip
+                title={name}
+                placement="right"
+                PopperProps={{
+                    sx: {
+                        '&[data-popper-placement]': {
+                            opacity: tooltipOpacity,
                         },
+                    },
+                }}
+                arrow
+            >
+
+                <Button
+                    fullWidth
+                    variant="text"
+                    size="large"
+                    sx={{
+                        minWidth: '0',
+
+                        padding: '0',
+                        margin: '0',
+
+                        borderRadius: '10px',
+                        display: 'flex',
+                        justifyContent: 'flex-start', // Align content to the left
+                        textAlign: 'left',
+                        color: 'white',
+
+                        transition: 'color 0.3s ease',
+
+                        '&:hover': {
+                            color: 'primary.main',
+                            '& .child-to-hover': {
+                                backgroundColor: 'primary.dark', // Darken on hover
+                            }
+                        },
+                        '&:active': {
+                            '& .child-to-hover': {
+                                backgroundColor: 'primary.light', // Lighten on active
+                            }
+                        },
+
+                        textTransform: 'none',
                     }}
-                    arrow // Optional: adds an arrow to the tooltip
                 >
-                    <Button
-                        color='white'
-                        onClick={() => handleNavigate('/user')}
+                    <Box
+                        className="child-to-hover"
+                        component="div" // Ensures it's treated as a block-level element
+                        sx={{
+                            display: 'flex', // Enable flexbox
+                            alignItems: 'center', // Center vertically
+                            justifyContent: 'center', // Center horizontally (optional)
+
+                            backgroundColor: grey[900],
+                            color: 'primary.contrastText',
+                            padding: '8px',
+                            borderRadius: '10px',
+                            boxShadow: 1,
+
+                            transition: 'background-color 0.3s ease',
+
+                            fontSize: '2rem',
+
+                        }}
                     >
-                        <Avatar
-                            alt={name}
-                            src={String(imagePath)}
-                            sx={{ width: size, height: size }}
-                        />
-                    </Button>
-                </Tooltip>
-            </Box>
+
+                        <PersonIcon fontSize="inherit" />
+                    </Box>
+
+
+                    {isToggled &&
+                        <Box
+                            sx={{
+                                marginLeft: '20px',
+                                paddingRight: '15px',
+                                fontSize: '0.9rem',
+
+                                overflow: 'hidden',
+                                whiteSpace: 'nowrap',
+                                textOverflow: 'ellipsis',
+
+                                maxWidth: '7rem',
+                            }}
+                        >
+                            {name}
+                        </Box>
+                    }
+                </Button>
+            </Tooltip>
         </>
     )
 }

@@ -30,7 +30,7 @@ export default function Friends(props) {
         <Box
             sx={{
                 minHeight: '100%',
-                maxHeight: '100%',
+                maxHeight: '1rem',
 
                 display: 'flex',
                 flexDirection: 'column',
@@ -75,35 +75,16 @@ export default function Friends(props) {
 
                 <Box sx={{ height: '1rem' }}></Box>
 
-                <FriendElement name='Dan Van Bueren' imagePath='https://picsum.photos/50' />
+                <FriendElement name='Friend 1' imagePath='/userData/1.jpg' />
 
                 <Box sx={{ height: '1rem' }}></Box>
 
-                <FriendElement name='Owen Tabor' imagePath='https://picsum.photos/50' />
+                <FriendElement name='Friend 2' imagePath='/userData/1.jpg' />
 
                 <Box sx={{ height: '1rem' }}></Box>
 
-                <FriendElement name='Dustin Robbins' imagePath='https://picsum.photos/50' />
+                <FriendElement name='Friend 3' imagePath='/userData/1.jpg' />
 
-                <Box sx={{ height: '1rem' }}></Box>
-
-                <FriendElement name='Kros' imagePath='https://picsum.photos/50' />
-
-                <Box sx={{ height: '1rem' }}></Box>
-
-                <FriendElement name='Emmie' imagePath='https://picsum.photos/50' />
-
-                <Box sx={{ height: '1rem' }}></Box>
-
-                <FriendElement name='Dixie' imagePath='https://picsum.photos/50' />
-
-                <Box sx={{ height: '1rem' }}></Box>
-
-                <FriendElement name='Aaron Knotts' imagePath='https://picsum.photos/50' />
-
-                <Box sx={{ height: '1rem' }}></Box>
-
-                <FriendElement name='Levi Valentine' imagePath='https://picsum.photos/50' />
             </Box>
 
             {/* Snapped to bottom */}
@@ -120,8 +101,9 @@ export default function Friends(props) {
 
                 <BigButton
                     isToggled={isToggled}
-                    icon={<PersonAddIcon fontSize="large" />}
+                    icon={<PersonAddIcon fontSize="inherit" />}
                     text={'Add Friend'}
+                    href="/addfriend"
                     onClick={() => handleNavigate('/addfriend')}
                 />
             </Box>

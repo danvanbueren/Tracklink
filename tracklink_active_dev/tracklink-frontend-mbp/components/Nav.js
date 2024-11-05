@@ -42,7 +42,7 @@ export default function Nav(props) {
             <Box
                 sx={{
                     minHeight: '100%',
-                    maxHeight: '100%',
+                    maxHeight: '1rem',
 
                     display: 'flex',
                     flexDirection: 'column',
@@ -89,7 +89,7 @@ export default function Nav(props) {
 
                     <BigButton
                         isToggled={isToggled}
-                        icon={<HomeIcon fontSize="large" />}
+                        icon={<HomeIcon fontSize="inherit" />}
                         text={'Home'}
                         href="/home"
                         onClick={() => handleNavigate('/home')}
@@ -99,7 +99,7 @@ export default function Nav(props) {
 
                     <BigButton
                         isToggled={isToggled}
-                        icon={<MusicNoteIcon fontSize="large" />}
+                        icon={<MusicNoteIcon fontSize="inherit" />}
                         text={'Tracks'}
                         href="/tracks"
                         onClick={() => handleNavigate('/tracks')}
@@ -109,7 +109,7 @@ export default function Nav(props) {
 
                     <BigButton
                         isToggled={isToggled}
-                        icon={<LibraryMusicIcon fontSize="large" />}
+                        icon={<LibraryMusicIcon fontSize="inherit" />}
                         text={'Projects'}
                         href="/projects"
                         onClick={() => handleNavigate('/projects')}
@@ -119,7 +119,7 @@ export default function Nav(props) {
 
                     <BigButton
                         isToggled={isToggled}
-                        icon={<PeopleAltIcon fontSize="large" />}
+                        icon={<PeopleAltIcon fontSize="inherit" />}
                         text={'Collab'}
                         href="/collab"
                         onClick={() => handleNavigate('/collab')}
@@ -129,7 +129,7 @@ export default function Nav(props) {
 
                     <BigButton
                         isToggled={isToggled}
-                        icon={<ScheduleIcon fontSize="large" />}
+                        icon={<ScheduleIcon fontSize="inherit" />}
                         text={'Recent'}
                         href="/recent"
                         onClick={() => handleNavigate('/recent')}
@@ -139,7 +139,7 @@ export default function Nav(props) {
 
                     <BigButton
                         isToggled={isToggled}
-                        icon={<StarIcon fontSize="large" />}
+                        icon={<StarIcon fontSize="inherit" />}
                         text={'Starred'}
                         href="/starred"
                         onClick={() => handleNavigate('/starred')}
@@ -149,7 +149,7 @@ export default function Nav(props) {
 
                     <BigButton
                         isToggled={isToggled}
-                        icon={<InventoryIcon fontSize="large" />}
+                        icon={<InventoryIcon fontSize="inherit" />}
                         text={'Archive'}
                         href="/archive"
                         onClick={() => handleNavigate('/archive')}
@@ -159,7 +159,7 @@ export default function Nav(props) {
 
                     <BigButton
                         isToggled={isToggled}
-                        icon={<DeleteIcon fontSize="large" />}
+                        icon={<DeleteIcon fontSize="inherit" />}
                         text={'Trash'}
                         href="/trash"
                         onClick={() => handleNavigate('/trash')}
@@ -178,7 +178,7 @@ export default function Nav(props) {
 
                     <BigButton
                         isToggled={isToggled}
-                        icon={<AddIcon fontSize="large" />}
+                        icon={<AddIcon fontSize="inherit" />}
                         text={'New'}
                         href="/new"
                         onClick={() => handleNavigate('/new')}

@@ -29,8 +29,8 @@ export const NavigationProvider = ({ children }) => {
     const navigateTo = (url) => {
         setIsNavigating(true);
 
+        setCurrentPage(url);
         router.push(url);
-        setCurrentPage(pathname);
 
         setIsNavigating(false);
     };

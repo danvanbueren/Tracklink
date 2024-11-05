@@ -29,15 +29,19 @@ export default function Footer(props) {
                 sx={{
                     display: 'flex', // Enable flexbox
                     alignItems: 'center', // Center vertically
-                    minWidth: '100vw',
+
+                    minWidth: '70rem',
+                    width: '100vw',
                     maxWidth: '100vw',
-                    paddingTop: '1.5rem',
-                    paddingBottom: '1rem',
+
+                    paddingTop: '1rem',
+                    paddingBottom: '0.5rem',
                     paddingX: '1rem',
                 }}
             >
                 <Grid container spacing={3} sx={{
-                    minWidth: '100vw',
+                    minWidth: '70rem',
+                    width: '100vw',
                     maxWidth: '100vw',
                 }}
                 >
@@ -90,7 +94,7 @@ export default function Footer(props) {
                                             }}
                                             onClick={() => handleNavigate('/track')}
                                         >
-                                            <Typography variant='h6'>left to chance</Typography>
+                                            <Typography variant='h6'>Song Title</Typography>
                                         </Button>
                                     </Box>
                                     <Box display="flex" justifyContent="flex-start"> {/* Use appropriate alignment */}
@@ -106,7 +110,7 @@ export default function Footer(props) {
                                             }}
                                             onClick={() => handleNavigate('/user')}
                                         >
-                                            <Typography>polybit</Typography>
+                                            <Typography>Artist Name</Typography>
                                         </Button>
                                     </Box>
 
@@ -114,11 +118,17 @@ export default function Footer(props) {
                                 </Stack>
 
                                 <IconButton
-                                    color="primary"
+                                    color="white"
                                     sx={{
                                         width: '2.5rem',
                                         height: '2.5rem',
                                         marginLeft: '1rem',
+
+                                        color: 'white',
+                                        transition: 'color 0.3s ease',
+                                        '&:hover': {
+                                            color: 'primary.main',
+                                        },
                                     }}
                                 >
                                     <StarBorderIcon />
@@ -161,37 +171,87 @@ export default function Footer(props) {
                                         >
 
                                             <IconButton
-                                                color='primary'
-                                                sx={{ width: '2.5rem', height: '2.5rem', marginX: '0.2rem',}}
+                                                color="white"
+                                                sx={{
+                                                    width: '2.5rem',
+                                                    height: '2.5rem',
+                                                    marginX: '0.2rem',
+
+                                                    color: 'white',
+                                                    transition: 'color 0.3s ease',
+                                                    '&:hover': {
+                                                        color: 'primary.main',
+                                                    },
+                                                }}
                                                 onClick={() => handleNavigate('/track')}
                                             >
                                                 <AddCommentIcon/>
                                             </IconButton>
 
                                             <IconButton
-                                                color='primary'
-                                                sx={{ width: '2.5rem', height: '2.5rem', marginX: '0.2rem',}}
+                                                color="white"
+                                                sx={{
+                                                    width: '2.5rem',
+                                                    height: '2.5rem',
+                                                    marginX: '0.2rem',
+
+                                                    color: 'white',
+                                                    transition: 'color 0.3s ease',
+                                                    '&:hover': {
+                                                        color: 'primary.main',
+                                                    },
+                                                }}
                                             >
                                                 <SkipPreviousIcon/>
                                             </IconButton>
 
                                             <IconButton
-                                                color='primary'
-                                                sx={{ width: '3.5rem', height: '3.5rem', marginX: '0.2rem',}}
+                                                color="white"
+                                                sx={{
+                                                    width: '3.5rem',
+                                                    height: '3.5rem',
+                                                    marginX: '0.2rem',
+
+                                                    color: 'white',
+                                                    transition: 'color 0.3s ease',
+                                                    '&:hover': {
+                                                        color: 'primary.main',
+                                                    },
+                                                }}
                                             >
                                                 <PauseCircleIcon sx={{fontSize: '3rem'}}/>
                                             </IconButton>
 
                                             <IconButton
-                                                color='primary'
-                                                sx={{ width: '2.5rem', height: '2.5rem', marginX: '0.2rem',}}
+                                                color="white"
+                                                sx={{
+                                                    width: '2.5rem',
+                                                    height: '2.5rem',
+                                                    marginX: '0.2rem',
+
+                                                    color: 'white',
+                                                    transition: 'color 0.3s ease',
+                                                    '&:hover': {
+                                                        color: 'primary.main',
+                                                    },
+                                                }}
                                             >
                                                 <SkipNextIcon/>
                                             </IconButton>
 
                                             <IconButton
-                                                color='primary'
-                                                sx={{ width: '2.5rem', height: '2.5rem', marginX: '0.2rem',}}
+                                                color="white"
+                                                sx={{
+                                                    width: '2.5rem',
+                                                    height: '2.5rem',
+                                                    marginX: '0.2rem',
+
+                                                    color: 'white',
+                                                    transition: 'color 0.3s ease',
+                                                    '&:hover': {
+                                                        color: 'primary.main',
+                                                    },
+                                                }}
                                             >
                                                 <RepeatIcon/>
                                             </IconButton>
@@ -289,22 +349,44 @@ export default function Footer(props) {
                                 >
 
                                     <IconButton
-                                        color='primary'
-                                        sx={{marginRight: '1rem',}}
+                                        color="white"
+                                        sx={{
+                                            marginRight: '1rem',
+
+                                            color: 'white',
+                                            transition: 'color 0.3s ease',
+                                            '&:hover': {
+                                                color: 'primary.main',
+                                            },
+                                        }}
                                         onClick={() => handleNavigate('/queue')}
                                     >
                                         <QueueMusicIcon/>
                                     </IconButton>
 
                                     <IconButton
-                                        color='primary'
+                                        color="white"
+                                        sx={{
+                                            color: 'white',
+                                            transition: 'color 0.3s ease',
+                                            '&:hover': {
+                                                color: 'primary.main',
+                                            },
+                                        }}
                                     >
                                         <VolumeUpIcon/>
                                     </IconButton>
 
                                     <Slider
                                         value={50}
+                                        color="white"
                                         sx={{
+                                            color: 'white',
+                                            transition: 'color 0.3s ease',
+                                            '&:hover': {
+                                                color: 'primary.main',
+                                            },
+
                                             marginLeft: '0.5rem',
                                             marginRight: '1rem',
                                             width: '7rem',
@@ -322,7 +404,16 @@ export default function Footer(props) {
                                         }}
                                     />
 
-                                    <IconButton color='primary'>
+                                    <IconButton
+                                        color="white"
+                                        sx={{
+                                            color: 'white',
+                                            transition: 'color 0.3s ease',
+                                            '&:hover': {
+                                                color: 'primary.main',
+                                            },
+                                        }}
+                                    >
                                         <KeyboardDoubleArrowDownIcon/>
                                     </IconButton>
 

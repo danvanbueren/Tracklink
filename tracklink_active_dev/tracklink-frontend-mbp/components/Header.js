@@ -82,14 +82,33 @@ export default function Header(props) {
                             }}
                         >
 
-                            <IconButton color='primary' sx={{marginRight: '1rem'}}>
+                            <IconButton
+                                color='white'
+                                sx={{
+                                    marginRight: '1rem',
+
+                                    color: 'white',
+                                    transition: 'color 0.3s ease',
+                                    '&:hover': {
+                                        color: 'primary.main',
+                                    },
+                                }}
+                            >
                                 <DarkModeIcon />
                             </IconButton>
 
                             <IconButton
                                 onClick={() => handleNavigate('/settings')}
-                                color='primary'
-                                sx={{marginRight: '1rem'}}
+                                color='white'
+                                sx={{
+                                    color: 'white',
+                                    transition: 'color 0.3s ease',
+                                    '&:hover': {
+                                        color: 'primary.main',
+                                    },
+
+                                    marginRight: '1rem'
+                                 }}
                             >
                                 <SettingsIcon />
                             </IconButton>
