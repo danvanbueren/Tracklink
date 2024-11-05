@@ -13,13 +13,29 @@ import InventoryIcon from '@mui/icons-material/Inventory';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import {useLeftToggle} from "@/context/contextToggleVerboseNav";
-import BigButton from "@/comp/BigButton";
+import {useNavigation} from '@/context/contextNavigation'
+
+import BigButton from "@/components/BigButton";
 
 export default function Nav(props) {
+
 
     const { toggle: leftToggle } = useLeftToggle();
 
     const { isToggled = true } = useLeftToggle();
+
+
+    const { navigateTo, isNavigating } = useNavigation();
+
+    const handleNavigate = (destination) => {
+        if (isNavigating) {
+            return;
+        }
+
+        navigateTo(destination);
+    };
+
+
 
     return (
         <>
@@ -76,6 +92,7 @@ export default function Nav(props) {
                         icon={<HomeIcon fontSize="large" />}
                         text={'Home'}
                         href="/home"
+                        onClick={() => handleNavigate('/home')}
                     />
 
                     <Box sx={{ height: '2.5rem' }}></Box>
@@ -85,6 +102,7 @@ export default function Nav(props) {
                         icon={<MusicNoteIcon fontSize="large" />}
                         text={'Tracks'}
                         href="/tracks"
+                        onClick={() => handleNavigate('/tracks')}
                     />
 
                     <Box sx={{ height: '1rem' }}></Box>
@@ -94,6 +112,7 @@ export default function Nav(props) {
                         icon={<LibraryMusicIcon fontSize="large" />}
                         text={'Projects'}
                         href="/projects"
+                        onClick={() => handleNavigate('/projects')}
                     />
 
                     <Box sx={{ height: '2.5rem' }}></Box>
@@ -103,6 +122,7 @@ export default function Nav(props) {
                         icon={<PeopleAltIcon fontSize="large" />}
                         text={'Collab'}
                         href="/collab"
+                        onClick={() => handleNavigate('/collab')}
                     />
 
                     <Box sx={{ height: '1rem' }}></Box>
@@ -112,6 +132,7 @@ export default function Nav(props) {
                         icon={<ScheduleIcon fontSize="large" />}
                         text={'Recent'}
                         href="/recent"
+                        onClick={() => handleNavigate('/recent')}
                     />
 
                     <Box sx={{ height: '1rem' }}></Box>
@@ -121,6 +142,7 @@ export default function Nav(props) {
                         icon={<StarIcon fontSize="large" />}
                         text={'Starred'}
                         href="/starred"
+                        onClick={() => handleNavigate('/starred')}
                     />
 
                     <Box sx={{ height: '2.5rem' }}></Box>
@@ -130,6 +152,7 @@ export default function Nav(props) {
                         icon={<InventoryIcon fontSize="large" />}
                         text={'Archive'}
                         href="/archive"
+                        onClick={() => handleNavigate('/archive')}
                     />
 
                     <Box sx={{ height: '1rem' }}></Box>
@@ -139,6 +162,7 @@ export default function Nav(props) {
                         icon={<DeleteIcon fontSize="large" />}
                         text={'Trash'}
                         href="/trash"
+                        onClick={() => handleNavigate('/trash')}
                     />
                 </Box>
 
@@ -157,6 +181,7 @@ export default function Nav(props) {
                         icon={<AddIcon fontSize="large" />}
                         text={'New'}
                         href="/new"
+                        onClick={() => handleNavigate('/new')}
                     />
                 </Box>
             </Box>

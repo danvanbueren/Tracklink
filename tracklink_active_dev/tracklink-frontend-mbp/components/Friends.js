@@ -6,11 +6,20 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 
 import {useRightToggle} from "@/context/contextToggleVerboseFriends";
 
-import FriendElement from "@/comp/FriendElement";
-import BigButton from "@/comp/BigButton";
-
+import FriendElement from "@/components/FriendElement";
+import BigButton from "@/components/BigButton";
+import {useNavigation} from "@/context/contextNavigation";
 
 export default function Friends(props) {
+
+    // Routing
+    const { navigateTo, isNavigating } = useNavigation();
+    const handleNavigate = (destination) => {
+        if (isNavigating) {
+            return;
+        }
+        navigateTo(destination);
+    };
 
     const { toggle: rightToggle } = useRightToggle();
 
@@ -66,35 +75,35 @@ export default function Friends(props) {
 
                 <Box sx={{ height: '1rem' }}></Box>
 
-                <FriendElement name='Dan Van Bueren' imagePath='https://scontent-dus1-1.xx.fbcdn.net/v/t39.30808-6/458761771_27479483351650579_285909054981703462_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=jj_Jv7MHb5UQ7kNvgFk6_6I&_nc_zt=23&_nc_ht=scontent-dus1-1.xx&_nc_gid=A2jy4xEKfLrOS8zw_hPsNPR&oh=00_AYA56m1YL_7Sp8aqY71qv5XM9jSiu0-BHQzGkWJY6ZGFLw&oe=672C6639' />
+                <FriendElement name='Dan Van Bueren' imagePath='https://picsum.photos/50' />
 
                 <Box sx={{ height: '1rem' }}></Box>
 
-                <FriendElement name='Owen Tabor' imagePath='https://scontent-dus1-1.xx.fbcdn.net/v/t39.30808-6/358373642_3405586719680385_7555361372614125702_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=NeNqeC0Ydw4Q7kNvgEHrcqU&_nc_zt=23&_nc_ht=scontent-dus1-1.xx&_nc_gid=Ae-gmt0V9H1k1z1mTMN_aWT&oh=00_AYDqFcYKnaxJhgdoEzwtqUYDs0Ga5i1Myq2oy163tCCpGw&oe=672C819D'/>
+                <FriendElement name='Owen Tabor' imagePath='https://picsum.photos/50' />
 
                 <Box sx={{ height: '1rem' }}></Box>
 
-                <FriendElement name='Dustin Robbins' imagePath='https://cdn.discordapp.com/attachments/391377440112640001/1302407600775626803/dustingoogle-1.png?ex=67280119&is=6726af99&hm=6f269d70ec8f86aabdd8a690f473b6c56999a58fde8b7aec3aae80441d847147&'/>
+                <FriendElement name='Dustin Robbins' imagePath='https://picsum.photos/50' />
 
                 <Box sx={{ height: '1rem' }}></Box>
 
-                <FriendElement name='Kros' />
+                <FriendElement name='Kros' imagePath='https://picsum.photos/50' />
 
                 <Box sx={{ height: '1rem' }}></Box>
 
-                <FriendElement name='Emmie' />
+                <FriendElement name='Emmie' imagePath='https://picsum.photos/50' />
 
                 <Box sx={{ height: '1rem' }}></Box>
 
-                <FriendElement name='Dixie' />
+                <FriendElement name='Dixie' imagePath='https://picsum.photos/50' />
 
                 <Box sx={{ height: '1rem' }}></Box>
 
-                <FriendElement name='Aaron Knotts' />
+                <FriendElement name='Aaron Knotts' imagePath='https://picsum.photos/50' />
 
                 <Box sx={{ height: '1rem' }}></Box>
 
-                <FriendElement name='Levi Valentine' />
+                <FriendElement name='Levi Valentine' imagePath='https://picsum.photos/50' />
             </Box>
 
             {/* Snapped to bottom */}
@@ -113,7 +122,7 @@ export default function Friends(props) {
                     isToggled={isToggled}
                     icon={<PersonAddIcon fontSize="large" />}
                     text={'Add Friend'}
-                    href={'/addfriend'}
+                    onClick={() => handleNavigate('/addfriend')}
                 />
             </Box>
         </Box>

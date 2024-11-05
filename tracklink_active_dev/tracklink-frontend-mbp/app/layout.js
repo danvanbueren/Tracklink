@@ -8,13 +8,17 @@ import {Box, createTheme, CssBaseline, ThemeProvider} from "@mui/material";
 import * as React from "react";
 import {LeftToggleProvider} from "@/context/contextToggleVerboseNav";
 import {RightToggleProvider} from "@/context/contextToggleVerboseFriends";
-import AppWrapper from "@/comp/AppWrapper";
+import AppWrapper from "@/components/AppWrapper";
+import {NavigationProvider} from "@/context/contextNavigation";
 
 const darkTheme = createTheme({
     palette: {
         mode: 'dark',
     },
 });
+
+// Replace this with authentication logic to control whether app layout is displayed or fallback to external site
+const auth = true;
 
 export default function RootLayout({ children }) {
 
@@ -36,13 +40,22 @@ export default function RootLayout({ children }) {
                     maxHeight: '100vh',
                 }}
             >
-                <LeftToggleProvider>
-                    <RightToggleProvider>
-                        <AppWrapper>
-                            {children}
-                        </AppWrapper>
-                    </RightToggleProvider>
-                </LeftToggleProvider>
+                {auth ?
+                    <LeftToggleProvider>
+                        <RightToggleProvider>
+                            <NavigationProvider>
+                                <AppWrapper>
+                                    {children}
+                                </AppWrapper>
+                            </NavigationProvider>
+                        </RightToggleProvider>
+                    </LeftToggleProvider>
+                    :
+                    <>
+                        <h1>NO AUTH</h1>
+                        {children}
+                    </>
+                }
             </Box>
         </ThemeProvider>
         </body>

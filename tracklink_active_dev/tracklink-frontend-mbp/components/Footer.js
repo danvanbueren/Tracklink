@@ -10,8 +10,18 @@ import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
 import SkipNextIcon from '@mui/icons-material/SkipNext';
 import RepeatIcon from '@mui/icons-material/Repeat';
 import PauseCircleIcon from '@mui/icons-material/PauseCircle';
+import {useNavigation} from "@/context/contextNavigation";
 
 export default function Footer(props) {
+
+    // Routing
+    const { navigateTo, isNavigating } = useNavigation();
+    const handleNavigate = (destination) => {
+        if (isNavigating) {
+            return;
+        }
+        navigateTo(destination);
+    };
 
     return (
         <>
@@ -51,7 +61,10 @@ export default function Footer(props) {
                                     width: '100%',
                                 }}
                             >
-                                <Button sx={{padding: 0, margin: 0, marginRight: '0.8rem'}}>
+                                <Button
+                                    sx={{padding: 0, margin: 0, marginRight: '0.8rem'}}
+                                    onClick={() => handleNavigate('/track')}
+                                >
                                     <Card sx={{ display: 'flex', padding: 0, margin: 0, height: '4rem', width: '4rem',}}>
                                         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                                             <CardMedia
@@ -75,6 +88,7 @@ export default function Footer(props) {
                                                 marginBottom: '0.1rem',
                                                 textTransform: 'none',
                                             }}
+                                            onClick={() => handleNavigate('/track')}
                                         >
                                             <Typography variant='h6'>left to chance</Typography>
                                         </Button>
@@ -90,6 +104,7 @@ export default function Footer(props) {
                                                 paddingX: '0.5rem',
                                                 textTransform: 'none',
                                             }}
+                                            onClick={() => handleNavigate('/user')}
                                         >
                                             <Typography>polybit</Typography>
                                         </Button>
@@ -144,21 +159,43 @@ export default function Footer(props) {
                                                 width: '100%',
                                             }}
                                         >
-                                        <IconButton color='primary' sx={{ width: '2.5rem', height: '2.5rem', marginX: '0.2rem',}}>
-                                            <AddCommentIcon/>
-                                        </IconButton>
-                                        <IconButton color='primary' sx={{ width: '2.5rem', height: '2.5rem', marginX: '0.2rem',}}>
-                                            <SkipPreviousIcon/>
-                                        </IconButton>
-                                        <IconButton color='primary' sx={{ width: '3.5rem', height: '3.5rem', marginX: '0.2rem',}}>
-                                            <PauseCircleIcon sx={{fontSize: '3rem'}}/>
-                                        </IconButton>
-                                        <IconButton color='primary' sx={{ width: '2.5rem', height: '2.5rem', marginX: '0.2rem',}}>
-                                            <SkipNextIcon/>
-                                        </IconButton>
-                                        <IconButton color='primary' sx={{ width: '2.5rem', height: '2.5rem', marginX: '0.2rem',}}>
-                                            <RepeatIcon/>
-                                        </IconButton>
+
+                                            <IconButton
+                                                color='primary'
+                                                sx={{ width: '2.5rem', height: '2.5rem', marginX: '0.2rem',}}
+                                                onClick={() => handleNavigate('/track')}
+                                            >
+                                                <AddCommentIcon/>
+                                            </IconButton>
+
+                                            <IconButton
+                                                color='primary'
+                                                sx={{ width: '2.5rem', height: '2.5rem', marginX: '0.2rem',}}
+                                            >
+                                                <SkipPreviousIcon/>
+                                            </IconButton>
+
+                                            <IconButton
+                                                color='primary'
+                                                sx={{ width: '3.5rem', height: '3.5rem', marginX: '0.2rem',}}
+                                            >
+                                                <PauseCircleIcon sx={{fontSize: '3rem'}}/>
+                                            </IconButton>
+
+                                            <IconButton
+                                                color='primary'
+                                                sx={{ width: '2.5rem', height: '2.5rem', marginX: '0.2rem',}}
+                                            >
+                                                <SkipNextIcon/>
+                                            </IconButton>
+
+                                            <IconButton
+                                                color='primary'
+                                                sx={{ width: '2.5rem', height: '2.5rem', marginX: '0.2rem',}}
+                                            >
+                                                <RepeatIcon/>
+                                            </IconButton>
+
                                         </Box>
                                     </Stack>
                                 </Box>
@@ -250,28 +287,45 @@ export default function Footer(props) {
                                         paddingRight: '20px',
                                     }}
                                 >
-                                <IconButton color='primary' sx={{marginRight: '1rem',}}><QueueMusicIcon/></IconButton>
-                                <IconButton color='primary'><VolumeUpIcon/></IconButton>
-                                <Slider
-                                    value={50}
-                                    sx={{
-                                        marginLeft: '0.5rem',
-                                        marginRight: '1rem',
-                                        width: '7rem',
-                                        '& .MuiSlider-thumb': {
-                                            visibility: 'hidden', // Hide the thumb by default
-                                            transition: 'visibility 0s, opacity 0.2s linear', // Smooth transition
-                                            width: 15,
-                                            height: 15,
-                                            opacity: 0, // Set initial opacity to 0
-                                        },
-                                        '&:hover .MuiSlider-thumb, &:active .MuiSlider-thumb': {
-                                            visibility: 'visible', // Show the thumb on hover or active
-                                            opacity: 1, // Set opacity to 1 when visible
-                                        },
-                                    }}
-                                />
-                                <IconButton color='primary'><KeyboardDoubleArrowDownIcon/></IconButton>
+
+                                    <IconButton
+                                        color='primary'
+                                        sx={{marginRight: '1rem',}}
+                                        onClick={() => handleNavigate('/queue')}
+                                    >
+                                        <QueueMusicIcon/>
+                                    </IconButton>
+
+                                    <IconButton
+                                        color='primary'
+                                    >
+                                        <VolumeUpIcon/>
+                                    </IconButton>
+
+                                    <Slider
+                                        value={50}
+                                        sx={{
+                                            marginLeft: '0.5rem',
+                                            marginRight: '1rem',
+                                            width: '7rem',
+                                            '& .MuiSlider-thumb': {
+                                                visibility: 'hidden', // Hide the thumb by default
+                                                transition: 'visibility 0s, opacity 0.2s linear', // Smooth transition
+                                                width: 15,
+                                                height: 15,
+                                                opacity: 0, // Set initial opacity to 0
+                                            },
+                                            '&:hover .MuiSlider-thumb, &:active .MuiSlider-thumb': {
+                                                visibility: 'visible', // Show the thumb on hover or active
+                                                opacity: 1, // Set opacity to 1 when visible
+                                            },
+                                        }}
+                                    />
+
+                                    <IconButton color='primary'>
+                                        <KeyboardDoubleArrowDownIcon/>
+                                    </IconButton>
+
                                 </Box>
                             </Stack>
                         </Box>

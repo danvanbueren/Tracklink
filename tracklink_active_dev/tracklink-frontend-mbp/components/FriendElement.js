@@ -2,8 +2,18 @@ import * as React from "react";
 
 import {Avatar, Box, Button, Tooltip} from "@mui/material";
 import {useRightToggle} from "@/context/contextToggleVerboseFriends";
+import {useNavigation} from "@/context/contextNavigation";
 
 export default function FriendElement({ name, imagePath, size }) {
+
+    // Routing
+    const { navigateTo, isNavigating } = useNavigation();
+    const handleNavigate = (destination) => {
+        if (isNavigating) {
+            return;
+        }
+        navigateTo(destination);
+    };
 
     // Toggle drawer
     const { isToggled = true } = useRightToggle();
@@ -30,11 +40,16 @@ export default function FriendElement({ name, imagePath, size }) {
                     }}
                     arrow // Optional: adds an arrow to the tooltip
                 >
-                    <Avatar
-                        alt={name}
-                        src={String(imagePath)}
-                        sx={{ width: size, height: size }}
-                    />
+                    <Button
+                        color='white'
+                        onClick={() => handleNavigate('/user')}
+                    >
+                        <Avatar
+                            alt={name}
+                            src={String(imagePath)}
+                            sx={{ width: size, height: size }}
+                        />
+                    </Button>
                 </Tooltip>
             </Box>
         </>

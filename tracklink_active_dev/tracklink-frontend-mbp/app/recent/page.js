@@ -1,12 +1,10 @@
-'use client';
-
 import * as React from 'react';
 
-export default function Home() {
+export default function Recent() {
 
     return (
         <main>
-            <h2>Root</h2>
+            <h2>Recent</h2>
         </main>
     );
 }

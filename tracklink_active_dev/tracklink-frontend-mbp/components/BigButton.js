@@ -5,19 +5,8 @@ import {Box, Button, Tooltip} from "@mui/material";
 import BrokenImageIcon from '@mui/icons-material/BrokenImage';
 import CloseFullscreenIcon from '@mui/icons-material/CloseFullscreen';
 import OpenInFullIcon from '@mui/icons-material/OpenInFull';
-import {useEffect, useState} from "react";
 
-export default function BigButton({ icon, text, onClick, isToggled, isToggleController, isActive, href }) {
-
-
-    const [currentHref, setCurrentHref] = useState('');
-
-    useEffect(() => {
-        // Set the href when the component mounts
-        setCurrentHref(window.location.pathname);
-    }, []);
-
-
+export default function BigButton({ icon, text, onClick, isToggled, isToggleController, isActive }) {
 
     // Default values if props not passed
     if (icon === undefined)
@@ -47,7 +36,7 @@ export default function BigButton({ icon, text, onClick, isToggled, isToggleCont
     let boxSxBgColor = '';
     let boxSxColor = '';
 
-    if(currentHref === href) {
+    if(isActive) {
         // Solid blue button with black icon
         buttonSxHover = {
             '& .child-to-hover': {
@@ -87,7 +76,6 @@ export default function BigButton({ icon, text, onClick, isToggled, isToggleCont
             >
 
                 <Button
-                    href={href}
                     fullWidth
                     variant="text"
                     size="large"

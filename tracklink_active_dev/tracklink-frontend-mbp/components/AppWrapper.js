@@ -5,11 +5,11 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid2";
 
-import Header from "@/comp/Header";
-import Footer from "@/comp/Footer";
-import Nav from "@/comp/Nav";
-import ViewWrapper from "@/comp/ViewWrapper";
-import Friends from "@/comp/Friends";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import Nav from "@/components/Nav";
+import ViewWrapper from "@/components/ViewWrapper";
+import Friends from "@/components/Friends";
 
 export default function AppWrapper({ children }) {
     return (
