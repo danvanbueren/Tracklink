@@ -5,7 +5,6 @@ import {useRightToggle} from "@/context/contextToggleVerboseFriends";
 import {useNavigation} from "@/context/contextNavigation";
 import PersonIcon from '@mui/icons-material/Person';
 import {grey} from "@mui/material/colors";
-import Image from "next/image";
 
 export default function FriendElement({ name, imagePath, size }) {
 
