@@ -9,9 +9,6 @@ import {useNavigation} from "@/context/contextNavigation";
 
 export default function BigButton({ icon, text, onClick, isToggled, isToggleController, href }) {
 
-    // Routing
-    const { currentPage } = useNavigation();
-
     // Default values if props not passed
     if (icon === undefined)
         icon = <BrokenImageIcon fontSize="inherit" />
@@ -39,6 +36,9 @@ export default function BigButton({ icon, text, onClick, isToggled, isToggleCont
     let boxSxBorder = '1px solid';
     let boxSxBgColor = '';
     let boxSxColor = '';
+
+    // Routing
+    const { currentPage } = useNavigation();
 
     if(currentPage === href) {
         // Solid blue button with black icon
