@@ -16,6 +16,21 @@ export default function Header(props) {
         navigateTo(destination);
     };
 
+    // Hide search bar on `/home`
+    const { currentPage } = useNavigation();
+
+    let searchBar;
+
+    if(currentPage !== '/home') {
+        searchBar =
+        <TextField
+            fullWidth
+            label="Search"
+            id="fullWidth"
+        />
+
+    }
+
     return (
         <>
             <Box
@@ -63,11 +78,7 @@ export default function Header(props) {
                     </Grid>
                     <Grid size={4}>
 
-                        <TextField
-                            fullWidth
-                            label="Search"
-                            id="fullWidth"
-                        />
+                        {searchBar}
 
 
                     </Grid>
