@@ -40,6 +40,8 @@ export default function Friends(props) {
                 paddingLeft: 0,
                 paddingRight: 0,
                 margin: 0,
+
+                overflow: 'auto',
             }}
         >
             <Box
@@ -70,6 +72,7 @@ export default function Friends(props) {
                     paddingRight: '20px',
                     overflow: 'auto',
                     flex: 1,
+                    minHeight: '5rem',
                 }}
             >
 

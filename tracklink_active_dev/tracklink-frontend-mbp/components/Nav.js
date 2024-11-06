@@ -42,7 +42,7 @@ export default function Nav(props) {
             <Box
                 sx={{
                     minHeight: '100%',
-                    maxHeight: '1rem',
+                    maxHeight: '1px',
 
                     display: 'flex',
                     flexDirection: 'column',
@@ -52,6 +52,8 @@ export default function Nav(props) {
                     paddingLeft: 0,
                     paddingRight: 0,
                     margin: 0,
+
+                    overflow: 'auto',
                 }}
             >
                 <Box
@@ -83,6 +85,7 @@ export default function Nav(props) {
                         paddingLeft: '20px',
                         overflow: 'auto',
                         flex: 1,
+                        minHeight: '5rem',
                     }}
                 >
                     <Box sx={{ height: '1rem' }}></Box>
