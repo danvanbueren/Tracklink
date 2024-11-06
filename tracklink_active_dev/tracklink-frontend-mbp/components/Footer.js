@@ -11,6 +11,7 @@ import SkipNextIcon from '@mui/icons-material/SkipNext';
 import RepeatIcon from '@mui/icons-material/Repeat';
 import PauseCircleIcon from '@mui/icons-material/PauseCircle';
 import {useNavigation} from "@/context/contextNavigation";
+import TrackSummaryButton from "@/components/TrackSummaryButton";
 
 export default function Footer(props) {
 
@@ -56,85 +57,25 @@ export default function Footer(props) {
                             }}
                         >
 
-                        <Stack direction="row">
-                            <Box
+                            <TrackSummaryButton />
+
+
+                            <IconButton
+                                color="white"
                                 sx={{
-                                    display: 'flex',
-                                    alignItems: 'center',     // Vertical centering
-                                    height: '100%',          // Full viewport height
-                                    width: '100%',
+                                    width: '2.5rem',
+                                    height: '2.5rem',
+                                    marginLeft: '1rem',
+
+                                    color: 'white',
+                                    transition: 'color 0.3s ease',
+                                    '&:hover': {
+                                        color: 'primary.main',
+                                    },
                                 }}
                             >
-                                <Button
-                                    sx={{padding: 0, margin: 0, marginRight: '0.8rem'}}
-                                    onClick={() => handleNavigate('/track')}
-                                >
-                                    <Card sx={{ display: 'flex', padding: 0, margin: 0, height: '4rem', width: '4rem',}}>
-                                        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                                            <CardMedia
-                                                component="img"
-                                                image="https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/08/36/6e/08366e18-05aa-35ea-1e3c-0f4cb6b89883/artwork.jpg/486x486bb.png"
-                                                alt="Art"
-                                            />
-                                        </Box>
-                                    </Card>
-                                </Button>
-
-                                <Stack direction="column">
-                                    <Box display="flex" justifyContent="flex-start"> {/* Use appropriate alignment */}
-                                        <Button
-                                            color='white'
-                                            sx={{
-                                                flexShrink: 0,
-                                                margin: 0,
-                                                padding: 0,
-                                                paddingX: '0.5rem',
-                                                marginBottom: '0.1rem',
-                                                textTransform: 'none',
-                                            }}
-                                            onClick={() => handleNavigate('/track')}
-                                        >
-                                            <Typography variant='h6'>Song Title</Typography>
-                                        </Button>
-                                    </Box>
-                                    <Box display="flex" justifyContent="flex-start"> {/* Use appropriate alignment */}
-                                        <Button
-                                            size="small"
-                                            color='white'
-                                            sx={{
-                                                flexShrink: 0,
-                                                margin: 0,
-                                                padding: 0,
-                                                paddingX: '0.5rem',
-                                                textTransform: 'none',
-                                            }}
-                                            onClick={() => handleNavigate('/user')}
-                                        >
-                                            <Typography>Artist Name</Typography>
-                                        </Button>
-                                    </Box>
-
-
-                                </Stack>
-
-                                <IconButton
-                                    color="white"
-                                    sx={{
-                                        width: '2.5rem',
-                                        height: '2.5rem',
-                                        marginLeft: '1rem',
-
-                                        color: 'white',
-                                        transition: 'color 0.3s ease',
-                                        '&:hover': {
-                                            color: 'primary.main',
-                                        },
-                                    }}
-                                >
-                                    <StarBorderIcon />
-                                </IconButton>
-                            </Box>
-                        </Stack>
+                                <StarBorderIcon />
+                            </IconButton>
                         </Box>
                     </Grid>
 
