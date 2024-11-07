@@ -2,15 +2,11 @@
 
 import * as React from 'react';
 import {
-    Box, Button, Card, CardMedia,
-    FormControl, IconButton,
-    InputAdornment,
-    InputLabel,
+    Box, Button, Card,
     Menu,
     MenuItem,
-    OutlinedInput,
-    Select, Stack,
-    TextField, Typography
+    Stack,
+    TextField
 } from "@mui/material";
 
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
@@ -19,9 +15,8 @@ import PersonIcon from '@mui/icons-material/Person';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 
 import {useState} from "react";
-import {grey} from "@mui/material/colors";
-import StarBorderIcon from "@mui/icons-material/StarBorder";
 import TrackSummaryButton from "@/components/TrackSummaryButton";
+import Grid from "@mui/material/Grid2";
 
 export default function Home() {
 
@@ -156,17 +151,45 @@ export default function Home() {
             >
                 <h2>Recent</h2>
 
-                <Stack direction="row" spacing={8} sx={{ minWidth: '100%', maxWidth: '100%' }}>
-                    <Card sx={{p: '1rem', outline: '1px solid', outlineColor: 'background.default'}}>
-                        <TrackSummaryButton />
-                    </Card>
-                    <Card sx={{p: '1rem', outline: '1px solid', outlineColor: 'background.default'}}>
-                        <TrackSummaryButton />
-                    </Card>
-                    <Card sx={{p: '1rem', outline: '1px solid', outlineColor: 'background.default'}}>
-                        <TrackSummaryButton />
-                    </Card>
-                </Stack>
+
+                <Grid container spacing={2}>
+                    <Grid size={{ xs: 6, xl: 4 }} >
+                        <Card
+                            sx={{
+                                p: '1rem',
+                                outline: '1px solid',
+                                outlineColor: 'background.default',
+                            }}
+                        >
+                            <TrackSummaryButton />
+                        </Card>
+                    </Grid>
+
+                    <Grid size={{ xs: 6, xl: 4 }} >
+                        <Card
+                            sx={{
+                                p: '1rem',
+                                outline: '1px solid',
+                                outlineColor: 'background.default',
+                            }}
+                        >
+                            <TrackSummaryButton />
+                        </Card>
+                    </Grid>
+
+                    <Grid size={{ xs: 6, xl: 4 }} >
+                        <Card
+                            sx={{
+                                p: '1rem',
+                                outline: '1px solid',
+                                outlineColor: 'background.default',
+                            }}
+                        >
+                            <TrackSummaryButton />
+                        </Card>
+                    </Grid>
+                </Grid>
+
             </Box>
 
 
