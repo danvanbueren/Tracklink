@@ -20,16 +20,7 @@ import Grid from "@mui/material/Grid2";
 
 export default function Home() {
 
-    const [type, setType] = React.useState('');
-
-    const handleChange = (event) => {
-        setType(event.target.value);
-    };
-
-
-    //
-
-
+    /* DROPDOWN VARIABLES */
     const [anchorEl, setAnchorEl] = useState(null);
 
     const handleClick = (event) => {
@@ -151,7 +142,6 @@ export default function Home() {
             >
                 <h2>Recent</h2>
 
-
                 <Grid container spacing={2}>
                     <Grid size={{ xs: 6, xl: 4 }} >
                         <Card
@@ -189,18 +179,7 @@ export default function Home() {
                         </Card>
                     </Grid>
                 </Grid>
-
             </Box>
-
-
-
-
-
-
-
-
-
-
         </main>
     );
 }
