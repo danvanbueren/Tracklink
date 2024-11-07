@@ -1,4 +1,4 @@
-import {Box, Card} from "@mui/material";
+import {Card} from "@mui/material";
 import * as React from "react";
 export default function ViewWrapper({children}) {
     return (

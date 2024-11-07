@@ -59,7 +59,6 @@ export default function Footer(props) {
 
                             <TrackSummaryButton />
 
-
                             <IconButton
                                 color="white"
                                 sx={{

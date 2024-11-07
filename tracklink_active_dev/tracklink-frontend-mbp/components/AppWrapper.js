@@ -26,7 +26,7 @@ export default function AppWrapper({ children }) {
                     overflow: 'hidden',
                 }}
             >
-
+                {/* ALL BUT FOOTER */}
                 <Box
                     sx={{
                         display: 'flex',
@@ -50,6 +50,7 @@ export default function AppWrapper({ children }) {
                             size='grow'
                             sx={{ paddingX: '20px' }}
                         >
+                            {/* HEADER AND VIEW WRAPPER */}
                             <Box
                                 sx={{
                                     minHeight: '100%',
@@ -59,7 +60,6 @@ export default function AppWrapper({ children }) {
                                     justifyContent: 'space-between',
                                 }}
                             >
-
                                 {/* HEADER */}
                                 <Box
                                     sx={{
@@ -99,7 +99,7 @@ export default function AppWrapper({ children }) {
                     </Grid>
                 </Box>
 
-                {/* Bottom nav */}
+                {/* FOOTER */}
                 <Box
                     sx={{
                         minWidth: '100vw',
