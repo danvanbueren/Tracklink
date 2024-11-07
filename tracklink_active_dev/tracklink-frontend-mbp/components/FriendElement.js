@@ -6,12 +6,12 @@ import {useNavigation} from "@/context/contextNavigation";
 import PersonIcon from '@mui/icons-material/Person';
 import {grey} from "@mui/material/colors";
 
-export default function FriendElement({ name, imagePath, size, timeLastActive }) {
+export default function FriendElement({ friendUUID }) {
 
-
-    // if online, set activity bubble to green
-    // if away for 5 minutes or more, set to yellow
-    // if away for 30 minutes or more, set to red
+    // SIMULATED DATABASE ACTION
+    let name = 'SomeName';
+    let imagePath = 'https://picsum.photos/' + String(Math.floor(Math.random() * (300 - (200) + 1)) + (200));
+    let timeLastActive = Date.now() - Math.floor(Math.random() * (100000));
 
     // Compare times for text status
     function getActivityStatus(type) {
@@ -81,12 +81,12 @@ export default function FriendElement({ name, imagePath, size, timeLastActive })
     // Tooltip opacity
     const tooltipOpacity = isToggled ? 0 : 1;
 
-
-    if (size === undefined)
-        size = '2.9rem';
-
     return (
-        <>
+        <Box
+            sx={{
+                paddingBottom: '0.7rem',
+            }}
+        >
             <Tooltip
                 title={name}
                 placement="right"
@@ -104,6 +104,7 @@ export default function FriendElement({ name, imagePath, size, timeLastActive })
                     fullWidth
                     variant="text"
                     size="large"
+                    onClick={() => {handleNavigate('/user/' + String(friendUUID))}}
                     sx={{
                         minWidth: '0',
                         maxWidth: '100%',
@@ -113,7 +114,7 @@ export default function FriendElement({ name, imagePath, size, timeLastActive })
                         borderTopRightRadius: '5rem',
                         borderBottomRightRadius: '5rem',
                         display: 'flex',
-                        justifyContent: 'flex-start', // Align content to the left
+                        justifyContent: 'flex-start',
                         textAlign: 'left',
                         color: 'white',
                         transition: 'color 0.3s ease, border-radius 0.15s ease',
@@ -121,14 +122,20 @@ export default function FriendElement({ name, imagePath, size, timeLastActive })
                             color: 'primary.main',
                             borderRadius: '10px',
 
-                            '& .child-to-hover': {
-                                backgroundColor: 'primary.dark', // Darken on hover
+                            '& .child-top-level': {
+                                backgroundColor: 'primary.dark',
                                 borderRadius: '10px',
-                            }
+                                border: '2px solid',
+                                borderColor: 'primary.dark',
+                            },
+                            '& .child-image': {
+                                backgroundColor: 'primary.dark',
+                                borderRadius: '10px',
+                            },
                         },
                         '&:active': {
                             '& .child-to-hover': {
-                                backgroundColor: 'primary.light', // Lighten on active
+                                backgroundColor: 'primary.light',
                             }
                         },
 
@@ -136,7 +143,7 @@ export default function FriendElement({ name, imagePath, size, timeLastActive })
                     }}
                 >
                     <Box
-                        className="child-to-hover"
+                        className="child-top-level"
                         component="div" // Ensures it's treated as a block-level element
                         sx={{
                             position: 'relative',
@@ -149,15 +156,41 @@ export default function FriendElement({ name, imagePath, size, timeLastActive })
                             padding: '8px',
                             borderRadius: '50%',
                             boxShadow: 1,
+                            border: '2px solid',
+                            borderColor: 'rgba(18, 18, 18, 1)',
 
-                            transition: 'background-color 0.3s ease, border-radius 0.3s ease',
+                            transition: 'background-color 0.3s ease, border-radius 0.3s ease, border-color 0.3s ease',
 
                             fontSize: '2rem',
 
                         }}
                     >
+                        { imagePath &&
+                            <Box
+                                className="child-image"
+                                sx={{
+                                    position: 'absolute',
+                                    overflow: 'hidden',
+                                    maxWidth: '100%',
+                                    maxHeight: '100%',
 
-                        <PersonIcon fontSize="inherit" />
+                                    backgroundColor: grey[900],
+                                    borderRadius: '50%',
+
+                                    transition: 'background-color 0.3s ease, border-radius 0.3s ease',
+                                }}
+                            >
+                                <img
+                                    src={imagePath}
+                                    alt='Avatar'
+                                    loading='lazy'
+                                    width='48px'
+                                    height='48px'
+                                />
+                            </Box>
+                        }
+
+                        <PersonIcon fontSize="inherit"/>
 
                         <Box
                             component="span"
@@ -212,6 +245,6 @@ export default function FriendElement({ name, imagePath, size, timeLastActive })
                     }
                 </Button>
             </Tooltip>
-        </>
+        </Box>
     )
 }

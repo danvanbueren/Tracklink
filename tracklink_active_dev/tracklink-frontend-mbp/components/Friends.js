@@ -76,17 +76,18 @@ export default function Friends(props) {
                 }}
             >
 
-                <Box sx={{ height: '1rem' }}></Box>
+                <FriendElement friendUUID='1' />
+                <FriendElement />
+                <FriendElement />
+                <FriendElement />
+                <FriendElement />
+                <FriendElement />
+                <FriendElement />
+                <FriendElement />
+                <FriendElement />
+                <FriendElement />
 
-                <FriendElement name='Friend 1' imagePath='/userData/1.jpg' timeLastActive={Date.now() - 10}/>
 
-                <Box sx={{ height: '1rem' }}></Box>
-
-                <FriendElement name='Friend 1' imagePath='/userData/1.jpg' timeLastActive={Date.now() - 380}/>
-
-                <Box sx={{ height: '1rem' }}></Box>
-
-                <FriendElement name='Friend 1' imagePath='/userData/1.jpg' timeLastActive={Date.now() - 2100}/>
 
             </Box>
 
