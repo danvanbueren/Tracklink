@@ -78,15 +78,15 @@ export default function Friends(props) {
 
                 <Box sx={{ height: '1rem' }}></Box>
 
-                <FriendElement name='Friend 1' imagePath='/userData/1.jpg' />
+                <FriendElement name='Friend 1' imagePath='/userData/1.jpg' timeLastActive={Date.now() - 10}/>
 
                 <Box sx={{ height: '1rem' }}></Box>
 
-                <FriendElement name='Friend 2' imagePath='/userData/1.jpg' />
+                <FriendElement name='Friend 1' imagePath='/userData/1.jpg' timeLastActive={Date.now() - 380}/>
 
                 <Box sx={{ height: '1rem' }}></Box>
 
-                <FriendElement name='Friend 3' imagePath='/userData/1.jpg' />
+                <FriendElement name='Friend 1' imagePath='/userData/1.jpg' timeLastActive={Date.now() - 2100}/>
 
             </Box>
 
