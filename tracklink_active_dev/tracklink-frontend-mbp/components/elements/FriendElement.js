@@ -2,7 +2,6 @@ import * as React from "react";
 
 import {Box, Button, Tooltip, Typography} from "@mui/material";
 import {useRightToggle} from "@/context/contextToggleVerboseFriends";
-import {useLocalRouter} from "@/context/LocalRouterContext";
 import PersonIcon from '@mui/icons-material/Person';
 import {grey} from "@mui/material/colors";
 import {useRoute} from "@/context/RouteContext";
@@ -10,7 +9,7 @@ import {useRoute} from "@/context/RouteContext";
 export default function FriendElement({ friendUUID }) {
 
     // Routing
-    const { navigate, currentRoute } = useRoute();
+    const { navigate } = useRoute();
 
     // SIMULATED DATABASE ACTION
     let name = 'SomeName';
@@ -75,15 +74,6 @@ export default function FriendElement({ friendUUID }) {
                 }
         }
     }
-
-    // Routing
-    const { navigateTo, isNavigating } = useLocalRouter();
-    const handleNavigate = (destination) => {
-        if (isNavigating) {
-            return;
-        }
-        navigateTo(destination);
-    };
 
     // Toggle drawer
     const { isToggled = true } = useRightToggle();

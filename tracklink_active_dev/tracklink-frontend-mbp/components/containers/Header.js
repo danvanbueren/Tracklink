@@ -3,9 +3,7 @@ import * as React from "react";
 import SettingsIcon from '@mui/icons-material/Settings';
 import Grid from "@mui/material/Grid2";
 import DarkModeIcon from '@mui/icons-material/DarkMode';
-import {useLocalRouter} from "@/context/LocalRouterContext";
 import {useRoute} from "@/context/RouteContext";
-import {useState} from "react";
 
 export default function Header(props) {
 

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import Queue from "@/components/elements/Queue";
 
 export default function QueuePage({ slug }) {
 
@@ -6,6 +7,8 @@ export default function QueuePage({ slug }) {
         <main>
             <h2>Queue</h2>
             <p>slug: {slug}</p>
+
+            <Queue />
         </main>
     );
 }

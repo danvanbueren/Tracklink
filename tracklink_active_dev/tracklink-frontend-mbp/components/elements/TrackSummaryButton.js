@@ -1,6 +1,5 @@
 import {Box, Button, Card, CardMedia, Typography} from "@mui/material";
 import * as React from "react";
-import {useLocalRouter} from "@/context/LocalRouterContext";
 import Grid from "@mui/material/Grid2";
 import {useRoute} from "@/context/RouteContext";
 

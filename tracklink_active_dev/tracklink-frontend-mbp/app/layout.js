@@ -9,9 +9,9 @@ import * as React from "react";
 import {LeftToggleProvider} from "@/context/contextToggleVerboseNav";
 import {RightToggleProvider} from "@/context/contextToggleVerboseFriends";
 import AppWrapper from "@/components/containers/AppWrapper";
-import {LocalRouterProvider} from "@/context/LocalRouterContext";
 import darkTheme from "@/utils/theme";
 import {RouteProvider} from "@/context/RouteContext";
+import {AudioPlayerProvider} from "@/context/AudioPlayerContext";
 
 
 
@@ -43,13 +43,13 @@ export default function RootLayout({ children }) {
                 {auth ?
                     <LeftToggleProvider>
                         <RightToggleProvider>
-                            <LocalRouterProvider>
-                                <RouteProvider>
+                            <RouteProvider>
+                                <AudioPlayerProvider>
                                     <AppWrapper>
                                         {children}
                                     </AppWrapper>
-                                </RouteProvider>
-                            </LocalRouterProvider>
+                                </AudioPlayerProvider>
+                            </RouteProvider>
                         </RightToggleProvider>
                     </LeftToggleProvider>
                     :

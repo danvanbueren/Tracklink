@@ -8,7 +8,6 @@ import {useRightToggle} from "@/context/contextToggleVerboseFriends";
 
 import FriendElement from "@/components/elements/FriendElement";
 import BigButton from "@/components/elements/BigButton";
-import {useLocalRouter} from "@/context/LocalRouterContext";
 import {useRoute} from "@/context/RouteContext";
 
 export default function Friends(props) {

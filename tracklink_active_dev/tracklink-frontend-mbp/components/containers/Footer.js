@@ -1,39 +1,29 @@
-import {Box, Button, Card, CardMedia, IconButton, Slider, Stack, Typography} from "@mui/material";
+import {Box, IconButton, Stack} from "@mui/material";
 import * as React from "react";
 import Grid from "@mui/material/Grid2";
-import StarBorderIcon from '@mui/icons-material/StarBorder';
-import VolumeUpIcon from '@mui/icons-material/VolumeUp';
-import QueueMusicIcon from '@mui/icons-material/QueueMusic';
 import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
-import AddCommentIcon from '@mui/icons-material/AddComment';
-import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
-import SkipNextIcon from '@mui/icons-material/SkipNext';
-import RepeatIcon from '@mui/icons-material/Repeat';
-import PauseCircleIcon from '@mui/icons-material/PauseCircle';
-import {useLocalRouter} from "@/context/LocalRouterContext";
 import TrackSummaryButton from "@/components/elements/TrackSummaryButton";
-import {useState} from "react";
-import {useRoute} from "@/context/RouteContext";
+import {useAudioPlayer} from "@/context/AudioPlayerContext";
+import ToggleStarredButton from "@/components/elements/ToggleStarredButton";
+import AddCommentButton from "@/components/elements/audioControls/AddCommentButton";
+import SkipPreviousButton from "@/components/elements/audioControls/SkipPreviousButton";
+import TogglePlayPauseButton from "@/components/elements/audioControls/TogglePlayPauseButton";
+import SkipNextButton from "@/components/elements/audioControls/SkipNextButton";
+import RepeatButton from "@/components/elements/audioControls/RepeatButton";
+import PlaybackDurationSlider from "@/components/elements/audioControls/PlaybackDurationSlider";
+import CurrentPlaybackTime from "@/components/elements/audioControls/CurrentPlaybackTime";
+import TotalPlaybackTime from "@/components/elements/audioControls/TotalPlaybackTime";
+import QueueMusicButton from "@/components/elements/audioControls/QueueMusicButton";
+import MuteButton from "@/components/elements/audioControls/MuteButton";
+import VolumeSlider from "@/components/elements/audioControls/VolumeSlider";
 
-export default function Footer(props) {
+export default function Footer() {
 
-    // Routing
-    const { navigate, currentRoute } = useRoute();
-
-    // Control sliders
-    const [playbackDurationSliderValue, setPlaybackDurationSliderValue] = useState(0);
-    const [volumeSliderValue, setVolumeSliderValue] = useState(100);
-
-    const handleChangePlaybackDurationSliderValue = (event, newValue) => {
-        setPlaybackDurationSliderValue(newValue);
-    };
-
-    const handleChangeVolumeSliderValue = (event, newValue) => {
-        setVolumeSliderValue(newValue);
-    };
+    const { interfaceDisabled, audioRef, skipNext, isLooping } = useAudioPlayer();
 
     return (
         <>
+            <audio ref={audioRef} onEnded={skipNext} loop={isLooping}/>
             <Box
                 sx={{
                     display: 'flex', // Enable flexbox
@@ -55,7 +45,6 @@ export default function Footer(props) {
                 }}
                 >
                     <Grid size="grow">
-
                         <Box
                             sx={{
                                 display: 'flex',
@@ -64,32 +53,14 @@ export default function Footer(props) {
                                 width: '100%',
                             }}
                         >
-
-                            <TrackSummaryButton />
-
-                            <IconButton
-                                color="white"
-                                onClick={() => {alert('TODO: onClick function')}}
-                                sx={{
-                                    width: '2.5rem',
-                                    height: '2.5rem',
-                                    marginLeft: '1rem',
-
-                                    color: 'white',
-                                    transition: 'color 0.3s ease',
-                                    '&:hover': {
-                                        color: 'primary.dark',
-                                    },
-                                    '&:active': {
-                                        color: 'primary.main',
-                                    },
-                                }}
-                            >
-                                <StarBorderIcon />
-                            </IconButton>
+                            {!interfaceDisabled &&
+                                <>
+                                    <TrackSummaryButton/>
+                                    <ToggleStarredButton/>
+                                </>
+                            }
                         </Box>
                     </Grid>
-
 
                     <Grid size={4}>
                         <Box
@@ -101,7 +72,6 @@ export default function Footer(props) {
                                 width: '100%',
                             }}
                         >
-
                             <Stack direction="column" sx={{width: '100%',}}>
                                 <Box
                                     sx={{
@@ -121,112 +91,11 @@ export default function Footer(props) {
                                                 width: '100%',
                                             }}
                                         >
-
-                                            <IconButton
-                                                color="white"
-                                                sx={{
-                                                    width: '2.5rem',
-                                                    height: '2.5rem',
-                                                    marginX: '0.2rem',
-
-                                                    color: 'white',
-                                                    transition: 'color 0.3s ease',
-                                                    '&:hover': {
-                                                        color: 'primary.dark',
-                                                    },
-                                                    '&:active': {
-                                                        color: 'primary.main',
-                                                    },
-                                                }}
-                                                onClick={() => navigate('/track/some-track-id')}
-                                            >
-                                                <AddCommentIcon/>
-                                            </IconButton>
-
-                                            <IconButton
-                                                color="white"
-                                                onClick={() => {alert('TODO: onClick function')}}
-                                                sx={{
-                                                    width: '2.5rem',
-                                                    height: '2.5rem',
-                                                    marginX: '0.2rem',
-
-                                                    color: 'white',
-                                                    transition: 'color 0.3s ease',
-                                                    '&:hover': {
-                                                        color: 'primary.dark',
-                                                    },
-                                                    '&:active': {
-                                                        color: 'primary.main',
-                                                    },
-                                                }}
-                                            >
-                                                <SkipPreviousIcon/>
-                                            </IconButton>
-
-                                            <IconButton
-                                                color="white"
-                                                onClick={() => {alert('TODO: onClick function')}}
-                                                sx={{
-                                                    width: '3.5rem',
-                                                    height: '3.5rem',
-                                                    marginX: '0.2rem',
-
-                                                    color: 'white',
-                                                    transition: 'color 0.3s ease',
-                                                    '&:hover': {
-                                                        color: 'primary.dark',
-                                                    },
-                                                    '&:active': {
-                                                        color: 'primary.main',
-                                                    },
-                                                }}
-                                            >
-                                                <PauseCircleIcon sx={{fontSize: '3rem'}}/>
-                                            </IconButton>
-
-                                            <IconButton
-                                                color="white"
-                                                onClick={() => {alert('TODO: onClick function')}}
-                                                sx={{
-                                                    width: '2.5rem',
-                                                    height: '2.5rem',
-                                                    marginX: '0.2rem',
-
-                                                    color: 'white',
-                                                    transition: 'color 0.3s ease',
-                                                    '&:hover': {
-                                                        color: 'primary.dark',
-                                                    },
-                                                    '&:active': {
-                                                        color: 'primary.main',
-                                                    },
-                                                }}
-                                            >
-                                                <SkipNextIcon/>
-                                            </IconButton>
-
-                                            <IconButton
-                                                color="white"
-                                                onClick={() => {alert('TODO: onClick function')}}
-                                                sx={{
-                                                    width: '2.5rem',
-                                                    height: '2.5rem',
-                                                    marginX: '0.2rem',
-
-                                                    color: 'white',
-                                                    transition: 'color 0.3s ease',
-                                                    '&:hover': {
-                                                        color: 'primary.dark',
-                                                    },
-                                                    '&:active': {
-                                                        color: 'primary.main',
-                                                    },
-                                                }}
-                                            >
-                                                <RepeatIcon/>
-                                            </IconButton>
-
+                                            <AddCommentButton/>
+                                            <SkipPreviousButton/>
+                                            <TogglePlayPauseButton/>
+                                            <SkipNextButton/>
+                                            <RepeatButton/>
                                         </Box>
                                     </Stack>
                                 </Box>
@@ -249,61 +118,17 @@ export default function Footer(props) {
                                                 width: '100%',
                                             }}
                                         >
-                                            <Typography
-                                                sx={{
-                                                    fontSize: '0.85rem',
-                                                    userSelect: 'none', // Prevents text selection
-                                                }}
-                                            >
-                                                0:00
-                                            </Typography>
-
-                                            <Slider
-                                                value={playbackDurationSliderValue}
-                                                onChange={handleChangePlaybackDurationSliderValue}
-                                                sx={{
-                                                    marginX: '1rem',
-                                                    '& .MuiSlider-thumb': {
-                                                        visibility: 'hidden', // Hide the thumb by default
-                                                        transition: 'visibility 0s, opacity 0.2s linear', // Smooth transition
-                                                        width: 15,
-                                                        height: 15,
-                                                        opacity: 0, // Set initial opacity to 0
-                                                    },
-                                                    '&:hover': {
-                                                        color: 'primary.dark',
-                                                    },
-                                                    '&:hover .MuiSlider-thumb, &:active .MuiSlider-thumb': {
-                                                        visibility: 'visible', // Show the thumb on hover or active
-                                                        opacity: 1, // Set opacity to 1 when visible
-                                                    },
-                                                    '&:active .MuiSlider-thumb, &:active .MuiSlider-track': {
-                                                        color: 'primary.main',
-                                                    },
-                                                }}
-                                            />
-
-                                            <Typography
-                                                sx={{
-                                                    fontSize: '0.85rem',
-                                                    userSelect: 'none', // Prevents text selection
-                                                }}
-                                            >
-                                                0:00
-                                            </Typography>
+                                            <CurrentPlaybackTime/>
+                                            <PlaybackDurationSlider/>
+                                            <TotalPlaybackTime/>
                                         </Box>
                                     </Stack>
                                 </Box>
-
                             </Stack>
-
                         </Box>
-
                     </Grid>
 
-
                     <Grid size="grow">
-
                         <Box
                             sx={{
                                 display: 'flex',
@@ -314,7 +139,6 @@ export default function Footer(props) {
                                 paddingRight: '20px',
                             }}
                         >
-
                             <Stack direction="row">
                                 <Box
                                     sx={{
@@ -325,78 +149,15 @@ export default function Footer(props) {
                                         paddingRight: '20px',
                                     }}
                                 >
+                                    <QueueMusicButton/>
+                                    <MuteButton/>
+                                    <VolumeSlider/>
 
                                     <IconButton
                                         color="white"
-                                        sx={{
-                                            marginRight: '1rem',
-
-                                            color: 'white',
-                                            transition: 'color 0.3s ease',
-                                            '&:hover': {
-                                                color: 'primary.dark',
-                                            },
-                                            '&:active': {
-                                                color: 'primary.main',
-                                            },
+                                        onClick={() => {
+                                            alert('TODO: onClick function')
                                         }}
-                                        onClick={() => navigate('/queue')}
-                                    >
-                                        <QueueMusicIcon/>
-                                    </IconButton>
-
-                                    <IconButton
-                                        color="white"
-                                        onClick={() => {alert('TODO: onClick function')}}
-                                        sx={{
-                                            color: 'white',
-                                            transition: 'color 0.3s ease',
-                                            '&:hover': {
-                                                color: 'primary.dark',
-                                            },
-                                            '&:active': {
-                                                color: 'primary.main',
-                                            },
-                                        }}
-                                    >
-                                        <VolumeUpIcon/>
-                                    </IconButton>
-
-                                    <Slider
-                                        value={volumeSliderValue}
-                                        onChange={handleChangeVolumeSliderValue}
-                                        color="white"
-                                        sx={{
-                                            color: 'white',
-                                            transition: 'color 0.3s ease',
-
-                                            marginLeft: '0.5rem',
-                                            marginRight: '1rem',
-                                            width: '7rem',
-
-                                            '& .MuiSlider-thumb': {
-                                                visibility: 'hidden', // Hide the thumb by default
-                                                transition: 'visibility 0s, opacity 0.2s linear', // Smooth transition
-                                                width: 15,
-                                                height: 15,
-                                                opacity: 0, // Set initial opacity to 0
-                                            },
-                                            '&:hover': {
-                                                color: 'primary.dark',
-                                            },
-                                            '&:hover .MuiSlider-thumb, &:active .MuiSlider-thumb': {
-                                                visibility: 'visible', // Show the thumb on hover or active
-                                                opacity: 1, // Set opacity to 1 when visible
-                                            },
-                                            '&:active .MuiSlider-thumb, &:active .MuiSlider-track': {
-                                                color: 'primary.main',
-                                            },
-                                        }}
-                                    />
-
-                                    <IconButton
-                                        color="white"
-                                        onClick={() => {alert('TODO: onClick function')}}
                                         sx={{
                                             color: 'white',
                                             transition: 'color 0.3s ease',

@@ -5,7 +5,6 @@ import {Box, Button, Tooltip} from "@mui/material";
 import BrokenImageIcon from '@mui/icons-material/BrokenImage';
 import CloseFullscreenIcon from '@mui/icons-material/CloseFullscreen';
 import OpenInFullIcon from '@mui/icons-material/OpenInFull';
-import {useLocalRouter} from "@/context/LocalRouterContext";
 import {useRoute} from "@/context/RouteContext";
 
 export default function BigButton({ icon, text, onClick, isToggled, isToggleController, href }) {
