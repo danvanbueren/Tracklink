@@ -2,7 +2,7 @@ import * as React from "react";
 
 import {Box, Button, Tooltip, Typography} from "@mui/material";
 import {useRightToggle} from "@/context/contextToggleVerboseFriends";
-import {useNavigation} from "@/context/contextNavigation";
+import {useLocalRouter} from "@/context/LocalRouterContext";
 import PersonIcon from '@mui/icons-material/Person';
 import {grey} from "@mui/material/colors";
 
@@ -10,8 +10,14 @@ export default function FriendElement({ friendUUID }) {
 
     // SIMULATED DATABASE ACTION
     let name = 'SomeName';
-    let imagePath = 'https://picsum.photos/' + String(Math.floor(Math.random() * (300 - (200) + 1)) + (200));
-    let timeLastActive = Date.now() - Math.floor(Math.random() * (100000));
+    const [imagePath, setImagePath] = React.useState('');
+    const [timeLastActive, setTimeLastActive] = React.useState(Date.now());
+    React.useEffect(() => {
+        setImagePath('https://picsum.photos/' + String(Math.floor(Math.random() * 101) + 200));
+        setTimeLastActive(Date.now() - Math.floor(Math.random() * 100000));
+    }, []);
+
+
 
     // Compare times for text status
     function getActivityStatus(type) {
@@ -67,7 +73,7 @@ export default function FriendElement({ friendUUID }) {
     }
 
     // Routing
-    const { navigateTo, isNavigating } = useNavigation();
+    const { navigateTo, isNavigating } = useLocalRouter();
     const handleNavigate = (destination) => {
         if (isNavigating) {
             return;

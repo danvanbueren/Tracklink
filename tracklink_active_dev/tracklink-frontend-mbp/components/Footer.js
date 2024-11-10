@@ -10,18 +10,30 @@ import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
 import SkipNextIcon from '@mui/icons-material/SkipNext';
 import RepeatIcon from '@mui/icons-material/Repeat';
 import PauseCircleIcon from '@mui/icons-material/PauseCircle';
-import {useNavigation} from "@/context/contextNavigation";
+import {useLocalRouter} from "@/context/LocalRouterContext";
 import TrackSummaryButton from "@/components/TrackSummaryButton";
+import {useState} from "react";
 
 export default function Footer(props) {
 
     // Routing
-    const { navigateTo, isNavigating } = useNavigation();
+    const { navigateTo, isNavigating } = useLocalRouter();
     const handleNavigate = (destination) => {
         if (isNavigating) {
             return;
         }
         navigateTo(destination);
+    };
+
+    const [playbackDurationSliderValue, setPlaybackDurationSliderValue] = useState(0);
+    const [volumeSliderValue, setVolumeSliderValue] = useState(100);
+
+    const handleChangePlaybackDurationSliderValue = (event, newValue) => {
+        setPlaybackDurationSliderValue(newValue);
+    };
+
+    const handleChangeVolumeSliderValue = (event, newValue) => {
+        setVolumeSliderValue(newValue);
     };
 
     return (
@@ -69,6 +81,9 @@ export default function Footer(props) {
                                     color: 'white',
                                     transition: 'color 0.3s ease',
                                     '&:hover': {
+                                        color: 'primary.dark',
+                                    },
+                                    '&:active': {
                                         color: 'primary.main',
                                     },
                                 }}
@@ -120,6 +135,9 @@ export default function Footer(props) {
                                                     color: 'white',
                                                     transition: 'color 0.3s ease',
                                                     '&:hover': {
+                                                        color: 'primary.dark',
+                                                    },
+                                                    '&:active': {
                                                         color: 'primary.main',
                                                     },
                                                 }}
@@ -138,6 +156,9 @@ export default function Footer(props) {
                                                     color: 'white',
                                                     transition: 'color 0.3s ease',
                                                     '&:hover': {
+                                                        color: 'primary.dark',
+                                                    },
+                                                    '&:active': {
                                                         color: 'primary.main',
                                                     },
                                                 }}
@@ -155,6 +176,9 @@ export default function Footer(props) {
                                                     color: 'white',
                                                     transition: 'color 0.3s ease',
                                                     '&:hover': {
+                                                        color: 'primary.dark',
+                                                    },
+                                                    '&:active': {
                                                         color: 'primary.main',
                                                     },
                                                 }}
@@ -172,6 +196,9 @@ export default function Footer(props) {
                                                     color: 'white',
                                                     transition: 'color 0.3s ease',
                                                     '&:hover': {
+                                                        color: 'primary.dark',
+                                                    },
+                                                    '&:active': {
                                                         color: 'primary.main',
                                                     },
                                                 }}
@@ -189,6 +216,9 @@ export default function Footer(props) {
                                                     color: 'white',
                                                     transition: 'color 0.3s ease',
                                                     '&:hover': {
+                                                        color: 'primary.dark',
+                                                    },
+                                                    '&:active': {
                                                         color: 'primary.main',
                                                     },
                                                 }}
@@ -228,7 +258,8 @@ export default function Footer(props) {
                                             </Typography>
 
                                             <Slider
-                                                value={50}
+                                                value={playbackDurationSliderValue}
+                                                onChange={handleChangePlaybackDurationSliderValue}
                                                 sx={{
                                                     marginX: '1rem',
                                                     '& .MuiSlider-thumb': {
@@ -238,9 +269,15 @@ export default function Footer(props) {
                                                         height: 15,
                                                         opacity: 0, // Set initial opacity to 0
                                                     },
+                                                    '&:hover': {
+                                                        color: 'primary.dark',
+                                                    },
                                                     '&:hover .MuiSlider-thumb, &:active .MuiSlider-thumb': {
                                                         visibility: 'visible', // Show the thumb on hover or active
                                                         opacity: 1, // Set opacity to 1 when visible
+                                                    },
+                                                    '&:active .MuiSlider-thumb, &:active .MuiSlider-track': {
+                                                        color: 'primary.main',
                                                     },
                                                 }}
                                             />
@@ -296,6 +333,9 @@ export default function Footer(props) {
                                             color: 'white',
                                             transition: 'color 0.3s ease',
                                             '&:hover': {
+                                                color: 'primary.dark',
+                                            },
+                                            '&:active': {
                                                 color: 'primary.main',
                                             },
                                         }}
@@ -310,6 +350,9 @@ export default function Footer(props) {
                                             color: 'white',
                                             transition: 'color 0.3s ease',
                                             '&:hover': {
+                                                color: 'primary.dark',
+                                            },
+                                            '&:active': {
                                                 color: 'primary.main',
                                             },
                                         }}
@@ -318,18 +361,17 @@ export default function Footer(props) {
                                     </IconButton>
 
                                     <Slider
-                                        value={50}
+                                        value={volumeSliderValue}
+                                        onChange={handleChangeVolumeSliderValue}
                                         color="white"
                                         sx={{
                                             color: 'white',
                                             transition: 'color 0.3s ease',
-                                            '&:hover': {
-                                                color: 'primary.main',
-                                            },
 
                                             marginLeft: '0.5rem',
                                             marginRight: '1rem',
                                             width: '7rem',
+
                                             '& .MuiSlider-thumb': {
                                                 visibility: 'hidden', // Hide the thumb by default
                                                 transition: 'visibility 0s, opacity 0.2s linear', // Smooth transition
@@ -337,9 +379,15 @@ export default function Footer(props) {
                                                 height: 15,
                                                 opacity: 0, // Set initial opacity to 0
                                             },
+                                            '&:hover': {
+                                                color: 'primary.dark',
+                                            },
                                             '&:hover .MuiSlider-thumb, &:active .MuiSlider-thumb': {
                                                 visibility: 'visible', // Show the thumb on hover or active
                                                 opacity: 1, // Set opacity to 1 when visible
+                                            },
+                                            '&:active .MuiSlider-thumb, &:active .MuiSlider-track': {
+                                                color: 'primary.main',
                                             },
                                         }}
                                     />
@@ -350,6 +398,9 @@ export default function Footer(props) {
                                             color: 'white',
                                             transition: 'color 0.3s ease',
                                             '&:hover': {
+                                                color: 'primary.dark',
+                                            },
+                                            '&:active': {
                                                 color: 'primary.main',
                                             },
                                         }}

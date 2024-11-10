@@ -13,7 +13,7 @@ import InventoryIcon from '@mui/icons-material/Inventory';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import {useLeftToggle} from "@/context/contextToggleVerboseNav";
-import {useNavigation} from '@/context/contextNavigation'
+import {useLocalRouter} from '@/context/LocalRouterContext'
 
 import BigButton from "@/components/BigButton";
 
@@ -25,7 +25,7 @@ export default function Nav(props) {
     const { isToggled = true } = useLeftToggle();
 
 
-    const { navigateTo, isNavigating } = useNavigation();
+    const { navigateTo, isNavigating } = useLocalRouter();
 
     const handleNavigate = (destination) => {
         if (isNavigating) {

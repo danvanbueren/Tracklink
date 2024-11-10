@@ -1,6 +1,6 @@
 import {Box, Button, Card, CardMedia, Typography} from "@mui/material";
 import * as React from "react";
-import {useNavigation} from "@/context/contextNavigation";
+import {useLocalRouter} from "@/context/LocalRouterContext";
 import Grid from "@mui/material/Grid2";
 
 export default function TrackSummaryButton({trackId}) {
@@ -9,12 +9,12 @@ export default function TrackSummaryButton({trackId}) {
     const artPath = 'https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/08/36/6e/08366e18-05aa-35ea-1e3c-0f4cb6b89883/artwork.jpg/486x486bb.png';
     const trackName = 'Extremely Long Very Long Super Long Song Title';
     const artistName = 'Artist Name';
-    const userHandle = '';
-    const trackHandle = '';
+    const userHandle = 'x';
+    const trackHandle = 'x';
     /* simulate trackId lookup */
 
     // Routing
-    const { navigateTo, isNavigating } = useNavigation();
+    const { navigateTo, isNavigating } = useLocalRouter();
     const handleNavigate = (destination) => {
         if (isNavigating) {
             return;

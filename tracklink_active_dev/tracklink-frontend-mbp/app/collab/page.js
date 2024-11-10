@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-export default function Collab() {
+export default function CollabPage() {
 
     return (
         <main>

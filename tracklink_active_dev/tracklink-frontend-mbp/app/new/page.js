@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-export default function New() {
+export default function NewPage() {
 
     return (
         <main>

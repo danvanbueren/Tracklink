@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-export default function Trash() {
+export default function TrashPage() {
 
     return (
         <main>

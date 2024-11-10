@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-export default function Settings() {
+export default function SettingsPage() {
 
     return (
         <main>

@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-export default async function User({ params }) {
+export default async function UserPage({ params }) {
     const slug = (await params).slug
 
     return (

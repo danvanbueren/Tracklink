@@ -8,6 +8,4 @@ const darkTheme = createTheme({
     },
 });
 
-export default function Theme() {
-    return darkTheme;
-}
+export default darkTheme;

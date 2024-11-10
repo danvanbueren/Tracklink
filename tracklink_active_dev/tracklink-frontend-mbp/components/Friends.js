@@ -8,12 +8,12 @@ import {useRightToggle} from "@/context/contextToggleVerboseFriends";
 
 import FriendElement from "@/components/FriendElement";
 import BigButton from "@/components/BigButton";
-import {useNavigation} from "@/context/contextNavigation";
+import {useLocalRouter} from "@/context/LocalRouterContext";
 
 export default function Friends(props) {
 
     // Routing
-    const { navigateTo, isNavigating } = useNavigation();
+    const { navigateTo, isNavigating } = useLocalRouter();
     const handleNavigate = (destination) => {
         if (isNavigating) {
             return;

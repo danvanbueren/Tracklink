@@ -9,11 +9,15 @@ import * as React from "react";
 import {LeftToggleProvider} from "@/context/contextToggleVerboseNav";
 import {RightToggleProvider} from "@/context/contextToggleVerboseFriends";
 import AppWrapper from "@/components/AppWrapper";
-import {NavigationProvider} from "@/context/contextNavigation";
-import Theme from "@/utils/theme";
+import {LocalRouterProvider} from "@/context/LocalRouterContext";
+import darkTheme from "@/utils/theme";
+
+
 
 // Replace this with authentication logic to control whether app layout is displayed or fallback to external site
 const auth = true;
+
+
 
 export default function RootLayout({ children }) {
 
@@ -24,7 +28,7 @@ export default function RootLayout({ children }) {
             <meta name='description' content='Tracklink'/>
         </head>
         <body>
-        <ThemeProvider theme={Theme}>
+        <ThemeProvider theme={darkTheme}>
             <CssBaseline/>
             <Box
                 sx={{
@@ -38,11 +42,11 @@ export default function RootLayout({ children }) {
                 {auth ?
                     <LeftToggleProvider>
                         <RightToggleProvider>
-                            <NavigationProvider>
+                            <LocalRouterProvider>
                                 <AppWrapper>
                                     {children}
                                 </AppWrapper>
-                            </NavigationProvider>
+                            </LocalRouterProvider>
                         </RightToggleProvider>
                     </LeftToggleProvider>
                     :

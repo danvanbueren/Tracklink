@@ -5,7 +5,7 @@ import {Box, Button, Tooltip} from "@mui/material";
 import BrokenImageIcon from '@mui/icons-material/BrokenImage';
 import CloseFullscreenIcon from '@mui/icons-material/CloseFullscreen';
 import OpenInFullIcon from '@mui/icons-material/OpenInFull';
-import {useNavigation} from "@/context/contextNavigation";
+import {useLocalRouter} from "@/context/LocalRouterContext";
 
 export default function BigButton({ icon, text, onClick, isToggled, isToggleController, href }) {
 
@@ -38,7 +38,7 @@ export default function BigButton({ icon, text, onClick, isToggled, isToggleCont
     let boxSxColor = '';
 
     // Routing
-    const { currentPage } = useNavigation();
+    const { currentPage } = useLocalRouter();
 
     if(currentPage === href) {
         // Solid blue button with black icon

@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-export default function Track() {
+export default function TrackPage() {
 
     return (
         <main>

@@ -3,12 +3,12 @@ import * as React from "react";
 import SettingsIcon from '@mui/icons-material/Settings';
 import Grid from "@mui/material/Grid2";
 import DarkModeIcon from '@mui/icons-material/DarkMode';
-import {useNavigation} from "@/context/contextNavigation";
+import {useLocalRouter} from "@/context/LocalRouterContext";
 
 export default function Header(props) {
 
     // Routing
-    const { navigateTo, isNavigating } = useNavigation();
+    const { navigateTo, isNavigating } = useLocalRouter();
     const handleNavigate = (destination) => {
         if (isNavigating) {
             return;
@@ -17,7 +17,7 @@ export default function Header(props) {
     };
 
     // Hide search bar on `/home`
-    const { currentPage } = useNavigation();
+    const { currentPage } = useLocalRouter();
 
     let searchBar;
 
@@ -25,7 +25,7 @@ export default function Header(props) {
         searchBar =
         <TextField
             fullWidth
-            label="Search"
+            label="SearchPage"
             id="fullWidth"
         />
 

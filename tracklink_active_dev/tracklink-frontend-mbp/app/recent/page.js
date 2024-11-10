@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-export default function Recent() {
+export default function RecentPage() {
 
     return (
         <main>

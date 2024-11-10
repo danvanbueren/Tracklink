@@ -18,7 +18,7 @@ import {useState} from "react";
 import TrackSummaryButton from "@/components/TrackSummaryButton";
 import Grid from "@mui/material/Grid2";
 
-export default function Home() {
+export default function HomePage() {
 
     /* DROPDOWN VARIABLES */
     const [anchorEl, setAnchorEl] = useState(null);
@@ -63,7 +63,7 @@ export default function Home() {
                 >
                     <TextField
                         fullWidth
-                        label="Search in Tracklink"
+                        label="SearchPage in Tracklink"
                         id="fullWidth"
                     />
                 </Box>
