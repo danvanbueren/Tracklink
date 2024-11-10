@@ -4,32 +4,13 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import Grid from "@mui/material/Grid2";
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import {useLocalRouter} from "@/context/LocalRouterContext";
+import {useRoute} from "@/context/RouteContext";
+import {useState} from "react";
 
 export default function Header(props) {
 
     // Routing
-    const { navigateTo, isNavigating } = useLocalRouter();
-    const handleNavigate = (destination) => {
-        if (isNavigating) {
-            return;
-        }
-        navigateTo(destination);
-    };
-
-    // Hide search bar on `/home`
-    const { currentPage } = useLocalRouter();
-
-    let searchBar;
-
-    if(currentPage !== '/home') {
-        searchBar =
-        <TextField
-            fullWidth
-            label="SearchPage"
-            id="fullWidth"
-        />
-
-    }
+    const { navigate, currentRoute } = useRoute();
 
     return (
         <>
@@ -41,7 +22,6 @@ export default function Header(props) {
                     width: '100%',
                 }}
             >
-
                 <Grid container sx={{width: '100%',}}>
                     <Grid size="grow">
                         <Box
@@ -52,10 +32,9 @@ export default function Header(props) {
                                 width: '100%',
                             }}
                         >
-
                             <Button
                                 color='white'
-                                onClick={() => handleNavigate('/')}
+                                onClick={() => navigate('/')}
                             >
                                 <Typography
                                     variant='h4'
@@ -70,18 +49,19 @@ export default function Header(props) {
                                     Tracklink
                                 </Typography>
                             </Button>
-
-
-
-
                         </Box>
                     </Grid>
+
                     <Grid size={4}>
-
-                        {searchBar}
-
-
+                        {(currentRoute !== '/home' & currentRoute !== '/search') ?
+                            <TextField
+                                fullWidth
+                                label="Search"
+                                id="fullWidth"
+                            /> : null
+                        }
                     </Grid>
+
                     <Grid size="grow">
                         <Box
                             sx={{
@@ -92,9 +72,9 @@ export default function Header(props) {
                                 width: '100%',
                             }}
                         >
-
                             <IconButton
                                 color='white'
+                                onClick={() => {alert('TODO: onClick function')}}
                                 sx={{
                                     marginRight: '1rem',
 
@@ -109,7 +89,7 @@ export default function Header(props) {
                             </IconButton>
 
                             <IconButton
-                                onClick={() => handleNavigate('/settings')}
+                                onClick={() => navigate('/settings')}
                                 color='white'
                                 sx={{
                                     color: 'white',
@@ -123,15 +103,9 @@ export default function Header(props) {
                             >
                                 <SettingsIcon />
                             </IconButton>
-
                         </Box>
                     </Grid>
                 </Grid>
-
-
-
-
-
             </Box>
         </>
     )

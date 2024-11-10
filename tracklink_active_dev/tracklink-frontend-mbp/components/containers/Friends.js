@@ -6,24 +6,17 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 
 import {useRightToggle} from "@/context/contextToggleVerboseFriends";
 
-import FriendElement from "@/components/FriendElement";
-import BigButton from "@/components/BigButton";
+import FriendElement from "@/components/elements/FriendElement";
+import BigButton from "@/components/elements/BigButton";
 import {useLocalRouter} from "@/context/LocalRouterContext";
+import {useRoute} from "@/context/RouteContext";
 
 export default function Friends(props) {
 
     // Routing
-    const { navigateTo, isNavigating } = useLocalRouter();
-    const handleNavigate = (destination) => {
-        if (isNavigating) {
-            return;
-        }
-        navigateTo(destination);
-    };
+    const { navigate, currentRoute } = useRoute();
 
-    const { toggle: rightToggle } = useRightToggle();
-
-    const { isToggled = true } = useRightToggle();
+    const { toggle: rightToggle, isToggled = true } = useRightToggle();
 
     return (
     <>
@@ -108,7 +101,7 @@ export default function Friends(props) {
                     icon={<PersonAddIcon fontSize="inherit" />}
                     text={'Add Friend'}
                     href="/addfriend"
-                    onClick={() => handleNavigate('/addfriend')}
+                    onClick={() => navigate('/addfriend')}
                 />
             </Box>
         </Box>

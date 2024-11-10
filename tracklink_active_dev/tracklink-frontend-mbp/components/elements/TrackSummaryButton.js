@@ -2,6 +2,7 @@ import {Box, Button, Card, CardMedia, Typography} from "@mui/material";
 import * as React from "react";
 import {useLocalRouter} from "@/context/LocalRouterContext";
 import Grid from "@mui/material/Grid2";
+import {useRoute} from "@/context/RouteContext";
 
 export default function TrackSummaryButton({trackId}) {
 
@@ -14,13 +15,7 @@ export default function TrackSummaryButton({trackId}) {
     /* simulate trackId lookup */
 
     // Routing
-    const { navigateTo, isNavigating } = useLocalRouter();
-    const handleNavigate = (destination) => {
-        if (isNavigating) {
-            return;
-        }
-        navigateTo(destination);
-    };
+    const { navigate } = useRoute();
 
 return (
     <>
@@ -29,7 +24,7 @@ return (
 
                 <Button
                     sx={{padding: 0, margin: 0, marginRight: '0.8rem'}}
-                    onClick={() => handleNavigate('/track/' + trackHandle)}
+                    onClick={() => navigate('/track/' + trackHandle)}
                 >
                     <Card sx={{ display: 'flex', padding: 0, margin: 0, height: '4rem', width: '4rem',}}>
                         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
@@ -55,7 +50,7 @@ return (
                         textTransform: 'none',
                         maxWidth: '100%',
                     }}
-                    onClick={() => handleNavigate('/track/' + trackHandle)}
+                    onClick={() => navigate('/track/' + trackHandle)}
                 >
                     <Typography
                         variant='h6'
@@ -80,7 +75,7 @@ return (
                         textTransform: 'none',
                         maxWidth: '100%',
                     }}
-                    onClick={() => handleNavigate('/user/' + userHandle)}
+                    onClick={() => navigate('/user/' + userHandle)}
                 >
                     <Typography
                         sx={{

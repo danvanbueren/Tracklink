@@ -3,11 +3,11 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid2";
 
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import Nav from "@/components/Nav";
-import ViewWrapper from "@/components/ViewWrapper";
-import Friends from "@/components/Friends";
+import Header from "@/components/containers/Header";
+import Footer from "@/components/containers/Footer";
+import Nav from "@/components/containers/Nav";
+import RouterContent from "@/components/containers/RouterContent";
+import Friends from "@/components/containers/Friends";
 
 export default function AppWrapper({ children }) {
     return (
@@ -85,9 +85,9 @@ export default function AppWrapper({ children }) {
                                         maxHeight: 'calc(100vh - 11.9rem)',
                                     }}
                                 >
-                                    <ViewWrapper>
+                                    <RouterContent>
                                         {children}
-                                    </ViewWrapper>
+                                    </RouterContent>
                                 </Box>
                             </Box>
                         </Grid>

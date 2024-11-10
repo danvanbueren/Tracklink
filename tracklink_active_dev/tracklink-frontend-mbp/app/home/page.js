@@ -5,7 +5,6 @@ import {
     Box, Button, Card,
     Menu,
     MenuItem,
-    Stack,
     TextField
 } from "@mui/material";
 
@@ -15,10 +14,10 @@ import PersonIcon from '@mui/icons-material/Person';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 
 import {useState} from "react";
-import TrackSummaryButton from "@/components/TrackSummaryButton";
+import TrackSummaryButton from "@/components/elements/TrackSummaryButton";
 import Grid from "@mui/material/Grid2";
 
-export default function HomePage() {
+export default function HomePage({ slug }) {
 
     /* DROPDOWN VARIABLES */
     const [anchorEl, setAnchorEl] = useState(null);
@@ -63,7 +62,7 @@ export default function HomePage() {
                 >
                     <TextField
                         fullWidth
-                        label="SearchPage in Tracklink"
+                        label="Search in Tracklink"
                         id="fullWidth"
                     />
                 </Box>

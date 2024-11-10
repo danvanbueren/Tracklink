@@ -5,8 +5,12 @@ import {useRightToggle} from "@/context/contextToggleVerboseFriends";
 import {useLocalRouter} from "@/context/LocalRouterContext";
 import PersonIcon from '@mui/icons-material/Person';
 import {grey} from "@mui/material/colors";
+import {useRoute} from "@/context/RouteContext";
 
 export default function FriendElement({ friendUUID }) {
+
+    // Routing
+    const { navigate, currentRoute } = useRoute();
 
     // SIMULATED DATABASE ACTION
     let name = 'SomeName';
@@ -110,7 +114,7 @@ export default function FriendElement({ friendUUID }) {
                     fullWidth
                     variant="text"
                     size="large"
-                    onClick={() => {handleNavigate('/user/' + String(friendUUID))}}
+                    onClick={() => navigate('/user/' + String(friendUUID))}
                     sx={{
                         minWidth: '0',
                         maxWidth: '100%',

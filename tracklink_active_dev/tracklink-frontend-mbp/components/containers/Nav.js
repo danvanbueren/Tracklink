@@ -15,27 +15,15 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import {useLeftToggle} from "@/context/contextToggleVerboseNav";
 import {useLocalRouter} from '@/context/LocalRouterContext'
 
-import BigButton from "@/components/BigButton";
+import BigButton from "@/components/elements/BigButton";
+import {useRoute} from "@/context/RouteContext";
 
 export default function Nav(props) {
 
+    // Routing
+    const { navigate } = useRoute();
 
-    const { toggle: leftToggle } = useLeftToggle();
-
-    const { isToggled = true } = useLeftToggle();
-
-
-    const { navigateTo, isNavigating } = useLocalRouter();
-
-    const handleNavigate = (destination) => {
-        if (isNavigating) {
-            return;
-        }
-
-        navigateTo(destination);
-    };
-
-
+    const { toggle: leftToggle, isToggled = true } = useLeftToggle();
 
     return (
         <>
@@ -95,7 +83,7 @@ export default function Nav(props) {
                         icon={<HomeIcon fontSize="inherit" />}
                         text={'Home'}
                         href="/home"
-                        onClick={() => handleNavigate('/home')}
+                        onClick={() => navigate('/home')}
                     />
 
                     <Box sx={{ height: '2.5rem' }}></Box>
@@ -105,7 +93,7 @@ export default function Nav(props) {
                         icon={<MusicNoteIcon fontSize="inherit" />}
                         text={'Tracks'}
                         href="/tracks"
-                        onClick={() => handleNavigate('/tracks')}
+                        onClick={() => navigate('/tracks')}
                     />
 
                     <Box sx={{ height: '1rem' }}></Box>
@@ -115,7 +103,7 @@ export default function Nav(props) {
                         icon={<LibraryMusicIcon fontSize="inherit" />}
                         text={'Projects'}
                         href="/projects"
-                        onClick={() => handleNavigate('/projects')}
+                        onClick={() => navigate('/projects')}
                     />
 
                     <Box sx={{ height: '2.5rem' }}></Box>
@@ -125,7 +113,7 @@ export default function Nav(props) {
                         icon={<PeopleAltIcon fontSize="inherit" />}
                         text={'Collab'}
                         href="/collab"
-                        onClick={() => handleNavigate('/collab')}
+                        onClick={() => navigate('/collab')}
                     />
 
                     <Box sx={{ height: '1rem' }}></Box>
@@ -135,7 +123,7 @@ export default function Nav(props) {
                         icon={<ScheduleIcon fontSize="inherit" />}
                         text={'Recent'}
                         href="/recent"
-                        onClick={() => handleNavigate('/recent')}
+                        onClick={() => navigate('/recent')}
                     />
 
                     <Box sx={{ height: '1rem' }}></Box>
@@ -145,7 +133,7 @@ export default function Nav(props) {
                         icon={<StarIcon fontSize="inherit" />}
                         text={'Starred'}
                         href="/starred"
-                        onClick={() => handleNavigate('/starred')}
+                        onClick={() => navigate('/starred')}
                     />
 
                     <Box sx={{ height: '2.5rem' }}></Box>
@@ -155,7 +143,7 @@ export default function Nav(props) {
                         icon={<InventoryIcon fontSize="inherit" />}
                         text={'Archive'}
                         href="/archive"
-                        onClick={() => handleNavigate('/archive')}
+                        onClick={() => navigate('/archive')}
                     />
 
                     <Box sx={{ height: '1rem' }}></Box>
@@ -165,7 +153,7 @@ export default function Nav(props) {
                         icon={<DeleteIcon fontSize="inherit" />}
                         text={'Trash'}
                         href="/trash"
-                        onClick={() => handleNavigate('/trash')}
+                        onClick={() => navigate('/trash')}
                     />
                 </Box>
 
@@ -184,7 +172,7 @@ export default function Nav(props) {
                         icon={<AddIcon fontSize="inherit" />}
                         text={'New'}
                         href="/new"
-                        onClick={() => handleNavigate('/new')}
+                        onClick={() => navigate('/new')}
                     />
                 </Box>
             </Box>

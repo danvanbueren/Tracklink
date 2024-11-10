@@ -8,9 +8,10 @@ import {Box, CssBaseline, ThemeProvider} from "@mui/material";
 import * as React from "react";
 import {LeftToggleProvider} from "@/context/contextToggleVerboseNav";
 import {RightToggleProvider} from "@/context/contextToggleVerboseFriends";
-import AppWrapper from "@/components/AppWrapper";
+import AppWrapper from "@/components/containers/AppWrapper";
 import {LocalRouterProvider} from "@/context/LocalRouterContext";
 import darkTheme from "@/utils/theme";
+import {RouteProvider} from "@/context/RouteContext";
 
 
 
@@ -43,9 +44,11 @@ export default function RootLayout({ children }) {
                     <LeftToggleProvider>
                         <RightToggleProvider>
                             <LocalRouterProvider>
-                                <AppWrapper>
-                                    {children}
-                                </AppWrapper>
+                                <RouteProvider>
+                                    <AppWrapper>
+                                        {children}
+                                    </AppWrapper>
+                                </RouteProvider>
                             </LocalRouterProvider>
                         </RightToggleProvider>
                     </LeftToggleProvider>

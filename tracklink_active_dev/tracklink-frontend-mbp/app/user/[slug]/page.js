@@ -1,12 +1,11 @@
 import * as React from 'react';
 
-export default async function UserPage({ params }) {
-    const slug = (await params).slug
+export default function UserPage({ slug }) {
 
     return (
         <main>
             <h2>User</h2>
-            <div>SLUG: {slug}</div>
+            <p>slug: {slug}</p>
         </main>
     )
 }

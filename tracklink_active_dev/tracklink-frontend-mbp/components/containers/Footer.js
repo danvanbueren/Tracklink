@@ -11,20 +11,16 @@ import SkipNextIcon from '@mui/icons-material/SkipNext';
 import RepeatIcon from '@mui/icons-material/Repeat';
 import PauseCircleIcon from '@mui/icons-material/PauseCircle';
 import {useLocalRouter} from "@/context/LocalRouterContext";
-import TrackSummaryButton from "@/components/TrackSummaryButton";
+import TrackSummaryButton from "@/components/elements/TrackSummaryButton";
 import {useState} from "react";
+import {useRoute} from "@/context/RouteContext";
 
 export default function Footer(props) {
 
     // Routing
-    const { navigateTo, isNavigating } = useLocalRouter();
-    const handleNavigate = (destination) => {
-        if (isNavigating) {
-            return;
-        }
-        navigateTo(destination);
-    };
+    const { navigate, currentRoute } = useRoute();
 
+    // Control sliders
     const [playbackDurationSliderValue, setPlaybackDurationSliderValue] = useState(0);
     const [volumeSliderValue, setVolumeSliderValue] = useState(100);
 
@@ -73,6 +69,7 @@ export default function Footer(props) {
 
                             <IconButton
                                 color="white"
+                                onClick={() => {alert('TODO: onClick function')}}
                                 sx={{
                                     width: '2.5rem',
                                     height: '2.5rem',
@@ -141,13 +138,14 @@ export default function Footer(props) {
                                                         color: 'primary.main',
                                                     },
                                                 }}
-                                                onClick={() => handleNavigate('/track')}
+                                                onClick={() => navigate('/track/some-track-id')}
                                             >
                                                 <AddCommentIcon/>
                                             </IconButton>
 
                                             <IconButton
                                                 color="white"
+                                                onClick={() => {alert('TODO: onClick function')}}
                                                 sx={{
                                                     width: '2.5rem',
                                                     height: '2.5rem',
@@ -168,6 +166,7 @@ export default function Footer(props) {
 
                                             <IconButton
                                                 color="white"
+                                                onClick={() => {alert('TODO: onClick function')}}
                                                 sx={{
                                                     width: '3.5rem',
                                                     height: '3.5rem',
@@ -188,6 +187,7 @@ export default function Footer(props) {
 
                                             <IconButton
                                                 color="white"
+                                                onClick={() => {alert('TODO: onClick function')}}
                                                 sx={{
                                                     width: '2.5rem',
                                                     height: '2.5rem',
@@ -208,6 +208,7 @@ export default function Footer(props) {
 
                                             <IconButton
                                                 color="white"
+                                                onClick={() => {alert('TODO: onClick function')}}
                                                 sx={{
                                                     width: '2.5rem',
                                                     height: '2.5rem',
@@ -339,13 +340,14 @@ export default function Footer(props) {
                                                 color: 'primary.main',
                                             },
                                         }}
-                                        onClick={() => handleNavigate('/queue')}
+                                        onClick={() => navigate('/queue')}
                                     >
                                         <QueueMusicIcon/>
                                     </IconButton>
 
                                     <IconButton
                                         color="white"
+                                        onClick={() => {alert('TODO: onClick function')}}
                                         sx={{
                                             color: 'white',
                                             transition: 'color 0.3s ease',
@@ -394,6 +396,7 @@ export default function Footer(props) {
 
                                     <IconButton
                                         color="white"
+                                        onClick={() => {alert('TODO: onClick function')}}
                                         sx={{
                                             color: 'white',
                                             transition: 'color 0.3s ease',

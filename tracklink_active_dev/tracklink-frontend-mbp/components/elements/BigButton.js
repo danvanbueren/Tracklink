@@ -6,6 +6,7 @@ import BrokenImageIcon from '@mui/icons-material/BrokenImage';
 import CloseFullscreenIcon from '@mui/icons-material/CloseFullscreen';
 import OpenInFullIcon from '@mui/icons-material/OpenInFull';
 import {useLocalRouter} from "@/context/LocalRouterContext";
+import {useRoute} from "@/context/RouteContext";
 
 export default function BigButton({ icon, text, onClick, isToggled, isToggleController, href }) {
 
@@ -38,9 +39,9 @@ export default function BigButton({ icon, text, onClick, isToggled, isToggleCont
     let boxSxColor = '';
 
     // Routing
-    const { currentPage } = useLocalRouter();
+    const { currentRoute } = useRoute();
 
-    if(currentPage === href) {
+    if(currentRoute === href) {
         // Solid blue button with black icon
         buttonSxHover = {
             '& .child-to-hover': {
