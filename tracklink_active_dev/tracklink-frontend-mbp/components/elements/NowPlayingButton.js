@@ -4,7 +4,7 @@ import Grid from "@mui/material/Grid2";
 import {useRoute} from "@/context/RouteContext";
 import {useAudioPlayer} from "@/context/AudioPlayerContext";
 
-export default function TrackSummaryButton() {
+export default function NowPlayingButton() {
 
     const { currentTrackUUID, currentTrackName, currentTrackArtists, currentTrackArt } = useAudioPlayer();
 

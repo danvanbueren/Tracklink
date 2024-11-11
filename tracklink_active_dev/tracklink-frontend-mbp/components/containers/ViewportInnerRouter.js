@@ -1,23 +1,23 @@
 import {Card} from "@mui/material";
 import * as React from "react";
 import {useRoute} from "@/context/RouteContext";
-import HomePage from "@/app/home/page";
-import NotFoundPage from "@/components/views/NotFoundPage";
-import AddFriendPage from "@/app/addfriend/page";
-import ArchivePage from "@/app/archive/page";
-import CollabPage from "@/app/collab/page";
-import NewPage from "@/app/new/page";
-import ProjectsPage from "@/app/projects/page";
-import QueuePage from "@/app/queue/page";
-import RecentPage from "@/app/recent/page";
-import SearchPage from "@/app/search/page";
-import SettingsPage from "@/app/settings/page";
-import StarredPage from "@/app/starred/page";
-import TrackPage from "@/app/track/page";
-import TracksPage from "@/app/tracks/page";
-import TrashPage from "@/app/trash/page";
-import UserPage from "@/app/user/[slug]/page";
-export default function RouterContent({children}) {
+import HomePage from "@/components/views/authenticated/HomePage";
+import NotFoundPage from "@/components/views/noauth/NotFoundPage";
+import AddFriendPage from "@/components/views/authenticated/AddFriendButton";
+import ArchivePage from "@/components/views/authenticated/ArchivePage";
+import CollabPage from "@/components/views/authenticated/CollabPage";
+import NewPage from "@/components/views/authenticated/NewPage";
+import ProjectsPage from "@/components/views/authenticated/ProjectsPage";
+import QueuePage from "@/components/views/authenticated/QueuePage";
+import RecentPage from "@/components/views/authenticated/RecentPage";
+import SearchPage from "@/components/views/authenticated/SearchPage";
+import SettingsPage from "@/components/views/authenticated/SettingsPage";
+import StarredPage from "@/components/views/authenticated/StarredPage";
+import TrackPage from "@/components/views/authenticated/TrackPage";
+import TracksPage from "@/components/views/authenticated/TracksPage";
+import TrashPage from "@/components/views/authenticated/TrashPage";
+import UserPage from "@/components/views/authenticated/UserPage";
+export default function ViewportInnerRouter({children}) {
 
     const { currentRoute, slug, navigate } = useRoute();
 
@@ -26,7 +26,6 @@ export default function RouterContent({children}) {
         '/addfriend': slug ? <AddFriendPage slug={slug} /> : <AddFriendPage />,
         '/archive': slug ? <ArchivePage slug={slug} /> : <ArchivePage />,
         '/collab': slug ? <CollabPage slug={slug} /> : <CollabPage />,
-        '/home': slug ? <HomePage slug={slug} /> : <HomePage />,
         '/new': slug ? <NewPage slug={slug} /> : <NewPage />,
         '/projects': slug ? <ProjectsPage slug={slug} /> : <ProjectsPage />,
         '/queue': slug ? <QueuePage slug={slug} /> : <QueuePage />,

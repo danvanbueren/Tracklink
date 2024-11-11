@@ -2,7 +2,7 @@ import {Box, IconButton, Stack} from "@mui/material";
 import * as React from "react";
 import Grid from "@mui/material/Grid2";
 import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
-import TrackSummaryButton from "@/components/elements/TrackSummaryButton";
+import NowPlayingButton from "@/components/elements/NowPlayingButton";
 import {useAudioPlayer} from "@/context/AudioPlayerContext";
 import ToggleStarredButton from "@/components/elements/ToggleStarredButton";
 import AddCommentButton from "@/components/elements/audioControls/AddCommentButton";
@@ -55,7 +55,7 @@ export default function Footer() {
                         >
                             {!interfaceDisabled &&
                                 <>
-                                    <TrackSummaryButton />
+                                    <NowPlayingButton />
                                     <ToggleStarredButton />
                                 </>
                             }

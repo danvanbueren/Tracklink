@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-export default async function NotFoundPage() {
+export default function NotFoundPage() {
     return (
         <main>
             <h2>Not Found</h2>

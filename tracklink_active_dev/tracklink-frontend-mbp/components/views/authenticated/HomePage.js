@@ -14,8 +14,8 @@ import PersonIcon from '@mui/icons-material/Person';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 
 import {useState} from "react";
-import TrackSummaryButton from "@/components/elements/TrackSummaryButton";
 import Grid from "@mui/material/Grid2";
+import BigTrackButton from "@/components/elements/BigTrackButton";
 
 export default function HomePage({ slug }) {
 
@@ -143,39 +143,15 @@ export default function HomePage({ slug }) {
 
                 <Grid container spacing={2}>
                     <Grid size={{ xs: 6, xl: 4 }} >
-                        <Card
-                            sx={{
-                                p: '1rem',
-                                outline: '1px solid',
-                                outlineColor: 'background.default',
-                            }}
-                        >
-                            <TrackSummaryButton useAudioPlayerContext='false' trackHandle='1' userHandle='1' trackName='Track' artPath='https://picsum.photos/100' artistName='Artist' />
-                        </Card>
+                        <BigTrackButton trackUUID={1} />
                     </Grid>
 
                     <Grid size={{ xs: 6, xl: 4 }} >
-                        <Card
-                            sx={{
-                                p: '1rem',
-                                outline: '1px solid',
-                                outlineColor: 'background.default',
-                            }}
-                        >
-                            <TrackSummaryButton useAudioPlayerContext='false' trackHandle='1' userHandle='1' trackName='Track' artPath='https://picsum.photos/100' artistName='Artist' />
-                        </Card>
+                        <BigTrackButton trackUUID={2} />
                     </Grid>
 
                     <Grid size={{ xs: 6, xl: 4 }} >
-                        <Card
-                            sx={{
-                                p: '1rem',
-                                outline: '1px solid',
-                                outlineColor: 'background.default',
-                            }}
-                        >
-                            <TrackSummaryButton useAudioPlayerContext='false' trackHandle='1' userHandle='1' trackName='Track' artPath='https://picsum.photos/100' artistName='Artist' />
-                        </Card>
+                        <BigTrackButton trackUUID={3} />
                     </Grid>
                 </Grid>
             </Box>

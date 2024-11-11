@@ -51,7 +51,7 @@ export default function Header(props) {
                     </Grid>
 
                     <Grid size={4}>
-                        {(currentRoute !== '/home' & currentRoute !== '/search') ?
+                        {(currentRoute !== '/search' && currentRoute !== '/') ?
                             <TextField
                                 fullWidth
                                 label="Search"

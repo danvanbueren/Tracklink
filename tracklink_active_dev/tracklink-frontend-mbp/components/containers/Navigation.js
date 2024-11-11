@@ -17,7 +17,7 @@ import {useLeftToggle} from "@/context/contextToggleVerboseNav";
 import BigButton from "@/components/elements/BigButton";
 import {useRoute} from "@/context/RouteContext";
 
-export default function Nav(props) {
+export default function Navigation(props) {
 
     // Routing
     const { navigate } = useRoute();
@@ -81,8 +81,8 @@ export default function Nav(props) {
                         isToggled={isToggled}
                         icon={<HomeIcon fontSize="inherit" />}
                         text={'Home'}
-                        href="/home"
-                        onClick={() => navigate('/home')}
+                        href="/"
+                        onClick={() => navigate('/')}
                     />
 
                     <Box sx={{ height: '2.5rem' }}></Box>

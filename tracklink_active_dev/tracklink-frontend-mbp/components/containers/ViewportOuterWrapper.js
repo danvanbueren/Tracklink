@@ -5,11 +5,11 @@ import Grid from "@mui/material/Grid2";
 
 import Header from "@/components/containers/Header";
 import Footer from "@/components/containers/Footer";
-import Nav from "@/components/containers/Nav";
-import RouterContent from "@/components/containers/RouterContent";
+import Navigation from "@/components/containers/Navigation";
+import ViewportInnerRouter from "@/components/containers/ViewportInnerRouter";
 import Friends from "@/components/containers/Friends";
 
-export default function AppWrapper({ children }) {
+export default function ViewportOuterWrapper({ children }) {
     return (
         <>
             {/* CONTAINER */}
@@ -42,7 +42,7 @@ export default function AppWrapper({ children }) {
                     >
                         {/* GRID - NAV */}
                         <Grid size='auto'>
-                            <Nav />
+                            <Navigation />
                         </Grid>
 
                         {/* GRID - MIDDLE */}
@@ -85,9 +85,9 @@ export default function AppWrapper({ children }) {
                                         maxHeight: 'calc(100vh - 11.9rem)',
                                     }}
                                 >
-                                    <RouterContent>
+                                    <ViewportInnerRouter>
                                         {children}
-                                    </RouterContent>
+                                    </ViewportInnerRouter>
                                 </Box>
                             </Box>
                         </Grid>
