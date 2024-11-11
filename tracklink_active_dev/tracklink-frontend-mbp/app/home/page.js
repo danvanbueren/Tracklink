@@ -150,7 +150,7 @@ export default function HomePage({ slug }) {
                                 outlineColor: 'background.default',
                             }}
                         >
-                            <TrackSummaryButton />
+                            <TrackSummaryButton useAudioPlayerContext='false' trackHandle='1' userHandle='1' trackName='Track' artPath='https://picsum.photos/100' artistName='Artist' />
                         </Card>
                     </Grid>
 
@@ -162,7 +162,7 @@ export default function HomePage({ slug }) {
                                 outlineColor: 'background.default',
                             }}
                         >
-                            <TrackSummaryButton />
+                            <TrackSummaryButton useAudioPlayerContext='false' trackHandle='1' userHandle='1' trackName='Track' artPath='https://picsum.photos/100' artistName='Artist' />
                         </Card>
                     </Grid>
 
@@ -174,7 +174,7 @@ export default function HomePage({ slug }) {
                                 outlineColor: 'background.default',
                             }}
                         >
-                            <TrackSummaryButton />
+                            <TrackSummaryButton useAudioPlayerContext='false' trackHandle='1' userHandle='1' trackName='Track' artPath='https://picsum.photos/100' artistName='Artist' />
                         </Card>
                     </Grid>
                 </Grid>

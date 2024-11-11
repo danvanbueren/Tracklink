@@ -10,13 +10,11 @@ export default function Queue() {
             <Button
                 onClick={
                     () => addToQueue(
-                        [
-                            1, // uuid
-                            'amber', // title
-                            [1], // artists
-                            '../data/amber.mp3', // src audio
-                            'https://picsum.photos/200' // src image
-                        ]
+                        1, // uuid
+                        'amber', // title
+                        [1], // artists
+                        'https://essentials.pixfort.com/original/wp-content/uploads/sites/4/2020/02/skanews.wav', // src audio
+                        'https://picsum.photos/200' // src image
                     )
                 }
             >

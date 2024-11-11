@@ -1,17 +1,18 @@
-import {Box, Button, Card, CardMedia, Typography} from "@mui/material";
+import {Box, Button, Card, CardMedia, Stack, Typography} from "@mui/material";
 import * as React from "react";
 import Grid from "@mui/material/Grid2";
 import {useRoute} from "@/context/RouteContext";
+import {useAudioPlayer} from "@/context/AudioPlayerContext";
 
-export default function TrackSummaryButton({trackId}) {
+export default function TrackSummaryButton() {
 
-    /* simulate trackId lookup */
-    const artPath = 'https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/08/36/6e/08366e18-05aa-35ea-1e3c-0f4cb6b89883/artwork.jpg/486x486bb.png';
-    const trackName = 'Extremely Long Very Long Super Long Song Title';
-    const artistName = 'Artist Name';
-    const userHandle = 'x';
-    const trackHandle = 'x';
-    /* simulate trackId lookup */
+    const { currentTrackUUID, currentTrackName, currentTrackArtists, currentTrackArt } = useAudioPlayer();
+
+    let trackHandle = currentTrackUUID;
+    let trackName = currentTrackName;
+    let userHandle = currentTrackArtists;
+    let artPath = currentTrackArt;
+    let artistName = 'LOOKUP UUID: ' + currentTrackArtists
 
     // Routing
     const { navigate } = useRoute();
@@ -38,54 +39,62 @@ return (
             </Grid>
 
             <Grid size='grow'>
-                <Button
-                    color='white'
+                <Stack
+                    direction='column'
                     sx={{
-                        flexShrink: 0,
-                        margin: 0,
-                        padding: 0,
-                        paddingX: '0.5rem',
-                        marginBottom: '0.1rem',
-                        textTransform: 'none',
-                        maxWidth: '100%',
+                        display: 'flex',
+                        alignItems: 'flex-start',
                     }}
-                    onClick={() => navigate('/track/' + trackHandle)}
                 >
-                    <Typography
-                        variant='h6'
+                    <Button
+                        color='white'
                         sx={{
-                            overflow: 'hidden',
-                            whiteSpace: 'nowrap',
-                            textOverflow: 'ellipsis',
+                            flexShrink: 0,
+                            margin: 0,
+                            padding: 0,
+                            paddingX: '0.5rem',
+                            marginBottom: '0.1rem',
+                            textTransform: 'none',
+                            maxWidth: '100%',
                         }}
+                        onClick={() => navigate('/track/' + trackHandle)}
                     >
-                        {trackName}
-                    </Typography>
-                </Button>
+                        <Typography
+                            variant='h6'
+                            sx={{
+                                overflow: 'hidden',
+                                whiteSpace: 'nowrap',
+                                textOverflow: 'ellipsis',
+                            }}
+                        >
+                            {trackName}
+                        </Typography>
+                    </Button>
 
-                <Button
-                    size="small"
-                    color='white'
-                    sx={{
-                        flexShrink: 0,
-                        margin: 0,
-                        padding: 0,
-                        paddingX: '0.5rem',
-                        textTransform: 'none',
-                        maxWidth: '100%',
-                    }}
-                    onClick={() => navigate('/user/' + userHandle)}
-                >
-                    <Typography
+                    <Button
+                        size="small"
+                        color='white'
                         sx={{
-                            overflow: 'hidden',
-                            whiteSpace: 'nowrap',
-                            textOverflow: 'ellipsis',
+                            flexShrink: 0,
+                            margin: 0,
+                            padding: 0,
+                            paddingX: '0.5rem',
+                            textTransform: 'none',
+                            maxWidth: '100%',
                         }}
+                        onClick={() => navigate('/user/' + userHandle)}
                     >
-                        {artistName}
-                    </Typography>
-                </Button>
+                        <Typography
+                            sx={{
+                                overflow: 'hidden',
+                                whiteSpace: 'nowrap',
+                                textOverflow: 'ellipsis',
+                            }}
+                        >
+                            {artistName}
+                        </Typography>
+                    </Button>
+                </Stack>
             </Grid>
         </Grid>
     </>

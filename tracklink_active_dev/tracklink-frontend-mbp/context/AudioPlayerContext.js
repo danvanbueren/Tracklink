@@ -19,6 +19,12 @@ export const AudioPlayerProvider = ({ children }) => {
     const [progress, setProgress] = useState(0);
     const [interfaceDisabled, setInterfaceDisabled] = useState(true);
 
+    const [currentTrackUUID, setCurrentTrackUUID] = useState();
+    const [currentTrackName, setCurrentTrackName] = useState();
+    const [currentTrackArtists, setCurrentTrackArtists] = useState();
+    const [currentTrackSrc, setCurrentTrackSrc] = useState();
+    const [currentTrackArt, setCurrentTrackArt] = useState();
+
 
     const togglePlayPause = () => {
         if (isPlaying) {
@@ -80,8 +86,8 @@ export const AudioPlayerProvider = ({ children }) => {
         }
     };
 
-    const addToQueue = (track) => {
-        setQueueArray((prevPlaylist) => [...prevPlaylist, track]);
+    const addToQueue = (uuid, title, artists, srcAudio, srcArt) => {
+        setQueueArray((prevPlaylist) => [...prevPlaylist, [uuid, title, artists, srcAudio, srcArt]]);
         if (audioRef.current) {
             audioRef.current.play();
         } else {
@@ -110,29 +116,38 @@ export const AudioPlayerProvider = ({ children }) => {
     };
 
 
+    // React to change in volume state
     useEffect(() => {
         if (audioRef.current) {
             audioRef.current.volume = volume / 100;
         }
     }, [volume]);
 
+    // React to change in queue array state
     useEffect(() => {
         if (queueArray.length > 0) {
             setInterfaceDisabled(false);
         } else {
             setInterfaceDisabled(true);
+
         }
     }, [queueArray])
 
+    // React to change in states: current index, isPlaying, queue array
     useEffect(() => {
         const audioElement = audioRef.current;
 
-        if (audioElement) {
+        if ((queueArray.length > 0) && audioElement && queueArray[currentIndex] ) {
+
             audioElement.addEventListener('timeupdate', updateProgress);
-            if (queueArray[currentIndex]) {
-                audioElement.src = queueArray[currentIndex][3];
-                if (isPlaying) audioElement.play();
-            }
+            audioElement.src = queueArray[currentIndex][3];
+            if (isPlaying) audioElement.play();
+
+            setCurrentTrackUUID(queueArray[currentIndex][0]);
+            setCurrentTrackName(queueArray[currentIndex][1]);
+            setCurrentTrackArtists(queueArray[currentIndex][2]);
+            setCurrentTrackSrc(queueArray[currentIndex][3]);
+            setCurrentTrackArt(queueArray[currentIndex][4]);
         }
 
         return () => {
@@ -171,6 +186,12 @@ export const AudioPlayerProvider = ({ children }) => {
                 removeFromQueue,
                 clearQueue,
                 interfaceDisabled,
+
+                currentTrackUUID,
+                currentTrackName,
+                currentTrackArtists,
+                currentTrackSrc,
+                currentTrackArt,
             }}
         >
             {children}

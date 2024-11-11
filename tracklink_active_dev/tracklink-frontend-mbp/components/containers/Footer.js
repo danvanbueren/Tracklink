@@ -55,8 +55,8 @@ export default function Footer() {
                         >
                             {!interfaceDisabled &&
                                 <>
-                                    <TrackSummaryButton/>
-                                    <ToggleStarredButton/>
+                                    <TrackSummaryButton />
+                                    <ToggleStarredButton />
                                 </>
                             }
                         </Box>
