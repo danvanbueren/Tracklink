@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import NotFound from './pages/NotFound';
+import AudioPlayer from "@/components/AudioPlayer";
 
 export default function SpaRouter() {
     const { currentRoute, slug, navigate } = useRoute();
@@ -53,6 +54,10 @@ export default function SpaRouter() {
             <main>
                 {content}
             </main>
+
+            <footer style={{marginTop: '10rem', backgroundColor: '#bdf', padding: '1rem'}}>
+                <AudioPlayer />
+            </footer>
         </>
     );
 }

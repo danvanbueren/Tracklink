@@ -1,9 +1,10 @@
 import {RouteProvider} from "@/contexts/RouteContext";
 import SpaRouter from "@/components/SpaRouter";
+import {AudioPlayerProvider} from "@/contexts/AudioPlayerContext";
 
 export const metadata = {
-    title: "NextJS SPA Demo",
-    description: "NextJS SPA Demo",
+    title: "NextJS AudioPlayer Demo",
+    description: "NextJS AudioPlayer Demo",
 };
 
 export default function RootLayout({ children }) {
@@ -11,9 +12,13 @@ export default function RootLayout({ children }) {
         <html lang="en">
             <body>
                 <RouteProvider>
-                    <SpaRouter>
-                        {children}
-                    </SpaRouter>
+                    <AudioPlayerProvider>
+                        <SpaRouter>
+
+                            {children}
+
+                        </SpaRouter>
+                    </AudioPlayerProvider>
                 </RouteProvider>
             </body>
         </html>
