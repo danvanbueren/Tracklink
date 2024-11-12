@@ -14,22 +14,28 @@ import {useAudioPlayer} from "@/contexts/AudioPlayerContext";
 
 const AudioPlayer = () => {
     const {
-        playPause,
-        skipForward,
-        skipBackward,
-        toggleMute,
-        changeVolume,
-        changeCurrentTime,
-        toggleRepeatMode,
-        isPlaying,
-        isMuted,
+        playing,
+        queue,
+        queueIndex,
+        repeatMode,
+        muted,
         volume,
         currentTime,
-        duration,
-        repeatMode,
-        addSongToQueue,
-        controlsEnabled,
-        clearQueue,
+        totalTime,
+        disabled,
+
+        skipPreviousFunction,
+        togglePlayFunction,
+        skipForwardFunction,
+        repeatFunction,
+        muteFunction,
+        volumeFunction,
+        seekFunction,
+
+        clearQueueFunction,
+        removeFromQueueByIndexFunction,
+        addToQueueByPathFunction,
+
     } = useAudioPlayer();
 
     const formatTime = (time) => {
@@ -38,47 +44,40 @@ const AudioPlayer = () => {
         return `${minutes}:${seconds}`;
     };
 
-    const handleAddToQueue = (song) => {
-        addSongToQueue(song); // Adds the song to the queue
-    };
-
     return (
         <>
-            {/* Play Pause */}
-
-            <IconButton
-                onClick={playPause}
-                disabled={controlsEnabled}
-            >
-                {
-                    isPlaying ?
-                        <PauseIcon/> : <PlayArrowIcon/>
-                }
-            </IconButton>
 
             {/* Skip backward */}
-
             <IconButton
-                onClick={skipBackward}
-                disabled={controlsEnabled}
+                onClick={skipPreviousFunction}
+                disabled={disabled}
             >
                 <SkipPreviousIcon/>
             </IconButton>
 
-            {/* Skip forward */}
-
+            {/* Play Pause */}
             <IconButton
-                onClick={skipForward}
-                disabled={controlsEnabled}
+                onClick={togglePlayFunction}
+                disabled={disabled}
+            >
+                {
+                    playing ?
+                        <PauseIcon/> : <PlayArrowIcon/>
+                }
+            </IconButton>
+
+            {/* Skip forward */}
+            <IconButton
+                onClick={skipForwardFunction}
+                disabled={disabled}
             >
                 <SkipNextIcon/>
             </IconButton>
 
             {/* Repeat */}
-
             <IconButton
-                onClick={toggleRepeatMode}
-                disabled={controlsEnabled}
+                onClick={repeatFunction}
+                disabled={disabled}
             >
                 {
                     repeatMode === "one" ?
@@ -87,51 +86,53 @@ const AudioPlayer = () => {
             </IconButton>
 
             {/* Mute */}
-
             <IconButton
-                onClick={toggleMute}
-                disabled={controlsEnabled}
+                onClick={muteFunction}
+                disabled={disabled}
             >
                 {
-                    isMuted ?
-                        <VolumeOffIcon /> : <VolumeUpIcon />
+                    muted ?
+                        <VolumeOffIcon/> : <VolumeUpIcon/>
                 }
             </IconButton>
 
             {/* Volume */}
-
             <Slider
                 value={volume}
-                onChange={(e, value) => changeVolume(value)}
-                step={0.01}
+                onChange={(e, value) => volumeFunction(value)}
+                step={0.001}
                 min={0}
                 max={1}
-                disabled={controlsEnabled}
+                disabled={disabled}
             />
 
             {/* Current time */}
-
             <Typography>
-                {formatTime(currentTime)} / {formatTime(duration)}
+                {formatTime(currentTime)} / {formatTime(totalTime)}
             </Typography>
 
             {/* Seek */}
-
             <Slider
                 value={currentTime}
-                onChange={(e, value) => changeCurrentTime(value)}
+                onChange={(e, value) => seekFunction(value)}
                 min={0}
-                max={duration}
-                disabled={controlsEnabled}
+                max={totalTime}
+                step={0.001}
+                disabled={disabled}
             />
 
-            {/* Add to queue */}
+
+
+
+
+
+
 
             <Button
                 variant="contained"
                 color='error'
                 sx={{margin: '1rem'}}
-                onClick={clearQueue}
+                onClick={clearQueueFunction}
             >
                 Clear Queue
             </Button>
@@ -140,27 +141,51 @@ const AudioPlayer = () => {
                 variant="contained"
                 color='warning'
                 sx={{margin: '1rem'}}
-                onClick={clearQueue}
-                disabled
+                onClick={() => {
+                    removeFromQueueByIndexFunction(0)
+                }}
             >
-                Remove 1st from Queue
+                Pop index 0
             </Button>
 
             <Button
                 variant="contained"
                 sx={{margin: '1rem'}}
-                onClick={() => {handleAddToQueue('https://cdn.discordapp.com/attachments/1131627146427781231/1154514312099016714/3_Split_Second.mp3?ex=6733ba3d&is=673268bd&hm=d2bd67467471d7bc867411c977c69d0f2e8307f5e19e7321d3ce598d1eee099f&')}}
+                onClick={() => {
+                    addToQueueByPathFunction('/bestvibes.mp3')
+                }}
             >
-                Add SPLIT SECOND
+                bestvibes
             </Button>
 
             <Button
                 variant="contained"
                 sx={{margin: '1rem'}}
-                onClick={() => {handleAddToQueue('https://cdn.discordapp.com/attachments/1274080119488512041/1304510290448093214/Polybit_-_Lockstep_Instrumental_-_241110.mp3?ex=67339be1&is=67324a61&hm=a8591c9b1850e1543572b9cb4895b66762c6bd55030420e33c169a7be90a1fb9&')}}
+                onClick={() => {
+                    addToQueueByPathFunction('/fightclub.mp3')
+                }}
             >
-                Add LOCKSTEP
+                fightclub
             </Button>
+
+            <Button
+                variant="contained"
+                sx={{margin: '1rem'}}
+                onClick={() => {
+                    addToQueueByPathFunction('/soulish.mp3')
+                }}
+            >
+                soulish
+            </Button>
+
+            <h4>QUEUE:</h4>
+            <ul>
+                {
+                    queue.length > 0 ?
+                        queue.map((a, b) => <li key={b}>{a}</li>) :
+                        <p>Queue empty</p>
+                }
+            </ul>
         </>
     );
 };

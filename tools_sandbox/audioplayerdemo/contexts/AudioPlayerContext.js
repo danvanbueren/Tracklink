@@ -8,206 +8,151 @@ export const useAudioPlayer = () => useContext(AudioPlayerContext);
 
 export const AudioPlayerProvider = ({ children }) => {
 
+    const ref = useRef(new Audio());
 
-    const audioRef = useRef(new Audio());
+    const [playing, setPlaying] = useState(false);
 
+    const [queue, setQueue] = useState(['bestvibes.mp3']);
+    const [queueIndex, setQueueIndex] = useState(0);
 
-    /* USE STATES */
-    const [queue, setQueue] = useState([]); // Array of song URLs
-    const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
-    const [isPlaying, setIsPlaying] = useState(false);
-    const [isMuted, setIsMuted] = useState(false);
-    const [repeatMode, setRepeatMode] = useState("none"); // "none", "one", "all"
-    const [volume, setVolume] = useState(1);
+    const [repeatMode, setRepeatMode] = useState("none"); // off, all, one
+
+    const [muted, setMuted] = useState(false);
+    const [volume, setVolume] = useState(0.8);
+    const [previousVolume, setPreviousVolume] = useState(0);
+
     const [currentTime, setCurrentTime] = useState(0);
-    const [duration, setDuration] = useState(0);
-    const [controlsEnabled, setControlsEnabled] = useState(false);
+    const [totalTime, setTotalTime] = useState(0);
 
+    const [disabled, setDisabled] = useState(true);
 
-    // REACT TO `queue` STATE ... Control whether inputs are disabled or enabled
+    // Enable and disable controls
     useEffect(() => {
-
         if (queue.length < 1) {
-            setControlsEnabled(true);
+            setDisabled(true);
         } else {
-            setControlsEnabled(false);
+            setDisabled(false);
         }
-
     }, [queue])
 
-
-    // REACT TO `isPlaying` STATE ... Play/pause audio
-    useEffect(() => {
-
-        const audio = audioRef.current;
-
-        if (queue.length < 1) {
-            setIsPlaying(false);
-            audio.pause();
-            audio.load();
-            return
-        }
-
-        if (currentTrackIndex > queue.length) {return}
-
-
-        if (audio.src !== queue[currentTrackIndex]) {
-            audio.src = queue[currentTrackIndex];
-            audio.load();
-        }
-
-        if (isPlaying) {
-            audio.play();
-        } else {
-            audio.pause();
-        }
-
-    }, [currentTrackIndex, queue, isPlaying])
-
-
-/*
     // Update duration when the track is loaded
     useEffect(() => {
-        const audio = audioRef.current;
-        const handleLoadedMetadata = () => setDuration(audio.duration);
-        audio.addEventListener('loadedmetadata', handleLoadedMetadata);
-        return () => audio.removeEventListener('loadedmetadata', handleLoadedMetadata);
+        const handleLoadedMetadata = () => setTotalTime(ref.current.duration);
+        ref.current.addEventListener('loadedmetadata', handleLoadedMetadata);
+        return () => ref.current.removeEventListener('loadedmetadata', handleLoadedMetadata);
     }, []);
 
     // Update currentTime as the track plays
     useEffect(() => {
-        const audio = audioRef.current;
-
-        const handleTimeUpdate = () => {
-            setCurrentTime(audio.currentTime);
-        }
-
-        const handlePause = () => {
-            setIsPlaying(false);
-        }
-
-        audio.addEventListener('timeupdate', handleTimeUpdate);
-        audio.addEventListener('pause', handlePause);
-
-        return () => {
-            audio.removeEventListener('timeupdate', handleTimeUpdate);
-            audio.removeEventListener('pause', handlePause);
-        }
+        const handleTimeUpdate = () => setCurrentTime(ref.current.currentTime);
+        ref.current.addEventListener('timeupdate', handleTimeUpdate);
+        return () => ref.current.removeEventListener('timeupdate', handleTimeUpdate);
     }, []);
 
-    useEffect(() => {
-        const audio = audioRef.current;
-        audio.addEventListener('ended', handleEnded);
-        return () => audio.removeEventListener('ended', handleEnded);
-    }, [repeatMode]);
-*/
+    const togglePlayFunction = () => {
+        setPlaying(!playing);
 
-
-    const togglePlay = () => {
-        console.log('=== START: togglePlay ===');
-
-        if (queue.length < 1) {
-            console.warn('Queue has no content, returning!');
-            console.log('=== STOP__togglePlay ===');
-            console.log('');
-            return;
+        if (ref.current.src !== queue[queueIndex]) {
+            ref.current.src = queue[queueIndex];
         }
 
-        if (currentTrackIndex > queue.length) {
-            console.warn('Queue has no content, returning!');
-            console.log('=== STOP__togglePlay ===');
-            console.log('');
-            return;
-        }
-
-        setIsPlaying(!isPlaying);
-
-        console.log('=== STOP__togglePlay ===');
-        console.log('');
-    };
-
-
-    const skipForward = () => {
-        setCurrentTrackIndex((prevIndex) => (prevIndex + 1) % queue.length);
-    };
-
-
-    const skipBackward = () => {
-        setCurrentTrackIndex((prevIndex) => (prevIndex - 1 + queue.length) % queue.length);
-    };
-
-
-    const toggleMute = () => {
-        const audio = audioRef.current;
-        audio.muted = !audio.muted;
-        setIsMuted(audio.muted);
-    };
-
-
-    const changeVolume = (value) => {
-        const audio = audioRef.current;
-        audio.volume = value;
-        setVolume(value);
-    };
-
-
-    const changeCurrentTime = (value) => {
-        const audio = audioRef.current;
-        audio.currentTime = value;
-        setCurrentTime(value);
-    };
-
-
-    const toggleRepeatMode = () => {
-        setRepeatMode((prevMode) =>
-            prevMode === "none" ? "one" : prevMode === "one" ? "all" : "none"
-        );
-    };
-
-
-    const handleEnded = () => {
-        if (repeatMode === "one") {
-            audioRef.current.play();
-        } else if (repeatMode === "all") {
-            skipForward();
+        if (playing) {
+            ref.current.pause();
         } else {
-            setIsPlaying(false);
+            ref.current.currentTime = '5';
+            ref.current.play();
         }
-    };
+    }
 
+    const skipPreviousFunction = () => {
+        if (queue.length > queueIndex && queueIndex > 0) {
+            setQueueIndex(queueIndex - 1);
+        } else {
+            setCurrentTime(0);
+        }
+    }
 
-    const addSongToQueue = (song) => {
-        setQueue((prevQueue) => [...prevQueue, song]);
-    };
+    const skipForwardFunction = () => {
+        if (queue.length - 1 > queueIndex) {
+            setQueueIndex(queueIndex + 1);
+        } else {
+            setCurrentTime(totalTime);
+        }
+    }
 
+    const repeatFunction = () => {
+        if (repeatMode === "none") {
+            setRepeatMode("all");
+        } else if (repeatMode === "all") {
+            setRepeatMode("one");
+        } else {
+            setRepeatMode("none");
+        }
+    }
 
-    const clearQueue = () => {
+    const muteFunction = () => {
+        setMuted(!muted);
+
+        if (muted) {
+            setVolume(previousVolume);
+        } else {
+            setPreviousVolume(volume);
+            setVolume(0);
+        }
+    }
+
+    const volumeFunction = (value) => {
+        if (muted) {setMuted(false);}
+        if (value < 0.01) {
+            setMuted(true);
+            setPreviousVolume(1);
+        }
+
+        setVolume(value);
+        ref.current.volume = value;
+    }
+
+    const seekFunction = (value) => {
+        setCurrentTime(value);
+        ref.current.currentTime = value;
+    }
+
+    const clearQueueFunction = () => {
         setQueue([]);
     }
 
+    const removeFromQueueByIndexFunction = () => {
+
+    }
+
+    const addToQueueByPathFunction = () => {
+
+    }
 
     return (
         <AudioPlayerContext.Provider
             value={{
-                // Functions
-                playPause: togglePlay,
-                skipForward,
-                skipBackward,
-                toggleMute,
-                changeVolume,
-                changeCurrentTime,
-                toggleRepeatMode,
-                addSongToQueue,
-                clearQueue,
-                // States
-                isPlaying,
-                isMuted,
+                ref,
+                playing,
+                queue,
+                queueIndex,
+                repeatMode,
+                muted,
                 volume,
                 currentTime,
-                duration,
-                repeatMode,
-                currentTrack: queue[currentTrackIndex],
-                controlsEnabled,
+                totalTime,
+                disabled,
+
+                skipPreviousFunction,
+                togglePlayFunction,
+                skipForwardFunction,
+                repeatFunction,
+                muteFunction,
+                volumeFunction,
+                seekFunction,
+                clearQueueFunction,
+                removeFromQueueByIndexFunction,
+                addToQueueByPathFunction,
             }}
         >
             {children}
