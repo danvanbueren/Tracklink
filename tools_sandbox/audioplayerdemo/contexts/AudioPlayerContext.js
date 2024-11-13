@@ -1,6 +1,6 @@
 'use client'
 
-import React, { createContext, useContext, useState, useRef, useEffect } from 'react';
+import React, {createContext, useContext, useState, useRef, useEffect} from 'react';
 
 const AudioPlayerContext = createContext();
 
@@ -12,10 +12,10 @@ export const AudioPlayerProvider = ({ children }) => {
 
     const [playing, setPlaying] = useState(false);
 
-    const [queue, setQueue] = useState(['bestvibes.mp3']);
+    const [queue, setQueue] = useState([]);
     const [queueIndex, setQueueIndex] = useState(0);
 
-    const [repeatMode, setRepeatMode] = useState("none"); // off, all, one
+    const [repeatMode, setRepeatMode] = useState("off"); // off, all, one
 
     const [muted, setMuted] = useState(false);
     const [volume, setVolume] = useState(0.8);
@@ -26,10 +26,50 @@ export const AudioPlayerProvider = ({ children }) => {
 
     const [disabled, setDisabled] = useState(true);
 
+    const [currentTrackName, setCurrentTrackName] = useState(null);
+    const [currentTrackSrc, setCurrentTrackSrc] = useState(null);
+    const [currentTrackArtist, setCurrentTrackArtist] = useState(null);
+
+
+    const handleTrackEnded = () => {
+
+        if (repeatMode === "one") {
+            ref.current.currentTime = 0;
+        } else {
+
+            if ((queue.length - 2) >= queueIndex) {
+                setQueueIndex(queueIndex + 1);
+            } else {
+                if (repeatMode === 'all') {
+                    setQueueIndex(0);
+                    ref.current.currentTime = 0;
+                } else {
+                    setPlaying(false);
+                    ref.current.pause();
+                }
+            }
+        }
+
+        if (playing) {
+            ref.current.play();
+        } else {
+            ref.current.pause();
+        }
+    }
+
+
+    useEffect(() => {
+        ref.current.onended = handleTrackEnded;
+        return () => {
+            ref.current.onended = null;
+        };
+    }, [handleTrackEnded]);
+
     // Enable and disable controls
     useEffect(() => {
         if (queue.length < 1) {
             setDisabled(true);
+            setRepeatMode("off");
         } else {
             setDisabled(false);
         }
@@ -49,44 +89,90 @@ export const AudioPlayerProvider = ({ children }) => {
         return () => ref.current.removeEventListener('timeupdate', handleTimeUpdate);
     }, []);
 
+    // Update current name, src, artist
+    useEffect(() => {
+        if (queue.length > 0) {
+            setCurrentTrackSrc(queue[queueIndex][0])
+            setCurrentTrackName(queue[queueIndex][1])
+            setCurrentTrackArtist(queue[queueIndex][2])
+        }
+    }, [queue, queueIndex])
+
+    // Update audio source on changed
+    useEffect(() => {
+        ref.current.src = currentTrackSrc;
+        ref.current.load();
+        if (playing) {
+            ref.current.play();
+        }
+    }, [currentTrackSrc])
+
+    useEffect(() => {
+        if (playing) {
+            ref.current.play();
+        } else {
+            ref.current.pause();
+        }
+    }, [playing])
+
     const togglePlayFunction = () => {
         setPlaying(!playing);
-
-        if (ref.current.src !== queue[queueIndex]) {
-            ref.current.src = queue[queueIndex];
-        }
 
         if (playing) {
             ref.current.pause();
         } else {
-            ref.current.currentTime = '5';
-            ref.current.play();
+            if (queue.length === queueIndex && currentTime >= totalTime) {
+                ref.current.currentTime = 0
+                ref.current.play();
+            } else {
+                ref.current.play();
+            }
+
+
         }
     }
 
     const skipPreviousFunction = () => {
-        if (queue.length > queueIndex && queueIndex > 0) {
-            setQueueIndex(queueIndex - 1);
+        if(ref.current.currentTime < 2) {
+
+            if (queue.length > queueIndex && queueIndex > 0) {
+                setQueueIndex(queueIndex - 1);
+                ref.current.src = currentTrackSrc;
+                ref.current.load();
+                if (playing) {
+                    ref.current.play();
+                }
+            } else {
+                ref.current.currentTime = 0;
+            }
         } else {
-            setCurrentTime(0);
+            ref.current.currentTime = 0;
         }
     }
 
     const skipForwardFunction = () => {
         if (queue.length - 1 > queueIndex) {
             setQueueIndex(queueIndex + 1);
+            ref.current.src = currentTrackSrc;
+            ref.current.load();
+            if (playing) {
+                ref.current.play();
+            }
+
+
         } else {
+            ref.current.currentTime = totalTime;
             setCurrentTime(totalTime);
         }
     }
 
     const repeatFunction = () => {
-        if (repeatMode === "none") {
+        if (repeatMode === "off") {
             setRepeatMode("all");
         } else if (repeatMode === "all") {
             setRepeatMode("one");
         } else {
-            setRepeatMode("none");
+            setRepeatMode("off");
         }
     }
 
@@ -118,21 +204,28 @@ export const AudioPlayerProvider = ({ children }) => {
     }
 
     const clearQueueFunction = () => {
+        if(playing) {
+            setPlaying(false);
+        }
+
+        ref.current.pause();
+        ref.current.currentTime = 0;
+
         setQueue([]);
+        setQueueIndex(0)
     }
 
-    const removeFromQueueByIndexFunction = () => {
-
+    const removeFromQueueByIndexFunction = (index) => {
+        setQueue((prevQueue) => prevQueue.filter((_, i) => i !== index));
     }
 
-    const addToQueueByPathFunction = () => {
-
+    const addToQueueFunction = (src, name, artist) => {
+        setQueue([...queue, [src, name, artist]])
     }
 
     return (
         <AudioPlayerContext.Provider
             value={{
-                ref,
                 playing,
                 queue,
                 queueIndex,
@@ -143,6 +236,10 @@ export const AudioPlayerProvider = ({ children }) => {
                 totalTime,
                 disabled,
 
+                currentTrackName,
+                currentTrackArtist,
+                currentTrackSrc,
+
                 skipPreviousFunction,
                 togglePlayFunction,
                 skipForwardFunction,
@@ -150,9 +247,12 @@ export const AudioPlayerProvider = ({ children }) => {
                 muteFunction,
                 volumeFunction,
                 seekFunction,
+
                 clearQueueFunction,
                 removeFromQueueByIndexFunction,
-                addToQueueByPathFunction,
+                addToQueueFunction,
+
+                setQueueIndex,
             }}
         >
             {children}

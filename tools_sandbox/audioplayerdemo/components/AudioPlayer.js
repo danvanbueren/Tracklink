@@ -1,15 +1,16 @@
 'use client'
 
 import React from 'react';
-import {Button, IconButton, Slider, Typography} from '@mui/material';
+import {Box, Button, IconButton, Slider, Stack, Typography} from '@mui/material';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import PauseIcon from '@mui/icons-material/Pause';
 import SkipNextIcon from '@mui/icons-material/SkipNext';
 import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
 import VolumeOffIcon from '@mui/icons-material/VolumeOff';
-import LoopIcon from '@mui/icons-material/Loop';
-import RepeatOneIcon from '@mui/icons-material/RepeatOne';
+import RepeatIcon from '@mui/icons-material/Repeat';
+import RepeatOnIcon from '@mui/icons-material/RepeatOn';
+import RepeatOneOnIcon from '@mui/icons-material/RepeatOneOn';
 import {useAudioPlayer} from "@/contexts/AudioPlayerContext";
 
 const AudioPlayer = () => {
@@ -24,6 +25,10 @@ const AudioPlayer = () => {
         totalTime,
         disabled,
 
+        currentTrackName,
+        currentTrackArtist,
+        currentTrackSrc,
+
         skipPreviousFunction,
         togglePlayFunction,
         skipForwardFunction,
@@ -34,7 +39,9 @@ const AudioPlayer = () => {
 
         clearQueueFunction,
         removeFromQueueByIndexFunction,
-        addToQueueByPathFunction,
+        addToQueueFunction,
+
+        setQueueIndex,
 
     } = useAudioPlayer();
 
@@ -46,6 +53,15 @@ const AudioPlayer = () => {
 
     return (
         <>
+            {queue.length > 0 ?
+                <>
+                    <Typography sx={{fontWeight: 'bold'}}>Now Playing: {currentTrackName}</Typography>
+                    <Typography>by {currentTrackArtist}</Typography>
+                    <Typography sx={{opacity: '50%'}}>{currentTrackSrc}</Typography>
+                </>
+                : <Typography sx={{fontWeight: 'bold'}}>Not Playing</Typography>
+            }
+
 
             {/* Skip backward */}
             <IconButton
@@ -79,10 +95,9 @@ const AudioPlayer = () => {
                 onClick={repeatFunction}
                 disabled={disabled}
             >
-                {
-                    repeatMode === "one" ?
-                        <RepeatOneIcon/> : <LoopIcon/>
-                }
+                { repeatMode === "off" && <RepeatIcon /> }
+                { repeatMode === "all" && <RepeatOnIcon /> }
+                { repeatMode === "one" && <RepeatOneOnIcon /> }
             </IconButton>
 
             {/* Mute */}
@@ -104,6 +119,9 @@ const AudioPlayer = () => {
                 min={0}
                 max={1}
                 disabled={disabled}
+                sx={{
+                    width: '8rem'
+                }}
             />
 
             {/* Current time */}
@@ -119,13 +137,10 @@ const AudioPlayer = () => {
                 max={totalTime}
                 step={0.001}
                 disabled={disabled}
+                sx={{
+                    width: '32rem'
+                }}
             />
-
-
-
-
-
-
 
 
             <Button
@@ -139,20 +154,9 @@ const AudioPlayer = () => {
 
             <Button
                 variant="contained"
-                color='warning'
                 sx={{margin: '1rem'}}
                 onClick={() => {
-                    removeFromQueueByIndexFunction(0)
-                }}
-            >
-                Pop index 0
-            </Button>
-
-            <Button
-                variant="contained"
-                sx={{margin: '1rem'}}
-                onClick={() => {
-                    addToQueueByPathFunction('/bestvibes.mp3')
+                    addToQueueFunction('/bestvibes.mp3', 'Best Vibes', 'Dan')
                 }}
             >
                 bestvibes
@@ -162,7 +166,7 @@ const AudioPlayer = () => {
                 variant="contained"
                 sx={{margin: '1rem'}}
                 onClick={() => {
-                    addToQueueByPathFunction('/fightclub.mp3')
+                    addToQueueFunction('/fightclub.mp3', 'Fight Club', 'Dan')
                 }}
             >
                 fightclub
@@ -172,18 +176,49 @@ const AudioPlayer = () => {
                 variant="contained"
                 sx={{margin: '1rem'}}
                 onClick={() => {
-                    addToQueueByPathFunction('/soulish.mp3')
+                    addToQueueFunction('/soulish.mp3', 'Soulish', 'Dan')
                 }}
             >
                 soulish
             </Button>
 
-            <h4>QUEUE:</h4>
+            <Typography>Queue Index: {queueIndex}</Typography>
+            <Typography>Queue Length: {queue.length}</Typography>
+            <Typography>Queue:</Typography>
             <ul>
                 {
                     queue.length > 0 ?
-                        queue.map((a, b) => <li key={b}>{a}</li>) :
-                        <p>Queue empty</p>
+                        queue.map((a, b) =>
+                            <li key={b}>
+                                <Stack direction="row">
+                                    <Button
+                                        variant="text"
+                                        color='primary'
+                                        size='small'
+                                        sx={{marginX: '1rem'}}
+                                        onClick={() => {
+                                            setQueueIndex(b)
+                                        }}
+                                    >
+                                        {b === queueIndex ?
+                                        <Typography sx={{backgroundColor: 'background.default'}}>Index: {b} --- Name: {a[1]} --- Artist: {a[2]} --- Source: {a[0]}</Typography>
+                                            : <Typography>Index: {b} --- Name: {a[1]} --- Artist: {a[2]} --- Source: {a[0]}</Typography>
+                                        }
+                                    </Button>
+                                    <Button
+                                        variant="text"
+                                        color='error'
+                                        size='small'
+                                        sx={{marginX: '1rem'}}
+                                        onClick={() => {
+                                            removeFromQueueByIndexFunction(b)
+                                        }}
+                                    >
+                                        delete {b}
+                                    </Button>
+                                </Stack>
+                            </li>
+                        ) : <Typography>Queue empty</Typography>
                 }
             </ul>
         </>

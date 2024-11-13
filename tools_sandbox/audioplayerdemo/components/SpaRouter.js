@@ -55,7 +55,7 @@ export default function SpaRouter() {
                 {content}
             </main>
 
-            <footer style={{marginTop: '10rem', backgroundColor: '#bdf', padding: '1rem'}}>
+            <footer style={{marginTop: '1rem', backgroundColor: '#bdf', padding: '1rem', borderRadius: 25}}>
                 <AudioPlayer />
             </footer>
         </>
