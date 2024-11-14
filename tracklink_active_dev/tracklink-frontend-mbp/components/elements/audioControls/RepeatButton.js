@@ -1,19 +1,23 @@
 import RepeatIcon from "@mui/icons-material/Repeat";
+import RepeatOnIcon from "@mui/icons-material/RepeatOn";
+import RepeatOneOnIcon from "@mui/icons-material/RepeatOneOn";
 import {IconButton} from "@mui/material";
 import * as React from "react";
 import {useAudioPlayer} from "@/context/AudioPlayerContext";
 
 export default function RepeatButton() {
 
-    const { interfaceDisabled } = useAudioPlayer();
+    const {
+        repeatFunction,
+        disabled,
+        repeatMode,
+    } = useAudioPlayer();
 
     return (
         <IconButton
-            disabled={interfaceDisabled}
+            disabled={disabled}
             color="white"
-            onClick={() => {
-                alert('TODO: onClick function')
-            }}
+            onClick={repeatFunction}
             sx={{
                 width: '2.5rem',
                 height: '2.5rem',
@@ -29,7 +33,9 @@ export default function RepeatButton() {
                 },
             }}
         >
-            <RepeatIcon/>
+            { repeatMode === "off" && <RepeatIcon /> }
+            { repeatMode === "all" && <RepeatOnIcon /> }
+            { repeatMode === "one" && <RepeatOneOnIcon /> }
         </IconButton>
     )
 }

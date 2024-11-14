@@ -6,13 +6,17 @@ import {useAudioPlayer} from "@/context/AudioPlayerContext";
 
 export default function TogglePlayPauseButton() {
 
-    const { isPlaying, interfaceDisabled, togglePlayPause } = useAudioPlayer();
+    const {
+        playing,
+        disabled,
+        togglePlayFunction,
+    } = useAudioPlayer();
 
     return (
         <IconButton
-            disabled={interfaceDisabled}
+            onClick={togglePlayFunction}
+            disabled={disabled}
             color="white"
-            onClick={togglePlayPause}
             sx={{
                 width: '3.5rem',
                 height: '3.5rem',
@@ -28,10 +32,9 @@ export default function TogglePlayPauseButton() {
                 },
             }}
         >
-            {isPlaying ?
-                <PauseCircleIcon sx={{fontSize: '3rem'}}/>
-                :
-                <PlayCircleIcon sx={{fontSize: '3rem'}}/>
+            {
+                playing ?
+                    <PauseCircleIcon sx={{fontSize: '3rem'}}/> : <PlayCircleIcon sx={{fontSize: '3rem'}}/>
             }
 
         </IconButton>

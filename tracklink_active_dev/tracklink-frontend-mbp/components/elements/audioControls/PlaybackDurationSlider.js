@@ -5,26 +5,28 @@ import {useAudioPlayer} from "@/context/AudioPlayerContext";
 
 export default function PlaybackDurationSlider() {
 
-    const { interfaceDisabled } = useAudioPlayer();
+    const {
+        currentTime,
+        totalTime,
+        seekFunction,
+        disabled,
+    } = useAudioPlayer();
 
     let sliderTrackOpacity;
-    if (interfaceDisabled) {
+    if (disabled) {
         sliderTrackOpacity = 0;
     } else {
         sliderTrackOpacity = 1;
     }
 
-    // Control sliders
-    const [playbackDurationSliderValue, setPlaybackDurationSliderValue] = useState(0);
-    const handleChangePlaybackDurationSliderValue = (event, newValue) => {
-        setPlaybackDurationSliderValue(newValue);
-    };
-
     return (
         <Slider
-            disabled = {interfaceDisabled}
-            value={playbackDurationSliderValue}
-            onChange={handleChangePlaybackDurationSliderValue}
+            disabled = {disabled}
+            value={currentTime}
+            onChange={(e, value) => seekFunction(value)}
+            min={0}
+            max={totalTime}
+            step={0.001}
             sx={{
                 marginX: '1rem',
                 '& .MuiSlider-thumb': {

@@ -5,26 +5,27 @@ import {useAudioPlayer} from "@/context/AudioPlayerContext";
 
 export default function VolumeSlider() {
 
-    const { interfaceDisabled } = useAudioPlayer();
+    const {
+        volume,
+        volumeFunction,
+        disabled,
+    } = useAudioPlayer();
 
     let sliderTrackOpacity;
-    if (interfaceDisabled) {
+    if (disabled) {
         sliderTrackOpacity = 0;
     } else {
         sliderTrackOpacity = 1;
     }
 
-    // Control sliders
-    const [volumeSliderValue, setVolumeSliderValue] = useState(100);
-    const handleChangeVolumeSliderValue = (event, newValue) => {
-        setVolumeSliderValue(newValue);
-    };
-
     return (
         <Slider
-            disabled = {interfaceDisabled}
-            value={volumeSliderValue}
-            onChange={handleChangeVolumeSliderValue}
+            value={volume}
+            onChange={(e, value) => volumeFunction(value)}
+            step={0.001}
+            min={0}
+            max={1}
+            disabled={disabled}
             color="white"
             sx={{
                 color: 'white',

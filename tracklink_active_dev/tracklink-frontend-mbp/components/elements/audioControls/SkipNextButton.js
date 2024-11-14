@@ -5,15 +5,16 @@ import {useAudioPlayer} from "@/context/AudioPlayerContext";
 
 export default function SkipNextButton() {
 
-    const { interfaceDisabled } = useAudioPlayer();
+    const {
+        skipForwardFunction,
+        disabled,
+    } = useAudioPlayer();
 
     return (
         <IconButton
-            disabled={interfaceDisabled}
+            disabled={disabled}
             color="white"
-            onClick={() => {
-                alert('TODO: onClick function')
-            }}
+            onClick={skipForwardFunction}
             sx={{
                 width: '2.5rem',
                 height: '2.5rem',

@@ -1,6 +1,6 @@
-'use client';
+'use client'
 
-import React, { createContext, useContext, useRef, useState, useEffect } from 'react';
+import React, {createContext, useContext, useState, useRef, useEffect} from 'react';
 
 const AudioPlayerContext = createContext();
 
@@ -8,190 +8,265 @@ export const useAudioPlayer = () => useContext(AudioPlayerContext);
 
 export const AudioPlayerProvider = ({ children }) => {
 
-    const audioRef = useRef(null);
+    const ref = useRef(new Audio());
 
-    const [isPlaying, setIsPlaying] = useState(false);
-    const [queueArray, setQueueArray] = useState([]);
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const [volume, setVolume] = useState(50);
-    const [isMuted, setIsMuted] = useState(false);
-    const [isLooping, setIsLooping] = useState(false);
-    const [progress, setProgress] = useState(0);
-    const [interfaceDisabled, setInterfaceDisabled] = useState(true);
+    const [playing, setPlaying] = useState(false);
 
-    const [currentTrackUUID, setCurrentTrackUUID] = useState();
-    const [currentTrackName, setCurrentTrackName] = useState();
-    const [currentTrackArtists, setCurrentTrackArtists] = useState();
-    const [currentTrackSrc, setCurrentTrackSrc] = useState();
-    const [currentTrackArt, setCurrentTrackArt] = useState();
+    const [queue, setQueue] = useState([]);
+    const [queueIndex, setQueueIndex] = useState(0);
 
+    const [repeatMode, setRepeatMode] = useState("off"); // off, all, one
 
-    const togglePlayPause = () => {
-        if (isPlaying) {
-            pause();
+    const [muted, setMuted] = useState(false);
+    const [volume, setVolume] = useState(0.8);
+    const [previousVolume, setPreviousVolume] = useState(0);
+
+    const [disabled, setDisabled] = useState(true);
+
+    const [currentTime, setCurrentTime] = useState(0);
+    const [totalTime, setTotalTime] = useState(0);
+
+    const [currentTrackName, setCurrentTrackName] = useState(null);
+    const [currentTrackSrc, setCurrentTrackSrc] = useState(null);
+    const [currentTrackArtist, setCurrentTrackArtist] = useState(null);
+    const [currentTrackUUID, setCurrentTrackUUID] = useState(null);
+    const [currentTrackImg, setCurrentTrackImg] = useState(null);
+
+    // End of playback logic based on repeatMode
+    const handleTrackEnded = () => {
+        if (repeatMode === "one") {
+            ref.current.currentTime = 0;
         } else {
-            play();
-        }
-    };
-
-    const play = () => {
-        setIsPlaying(true);
-        audioRef.current.play();
-    };
-
-    const pause = () => {
-        setIsPlaying(false);
-        audioRef.current.pause();
-    };
-
-    const skipNext = () => {
-        if (queueArray.length >= currentIndex) {
-            setCurrentIndex((currentIndex + 1) % queueArray.length);
-        }
-    };
-
-    const skipPrevious = () => {
-        if (queueArray.length >= 2 && currentIndex > 0) {
-            setCurrentIndex((currentIndex - 1 + queueArray.length) % queueArray.length);
-        }
-    };
-
-    const changeVolume = (newValue) => {
-        setVolume(newValue);
-        audioRef.current.volume = newValue / 100;
-        setIsMuted(newValue === 0);
-    };
-
-    const toggleMute = () => {
-        setIsMuted(!isMuted);
-        audioRef.current.muted = !isMuted;
-    };
-
-    const toggleLoop = () => {
-        setIsLooping(!isLooping);
-        audioRef.current.loop = !isLooping;
-    };
-
-    const seekProgress = (newValue) => {
-        const seekTime = (newValue / 100) * audioRef.current.duration;
-        audioRef.current.currentTime = seekTime;
-        setProgress(newValue);
-    };
-
-    const updateProgress = () => {
-        if (audioRef.current) {
-            const currentTime = audioRef.current.currentTime;
-            const duration = audioRef.current.duration;
-            setProgress((currentTime / duration) * 100);
-        }
-    };
-
-    const addToQueue = (uuid, title, artists, srcAudio, srcArt) => {
-        setQueueArray((prevPlaylist) => [...prevPlaylist, [uuid, title, artists, srcAudio, srcArt]]);
-        if (audioRef.current) {
-            audioRef.current.play();
-        } else {
-            audioRef.current.src = queueArray[3][currentIndex];
-            audioRef.current.play();
-        }
-    };
-
-    const removeFromQueue = (index) => {
-        setQueueArray((prevPlaylist) => prevPlaylist.filter((_, i) => i !== index));
-        if (index === currentIndex && queueArray.length > 1) {
-            skipNext();
-        } else if (index === queueArray.length - 1) {
-            setCurrentIndex(0);
-        }
-    };
-
-    const clearQueue = () => {
-        if (audioRef.current) {
-            audioRef.current.pause();
-        }
-        setIsPlaying(false);
-        setCurrentIndex(0);
-        setQueueArray([]);
-
-    };
-
-
-    // React to change in volume state
-    useEffect(() => {
-        if (audioRef.current) {
-            audioRef.current.volume = volume / 100;
-        }
-    }, [volume]);
-
-    // React to change in queue array state
-    useEffect(() => {
-        if (queueArray.length > 0) {
-            setInterfaceDisabled(false);
-        } else {
-            setInterfaceDisabled(true);
-
-        }
-    }, [queueArray])
-
-    // React to change in states: current index, isPlaying, queue array
-    useEffect(() => {
-        const audioElement = audioRef.current;
-
-        if ((queueArray.length > 0) && audioElement && queueArray[currentIndex] ) {
-
-            audioElement.addEventListener('timeupdate', updateProgress);
-            audioElement.src = queueArray[currentIndex][3];
-            if (isPlaying) audioElement.play();
-
-            setCurrentTrackUUID(queueArray[currentIndex][0]);
-            setCurrentTrackName(queueArray[currentIndex][1]);
-            setCurrentTrackArtists(queueArray[currentIndex][2]);
-            setCurrentTrackSrc(queueArray[currentIndex][3]);
-            setCurrentTrackArt(queueArray[currentIndex][4]);
-        }
-
-        return () => {
-            if (audioElement) {
-                audioElement.removeEventListener('timeupdate', updateProgress);
+            if ((queue.length - 2) >= queueIndex) {
+                setQueueIndex(queueIndex + 1);
+            } else {
+                if (repeatMode === 'all') {
+                    setQueueIndex(0);
+                    ref.current.currentTime = 0;
+                } else {
+                    setPlaying(false);
+                    ref.current.pause();
+                }
             }
+        }
+        if (playing) {
+            ref.current.play();
+        } else {
+            ref.current.pause();
+        }
+    }
+
+    // Late load function to handle end of playback
+    useEffect(() => {
+        ref.current.onended = handleTrackEnded;
+        return () => {
+            ref.current.onended = null;
         };
-    }, [currentIndex, isPlaying, queueArray]);
+    }, [handleTrackEnded]);
+
+    // Enable and disable controls
+    useEffect(() => {
+        if (queue.length < 1) {
+            setDisabled(true);
+            setRepeatMode("off");
+            setCurrentTime(0);
+            setTotalTime(0);
+            setCurrentTrackName(undefined);
+            setCurrentTrackSrc(undefined);
+            setCurrentTrackArtist(undefined);
+            setCurrentTrackUUID(undefined);
+            setCurrentTrackImg(undefined);
+        } else {
+            setDisabled(false);
+        }
+    }, [queue])
+
+    // Update duration when the track is loaded
+    useEffect(() => {
+        const handleLoadedMetadata = () => setTotalTime(ref.current.duration);
+        ref.current.addEventListener('loadedmetadata', handleLoadedMetadata);
+        return () => ref.current.removeEventListener('loadedmetadata', handleLoadedMetadata);
+    }, []);
+
+    // Update currentTime as the track plays
+    useEffect(() => {
+        const handleTimeUpdate = () => setCurrentTime(ref.current.currentTime);
+        ref.current.addEventListener('timeupdate', handleTimeUpdate);
+        return () => ref.current.removeEventListener('timeupdate', handleTimeUpdate);
+    }, []);
+
+    // Update current name, src, artist
+    useEffect(() => {
+        if (queue.length > 0) {
+            setCurrentTrackSrc(queue[queueIndex][0])
+            setCurrentTrackName(queue[queueIndex][1])
+            setCurrentTrackArtist(queue[queueIndex][2])
+            setCurrentTrackUUID(queue[queueIndex][3])
+            setCurrentTrackImg(queue[queueIndex][4])
+        }
+    }, [queue, queueIndex])
+
+    // Update ref source from state
+    useEffect(() => {
+        ref.current.src = currentTrackSrc;
+        ref.current.load();
+        if (playing) {
+            ref.current.play();
+        }
+    }, [currentTrackSrc])
+
+    // Update ref play/pause from state
+    useEffect(() => {
+        if (playing) {
+            ref.current.play();
+        } else {
+            ref.current.pause();
+        }
+    }, [playing])
+
+    // Update ref volume from state
+    useEffect(() => {
+        ref.current.volume = volume;
+    }, [volume])
+
+    const togglePlayFunction = () => {
+        setPlaying(!playing);
+        if (playing) {
+            ref.current.pause();
+        } else {
+            if (queue.length === queueIndex && currentTime >= totalTime) {
+                ref.current.currentTime = 0
+                ref.current.play();
+            } else {
+                ref.current.play();
+            }
+        }
+    }
+
+    const skipPreviousFunction = () => {
+        if(ref.current.currentTime < 2) {
+            if (queue.length > queueIndex && queueIndex > 0) {
+                setQueueIndex(queueIndex - 1);
+                ref.current.src = currentTrackSrc;
+                ref.current.load();
+                if (playing) {
+                    ref.current.play();
+                }
+            } else {
+                ref.current.currentTime = 0;
+            }
+        } else {
+            ref.current.currentTime = 0;
+        }
+    }
+
+    const skipForwardFunction = () => {
+        if (queue.length - 1 > queueIndex) {
+            setQueueIndex(queueIndex + 1);
+            ref.current.src = currentTrackSrc;
+            ref.current.load();
+            if (playing) {
+                ref.current.play();
+            }
+        } else {
+            ref.current.currentTime = totalTime;
+            setCurrentTime(totalTime);
+        }
+    }
+
+    const repeatFunction = () => {
+        if (repeatMode === "off") {
+            setRepeatMode("all");
+        } else if (repeatMode === "all") {
+            setRepeatMode("one");
+        } else {
+            setRepeatMode("off");
+        }
+    }
+
+    const muteFunction = () => {
+        setMuted(!muted);
+
+        if (muted) {
+            setVolume(previousVolume);
+        } else {
+            setPreviousVolume(volume);
+            setVolume(0);
+        }
+    }
+
+    const volumeFunction = (value) => {
+        if (muted) {setMuted(false);}
+        if (value < 0.01) {
+            setMuted(true);
+            setPreviousVolume(1);
+        }
+        setVolume(value);
+    }
+
+    const seekFunction = (value) => {
+        setCurrentTime(value);
+        ref.current.currentTime = value;
+    }
+
+    const clearQueueFunction = () => {
+        if(playing) {
+            setPlaying(false);
+        }
+        ref.current.pause();
+        ref.current.currentTime = 0;
+        setQueue([]);
+        setQueueIndex(0);
+    }
+
+    const removeFromQueueByIndexFunction = (index) => {
+
+        if (index === queueIndex) {
+            if (queueIndex < 1) {
+                setPlaying(false);
+                ref.current.pause();
+                ref.current.currentTime = 0;
+            } else {
+                setQueueIndex(queueIndex - 1);
+            }
+
+        }
+
+        setQueue((prevQueue) => prevQueue.filter((_, i) => i !== index));
+    }
+
+    const addToQueueFunction = (src, name, artist, uuid, img) => {
+        setQueue([...queue, [src, name, artist, uuid, img]])
+    }
 
     return (
         <AudioPlayerContext.Provider
             value={{
-                audioRef,
-                isPlaying,
-
-                togglePlayPause,
-                play,
-                pause,
-
-                skipNext,
-                skipPrevious,
-
+                playing,
+                queue,
+                queueIndex,
+                repeatMode,
+                muted,
                 volume,
-                changeVolume,
-                isMuted,
-                toggleMute,
-
-                isLooping,
-                toggleLoop,
-
-                progress,
-                seekProgress,
-
-                queueArray,
-                addToQueue,
-                removeFromQueue,
-                clearQueue,
-                interfaceDisabled,
-
-                currentTrackUUID,
+                currentTime,
+                totalTime,
+                disabled,
                 currentTrackName,
-                currentTrackArtists,
+                currentTrackArtist,
                 currentTrackSrc,
-                currentTrackArt,
+                currentTrackUUID,
+                currentTrackImg,
+                setQueueIndex,
+                skipPreviousFunction,
+                togglePlayFunction,
+                skipForwardFunction,
+                repeatFunction,
+                muteFunction,
+                volumeFunction,
+                seekFunction,
+                clearQueueFunction,
+                removeFromQueueByIndexFunction,
+                addToQueueFunction,
             }}
         >
             {children}

@@ -2,14 +2,21 @@ import AddCommentIcon from "@mui/icons-material/AddComment";
 import {IconButton} from "@mui/material";
 import * as React from "react";
 import {useAudioPlayer} from "@/context/AudioPlayerContext";
+import {useRoute} from "@/context/RouteContext";
 
 export default function AddCommentButton() {
 
-    const { interfaceDisabled } = useAudioPlayer();
+    const {
+        disabled,
+        currentTrackUUID
+    } = useAudioPlayer();
+
+    // Routing
+    const { navigate } = useRoute();
 
     return (
         <IconButton
-            disabled={interfaceDisabled}
+            disabled={disabled}
             color="white"
             sx={{
                 width: '2.5rem',
@@ -25,7 +32,7 @@ export default function AddCommentButton() {
                     color: 'primary.main',
                 },
             }}
-            onClick={() => navigate('/track/some-track-id')}
+            onClick={() => navigate('/track/' + currentTrackUUID)}
         >
             <AddCommentIcon/>
         </IconButton>
