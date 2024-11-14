@@ -1,10 +1,10 @@
 import {RouteProvider} from "@/contexts/RouteContext";
 import SpaRouter from "@/components/SpaRouter";
-import {AudioPlayerProvider} from "@/contexts/AudioPlayerContext";
+import {AudioPlayerProvider} from "@/components/AudioPlayer/AudioPlayerContext";
 
 export const metadata = {
-    title: "NextJS AudioPlayer Demo",
-    description: "NextJS AudioPlayer Demo",
+    title: "NextJS AudioPlayerContainer Demo",
+    description: "NextJS AudioPlayerContainer Demo",
 };
 
 export default function RootLayout({ children }) {
