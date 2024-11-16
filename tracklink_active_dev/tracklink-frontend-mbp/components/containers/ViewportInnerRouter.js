@@ -3,7 +3,7 @@ import * as React from "react";
 import {useRoute} from "@/context/RouteContext";
 import HomePage from "@/components/views/authenticated/HomePage";
 import NotFoundPage from "@/components/views/noauth/NotFoundPage";
-import AddFriendPage from "@/components/views/authenticated/AddFriendButton";
+import AddFriendPage from "@/components/views/authenticated/AddFriendPage";
 import ArchivePage from "@/components/views/authenticated/ArchivePage";
 import CollabPage from "@/components/views/authenticated/CollabPage";
 import NewPage from "@/components/views/authenticated/NewPage";
