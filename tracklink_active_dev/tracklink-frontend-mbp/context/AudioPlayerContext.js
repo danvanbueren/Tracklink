@@ -239,6 +239,22 @@ export const AudioPlayerProvider = ({ children }) => {
         setQueue([...queue, [src, name, artist, uuid, img]])
     }
 
+    const playImmediatelyFunction = (src, name, artist, uuid, img) => {
+
+        console.log(uuid, currentTrackUUID)
+
+        if (uuid !== currentTrackUUID) {
+            ref.current.pause();
+            ref.current.currentTime = 0;
+            setQueue([]);
+            setQueueIndex(0);
+            clearQueueFunction();
+            addToQueueFunction(src, name, artist, uuid, img);
+        }
+
+        togglePlayFunction();
+    }
+
     return (
         <AudioPlayerContext.Provider
             value={{
@@ -267,6 +283,7 @@ export const AudioPlayerProvider = ({ children }) => {
                 clearQueueFunction,
                 removeFromQueueByIndexFunction,
                 addToQueueFunction,
+                playImmediatelyFunction,
             }}
         >
             {children}

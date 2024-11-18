@@ -2,10 +2,10 @@
 
 import * as React from 'react';
 import {
-    Box, Button, Card,
+    Box, Button,
     Menu,
-    MenuItem,
-    TextField
+    MenuItem, Stack,
+    TextField, useMediaQuery
 } from "@mui/material";
 
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
@@ -16,8 +16,13 @@ import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import {useState} from "react";
 import Grid from "@mui/material/Grid2";
 import BigTrackButton from "@/components/elements/BigTrackButton";
+import {useRoute} from "@/context/RouteContext";
+import SocialActivityCard from "@/components/elements/SocialActivityCard";
 
 export default function HomePage({ slug }) {
+
+    // Routing
+    const { navigate } = useRoute();
 
     /* DROPDOWN VARIABLES */
     const [anchorEl, setAnchorEl] = useState(null);
@@ -30,10 +35,8 @@ export default function HomePage({ slug }) {
         setAnchorEl(null);
     };
 
-    const handleMenuItemClick = (action) => {
-        console.log("Selected action:", action); // Perform specific action
-        handleClose();
-    };
+    // Handle small screens (Recent & Starred projects)
+    const isVisible = useMediaQuery('(min-width:1536px)'); // Adjust the breakpoint as needed
 
     return (
         <main>
@@ -42,6 +45,7 @@ export default function HomePage({ slug }) {
                     display: 'flex',
                     flexDirection: 'row',
                     justifyContent: 'center',
+                    marginTop: '8vh',
                 }}
             >
                 <h1>Welcome to Tracklink</h1>
@@ -127,9 +131,29 @@ export default function HomePage({ slug }) {
                         open={Boolean(anchorEl)}
                         onClose={handleClose}
                     >
-                        <MenuItem onClick={() => handleMenuItemClick('Action 1')}>Action 1</MenuItem>
-                        <MenuItem onClick={() => handleMenuItemClick('Action 2')}>Action 2</MenuItem>
-                        <MenuItem onClick={() => handleMenuItemClick('Action 3')}>Action 3</MenuItem>
+                        <MenuItem
+                            onClick={
+                                () => { navigate('/search/action1') }
+                            }
+                        >
+                            Action 1
+                        </MenuItem>
+
+                        <MenuItem
+                            onClick={
+                                () => { navigate('/search/action2') }
+                            }
+                        >
+                            Action 2
+                        </MenuItem>
+
+                        <MenuItem
+                            onClick={
+                                () => { navigate('/search/action3') }
+                            }
+                        >
+                            Action 3
+                        </MenuItem>
                     </Menu>
                 </Box>
             </Box>
@@ -137,23 +161,77 @@ export default function HomePage({ slug }) {
             <Box
                 sx={{
                     paddingX: '2rem',
+                    paddingBottom: '2rem',
+                    marginTop: '10vh',
                 }}
             >
-                <h2>Recent</h2>
+                <Stack direction='row' display="flex" justifyContent="space-between" alignItems='center'>
+                    <h2>Recent</h2>
+                    <Button variant='text' onClick={() => {navigate('/recent')}}>See more</Button>
+                </Stack>
 
                 <Grid container spacing={2}>
-                    <Grid size={{ xs: 6, xl: 4 }} >
-                        <BigTrackButton trackUUID={1} />
+
+                    <Grid size={{xs: 6, xl: 4}}>
+                        <BigTrackButton trackUUID={1}/>
                     </Grid>
 
-                    <Grid size={{ xs: 6, xl: 4 }} >
-                        <BigTrackButton trackUUID={2} />
+                    <Grid size={{xs: 6, xl: 4}}>
+                        <BigTrackButton trackUUID={2}/>
                     </Grid>
 
-                    <Grid size={{ xs: 6, xl: 4 }} >
-                        <BigTrackButton trackUUID={3} />
-                    </Grid>
+                    {isVisible &&
+                        <Grid size={{xs: 6, xl: 4}}>
+                            <BigTrackButton trackUUID={3}/>
+                        </Grid>
+                    }
                 </Grid>
+
+            </Box>
+
+            <Box
+                sx={{
+                    paddingX: '2rem',
+                    paddingBottom: '2rem',
+                }}
+            >
+                <Stack direction='row' display="flex" justifyContent="space-between" alignItems='center'>
+                    <h2>Starred</h2>
+                    <Button variant='text' onClick={() => {navigate('/starred')}}>See more</Button>
+                </Stack>
+
+                <Grid container spacing={2}>
+
+                    <Grid size={{xs: 6, xl: 4}}>
+                        <BigTrackButton trackUUID={7}/>
+                    </Grid>
+
+                    <Grid size={{xs: 6, xl: 4}}>
+                        <BigTrackButton trackUUID={8}/>
+                    </Grid>
+
+                    {isVisible &&
+                        <Grid size={{xs: 6, xl: 4}}>
+                            <BigTrackButton trackUUID={9}/>
+                        </Grid>
+                    }
+                </Grid>
+
+            </Box>
+
+            <Box
+                sx={{
+                    paddingX: '2rem',
+                    paddingBottom: '2rem',
+                }}
+            >
+                <Stack direction='row' display="flex" justifyContent="space-between" alignItems='center'>
+                    <h2>Social</h2>
+                    <Button variant='text' onClick={() => {navigate('/social')}}>See more</Button>
+                </Stack>
+
+                <SocialActivityCard href='/someplace' />
+
             </Box>
         </main>
     );
