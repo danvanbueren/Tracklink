@@ -17,6 +17,7 @@ import TrackPage from "@/components/views/authenticated/TrackPage";
 import TracksPage from "@/components/views/authenticated/TracksPage";
 import TrashPage from "@/components/views/authenticated/TrashPage";
 import UserPage from "@/components/views/authenticated/UserPage";
+import SocialPage from "@/components/views/authenticated/SocialPage";
 export default function ViewportInnerRouter({children}) {
 
     const { currentRoute, slug, navigate } = useRoute();
@@ -32,6 +33,7 @@ export default function ViewportInnerRouter({children}) {
         '/recent': slug ? <RecentPage slug={slug} /> : <RecentPage />,
         '/search': slug ? <SearchPage slug={slug} /> : <SearchPage />,
         '/settings': slug ? <SettingsPage slug={slug} /> : <SettingsPage />,
+        '/social': slug ? <SocialPage slug={slug} /> : <SocialPage />,
         '/starred': slug ? <StarredPage slug={slug} /> : <StarredPage />,
         '/track': slug ? <TrackPage slug={slug} /> : <TrackPage />,
         '/tracks': slug ? <TracksPage slug={slug} /> : <TracksPage />,
