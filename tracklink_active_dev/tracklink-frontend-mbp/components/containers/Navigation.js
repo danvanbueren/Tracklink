@@ -6,23 +6,23 @@ import AddIcon from '@mui/icons-material/Add';
 import HomeIcon from '@mui/icons-material/Home';
 import MusicNoteIcon from '@mui/icons-material/MusicNote';
 import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
-import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import ScheduleIcon from '@mui/icons-material/Schedule';
 import StarIcon from '@mui/icons-material/Star';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import DeleteIcon from '@mui/icons-material/Delete';
+import GroupsIcon from '@mui/icons-material/Groups';
+import InterpreterModeIcon from '@mui/icons-material/InterpreterMode';
 
-import {useLeftToggle} from "@/context/contextToggleVerboseNav";
-
-import BigButton from "@/components/elements/BigButton";
+import BigNavigationButton from "@/components/elements/BigNavigationButton";
 import {useRoute} from "@/context/RouteContext";
+import {useGlobalStyle} from "@/context/GlobalStyleContext";
 
 export default function Navigation(props) {
 
     // Routing
     const { navigate } = useRoute();
 
-    const { toggle: leftToggle, isToggled = true } = useLeftToggle();
+    const { navigationVerbose, toggleNavigationVerbose } = useGlobalStyle();
 
     return (
         <>
@@ -54,10 +54,10 @@ export default function Navigation(props) {
                             alignItems: 'center', // Center vertically
                         }}
                     >
-                        <BigButton
+                        <BigNavigationButton
                             isToggleController={true}
-                            isToggled={isToggled}
-                            onClick={leftToggle}
+                            isToggled={navigationVerbose}
+                            onClick={toggleNavigationVerbose}
                         />
                     </Box>
 
@@ -77,8 +77,8 @@ export default function Navigation(props) {
                 >
                     <Box sx={{ height: '1rem' }}></Box>
 
-                    <BigButton
-                        isToggled={isToggled}
+                    <BigNavigationButton
+                        isToggled={navigationVerbose}
                         icon={<HomeIcon fontSize="inherit" />}
                         text={'Home'}
                         href="/"
@@ -87,8 +87,8 @@ export default function Navigation(props) {
 
                     <Box sx={{ height: '2.5rem' }}></Box>
 
-                    <BigButton
-                        isToggled={isToggled}
+                    <BigNavigationButton
+                        isToggled={navigationVerbose}
                         icon={<MusicNoteIcon fontSize="inherit" />}
                         text={'Tracks'}
                         href="/tracks"
@@ -97,28 +97,28 @@ export default function Navigation(props) {
 
                     <Box sx={{ height: '1rem' }}></Box>
 
-                    <BigButton
-                        isToggled={isToggled}
+                    <BigNavigationButton
+                        isToggled={navigationVerbose}
                         icon={<LibraryMusicIcon fontSize="inherit" />}
                         text={'Projects'}
                         href="/projects"
                         onClick={() => navigate('/projects')}
                     />
 
-                    <Box sx={{ height: '2.5rem' }}></Box>
+                    <Box sx={{ height: '1rem' }}></Box>
 
-                    <BigButton
-                        isToggled={isToggled}
-                        icon={<PeopleAltIcon fontSize="inherit" />}
+                    <BigNavigationButton
+                        isToggled={navigationVerbose}
+                        icon={<InterpreterModeIcon fontSize="inherit" />}
                         text={'Collab'}
                         href="/collab"
                         onClick={() => navigate('/collab')}
                     />
 
-                    <Box sx={{ height: '1rem' }}></Box>
+                    <Box sx={{ height: '2.5rem' }}></Box>
 
-                    <BigButton
-                        isToggled={isToggled}
+                    <BigNavigationButton
+                        isToggled={navigationVerbose}
                         icon={<ScheduleIcon fontSize="inherit" />}
                         text={'Recent'}
                         href="/recent"
@@ -127,18 +127,28 @@ export default function Navigation(props) {
 
                     <Box sx={{ height: '1rem' }}></Box>
 
-                    <BigButton
-                        isToggled={isToggled}
+                    <BigNavigationButton
+                        isToggled={navigationVerbose}
                         icon={<StarIcon fontSize="inherit" />}
                         text={'Starred'}
                         href="/starred"
                         onClick={() => navigate('/starred')}
                     />
 
+                    <Box sx={{ height: '1rem' }}></Box>
+
+                    <BigNavigationButton
+                        isToggled={navigationVerbose}
+                        icon={<GroupsIcon fontSize="inherit" />}
+                        text={'Social'}
+                        href="/social"
+                        onClick={() => navigate('/social')}
+                    />
+
                     <Box sx={{ height: '2.5rem' }}></Box>
 
-                    <BigButton
-                        isToggled={isToggled}
+                    <BigNavigationButton
+                        isToggled={navigationVerbose}
                         icon={<InventoryIcon fontSize="inherit" />}
                         text={'Archive'}
                         href="/archive"
@@ -147,8 +157,8 @@ export default function Navigation(props) {
 
                     <Box sx={{ height: '1rem' }}></Box>
 
-                    <BigButton
-                        isToggled={isToggled}
+                    <BigNavigationButton
+                        isToggled={navigationVerbose}
                         icon={<DeleteIcon fontSize="inherit" />}
                         text={'Trash'}
                         href="/trash"
@@ -166,8 +176,8 @@ export default function Navigation(props) {
 
                     <Box sx={{ height: '30px' }}></Box>
 
-                    <BigButton
-                        isToggled={isToggled}
+                    <BigNavigationButton
+                        isToggled={navigationVerbose}
                         icon={<AddIcon fontSize="inherit" />}
                         text={'New'}
                         href="/new"

@@ -4,18 +4,18 @@ import {Box, Divider} from "@mui/material";
 
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 
-import {useRightToggle} from "@/context/contextToggleVerboseFriends";
+import {useGlobalStyle} from "@/context/GlobalStyleContext";
 
 import FriendElement from "@/components/elements/FriendElement";
-import BigButton from "@/components/elements/BigButton";
+import BigNavigationButton from "@/components/elements/BigNavigationButton";
 import {useRoute} from "@/context/RouteContext";
 
 export default function Friends(props) {
 
     // Routing
-    const { navigate, currentRoute } = useRoute();
+    const { navigate } = useRoute();
 
-    const { toggle: rightToggle, isToggled = true } = useRightToggle();
+    const { friendsVerbose, toggleFriendsVerbose } = useGlobalStyle();
 
     return (
     <>
@@ -47,10 +47,10 @@ export default function Friends(props) {
                         alignItems: 'center', // Center vertically
                     }}
                 >
-                    <BigButton
+                    <BigNavigationButton
                         isToggleController={true}
-                        isToggled={isToggled}
-                        onClick={rightToggle}
+                        isToggled={friendsVerbose}
+                        onClick={toggleFriendsVerbose}
                     />
                 </Box>
 
@@ -95,8 +95,8 @@ export default function Friends(props) {
 
                 <Box sx={{ height: '30px' }}></Box>
 
-                <BigButton
-                    isToggled={isToggled}
+                <BigNavigationButton
+                    isToggled={friendsVerbose}
                     icon={<PersonAddIcon fontSize="inherit" />}
                     text={'Add Friend'}
                     href="/addfriend"

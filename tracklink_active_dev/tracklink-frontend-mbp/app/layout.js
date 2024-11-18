@@ -4,21 +4,22 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
-import {Box, CssBaseline, ThemeProvider} from "@mui/material";
+import {Box, createTheme, CssBaseline, ThemeProvider} from "@mui/material";
 import * as React from "react";
-import {LeftToggleProvider} from "@/context/contextToggleVerboseNav";
-import {RightToggleProvider} from "@/context/contextToggleVerboseFriends";
+import {GlobalStyleProvider} from "@/context/GlobalStyleContext";
 import ViewportOuterWrapper from "@/components/containers/ViewportOuterWrapper";
-import darkTheme from "@/utils/theme";
 import {RouteProvider} from "@/context/RouteContext";
 import {AudioPlayerProvider} from "@/context/AudioPlayerContext";
-
-
 
 // Replace this with authentication logic to control whether app layout is displayed or fallback to external site
 const auth = true;
 
-
+// Implement toggleable dark mode
+const darkTheme = createTheme({
+    palette: {
+        mode: 'dark',
+    },
+});
 
 export default function RootLayout({ children }) {
 
@@ -41,17 +42,15 @@ export default function RootLayout({ children }) {
                 }}
             >
                 {auth ?
-                    <LeftToggleProvider>
-                        <RightToggleProvider>
-                            <RouteProvider>
-                                <AudioPlayerProvider>
-                                    <ViewportOuterWrapper>
-                                        {children}
-                                    </ViewportOuterWrapper>
-                                </AudioPlayerProvider>
-                            </RouteProvider>
-                        </RightToggleProvider>
-                    </LeftToggleProvider>
+                    <GlobalStyleProvider>
+                        <RouteProvider>
+                            <AudioPlayerProvider>
+                                <ViewportOuterWrapper>
+                                    {children}
+                                </ViewportOuterWrapper>
+                            </AudioPlayerProvider>
+                        </RouteProvider>
+                    </GlobalStyleProvider>
                     :
                     <>
                         <h1>NO AUTH</h1>

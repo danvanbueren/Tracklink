@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import {Box, Button, Tooltip, Typography} from "@mui/material";
-import {useRightToggle} from "@/context/contextToggleVerboseFriends";
+import {useGlobalStyle} from "@/context/GlobalStyleContext";
 import PersonIcon from '@mui/icons-material/Person';
 import {grey} from "@mui/material/colors";
 import {useRoute} from "@/context/RouteContext";
@@ -76,10 +76,10 @@ export default function FriendElement({ friendUUID }) {
     }
 
     // Toggle drawer
-    const { isToggled = true } = useRightToggle();
+    const { friendsVerbose } = useGlobalStyle();
 
     // Tooltip opacity
-    const tooltipOpacity = isToggled ? 0 : 1;
+    const tooltipOpacity = friendsVerbose ? 0 : 1;
 
     return (
         <Box
@@ -209,7 +209,7 @@ export default function FriendElement({ friendUUID }) {
                     </Box>
 
 
-                    {isToggled &&
+                    {friendsVerbose &&
                         <Box>
                             <Box
                                 sx={{
