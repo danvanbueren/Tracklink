@@ -7,7 +7,7 @@ import CloseFullscreenIcon from '@mui/icons-material/CloseFullscreen';
 import OpenInFullIcon from '@mui/icons-material/OpenInFull';
 import {useRoute} from "@/context/RouteContext";
 
-export default function BigButton({ icon, text, onClick, isToggled, isToggleController, href }) {
+export default function BigNavigationButton({ icon, text, onClick, isToggled, isToggleController, href }) {
 
     // Default values if props not passed
     if (icon === undefined)
@@ -16,7 +16,7 @@ export default function BigButton({ icon, text, onClick, isToggled, isToggleCont
         text = 'Broken'
 
 
-    // Override icon and text if it's a toggle controller
+    // Override icon and text if it's a toggleFriendsVerbose controller
     if (isToggleController) {
         icon = <BrokenImageIcon fontSize="inherit" />;
         text = 'Toggle';
@@ -52,7 +52,6 @@ export default function BigButton({ icon, text, onClick, isToggled, isToggleCont
                 backgroundColor: 'primary.light', // Lighten on active
             }
         };
-        boxSxBorder = '';
         boxSxBgColor = 'primary.main';
         boxSxColor = 'primary.contrastText';
     }
