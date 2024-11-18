@@ -1,0 +1,191 @@
+body,
+      html {
+        width: 100%;
+        height: 100%
+      }
+
+      body {
+        background: linear-gradient(-45deg, #802000, #310032, #003f55, #009f7a);
+        background-size: 400% 400%;
+        animation: gradient 15s ease infinite
+      }
+
+      h1 {
+        background: linear-gradient(-45deg, #ff4000, #930096, #0080af, #00ffc3);
+        background-size: 400% 400%;
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        animation: gradient 15s ease infinite;
+      }
+
+      .commit-container {
+      background-color: #161b22;
+      outline: 1px #454545 solid;
+      padding: 16px;
+      padding-top: 12px;
+      border-radius: 8px;
+      min-width: 400px;
+      width: 31vw;
+      margin-bottom: 4rem;
+
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .avatar {
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      overflow: hidden;
+      margin-right: 10px;
+      outline: 1px #454545 solid;
+    }
+
+    .avatar img {
+      width: 100%;
+      height: 100%;
+    }
+
+    .commit-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      width: auto;
+      max-width: 80%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .commit-message {
+      font-size: 16px;
+      font-weight: bold;
+      color: #c9d1d9;
+      text-decoration: none;
+      padding-bottom: 8px;
+      padding-top: 0;
+      margin-top: 0;
+      max-width: 80%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .commit-message:hover {
+      text-decoration: underline;
+    }
+
+    .commit-author {
+      height: 100%;
+      font-size: 14px;
+      color: #8b949e;
+      padding: 0;
+      margin: 0;
+    }
+
+    .commit-author a {
+      color: #8b949e;
+      text-decoration: none;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .commit-author a:hover {
+      text-decoration: underline;
+    }
+
+    .commit-hash {
+      font-family: monospace;
+      font-size: 12px;
+      color: #8b949e;
+      background-color: #21262d;
+      padding: 2px 6px;
+      border-radius: 6px;
+      text-decoration: none;
+      position: relative;
+    }
+
+    .commit-hash:hover {
+      background-color: #30363d;
+      cursor: pointer;
+    }
+
+    .commit-hash::after {
+      content: 'View commit details';
+      position: absolute;
+      top: -25px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #161b22;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 12px;
+      color: #c9d1d9;
+      opacity: 0;
+      white-space: nowrap;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+
+    .commit-hash:hover::after {
+      opacity: 1;
+    }
+
+    .browse-icon {
+      font-size: 16px;
+      color: #8b949e;
+      padding: 4px;
+      border-radius: 6px;
+      background-color: #21262d;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .browse-icon:hover {
+      background-color: #30363d;
+    }
+
+    .browse-icon::after {
+      content: 'Browse repository at this point';
+      position: absolute;
+      top: -25px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #161b22;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 12px;
+      color: #c9d1d9;
+      opacity: 0;
+      white-space: nowrap;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+
+    .browse-icon:hover::after {
+      opacity: 1;
+    }
+
+      @keyframes gradient {
+        0% {
+          background-position: 0 50%
+        }
+
+        50% {
+          background-position: 100% 50%
+        }
+
+        100% {
+          background-position: 0 50%
+        }
+      }
