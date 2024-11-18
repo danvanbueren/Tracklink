@@ -1,9 +1,10 @@
-import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
+import PauseIcon from "@mui/icons-material/Pause";
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import {IconButton} from "@mui/material";
 import * as React from "react";
 import {useAudioPlayer} from "@/context/AudioPlayerContext";
 
-export default function AddToQueueButton({ trackUUID }) {
+export default function PlayImmediatelyButton({ trackUUID }) {
 
     const {
         playing,
@@ -30,7 +31,11 @@ export default function AddToQueueButton({ trackUUID }) {
                 },
             }}
         >
-            <PlaylistAddIcon sx={{fontSize: '2rem'}}/>
+            {
+                (playing && (currentTrackUUID === trackUUID)) ?
+                    <PauseIcon sx={{fontSize: '2rem'}}/> : <PlayArrowIcon sx={{fontSize: '2rem'}}/>
+            }
+
         </IconButton>
     )
 }
