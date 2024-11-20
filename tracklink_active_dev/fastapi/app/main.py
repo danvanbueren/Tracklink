@@ -1,13 +1,17 @@
-from typing import Union
-
-from fastapi import FastAPI
+from fastapi import FastAPI, UploadFile, File
+import os
 
 app = FastAPI()
 
+MEDIA_ROOT = os.getenv("MEDIA_ROOT", "./media")
+
+@app.post("/upload/")
+async def upload_file(file: UploadFile = File(...)):
+    file_path = os.path.join(MEDIA_ROOT, file.filename)
+    with open(file_path, "wb") as f:
+        f.write(await file.read())
+    return {"filename": file.filename}
+
 @app.get("/")
 def read_root():
-    return {"Hello": "World"}
-
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Union[str, None] = None):
-    return {"item_id": item_id, "q": q}
+    return {"message": "Hello, FastAPI!"}
