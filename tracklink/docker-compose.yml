@@ -1,4 +1,23 @@
 services:
+  frontend:
+    container_name: frontend
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    environment:
+      CHOKIDAR_USEPOLLING: true
+      WATCHPACK_POLLING: true
+      FAST_REFRESH: false
+      WDS_SOCKET_PORT: 3000
+    volumes:
+      - ./frontend:/app
+      - ./frontend/node_modules:/app/node_modules
+    depends_on:
+      - api
+    restart: on-failure
+    networks:
+      - backend_network
+
   api:
     container_name: api
     build: ./api
@@ -12,6 +31,8 @@ services:
     depends_on:
       - database
     restart: on-failure
+    networks:
+      - backend_network
 
   database:
     container_name: database
@@ -25,6 +46,8 @@ services:
     volumes:
       - ./database/db-pgdata-gitignore:/var/lib/postgresql/data
     restart: on-failure
+    networks:
+      - backend_network
 
 networks:
   backend_network:
