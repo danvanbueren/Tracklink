@@ -44,3 +44,4 @@ data/
 __pycache__
 .next/
 node_modules/
+db-pgdata-gitignore/
