@@ -16,12 +16,12 @@ A quick start guide is available [here](./tracklink).
 | tests | A sandbox of tools to test functionality and run unit tests |
 | **tracklink** | **Current working directory for active development** |
 
-### Tech Stack
+## Tech Stack
 - FRONTEND: React, NextJS, MaterialUI
 - BACKEND: FastAPI, Postgres, Express(?)
 - NOTE: The whole stack is containerized with Docker
 
-### Roadmap
+## Roadmap
 1. 🟢 DESIGN MOCKUP - Design frontend skeleton and implement basic client-side functionality
 2. 🟡 SIMPLE BACKEND - Build API endpoints and integrate database and file server
 3. 🔴 STACK INTEGRATION - Connect frontend to API endpoints and finish building out frontend components dependent on dynamic content
