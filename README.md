@@ -26,7 +26,7 @@ A quick start guide is available [here](./tracklink).
 2. 🟡 SIMPLE BACKEND - Build API endpoints and integrate database and file server
 3. 🔴 STACK INTEGRATION - Connect frontend to API endpoints and finish building out frontend components dependent on dynamic content
 4. 🔴 PERMISSIONS - Build out authorization/authentication for user sessions and enforce access control through a permissions system (frontend and backend)
-...
+5. ...
 
 ## ABOUT ME
 
