@@ -4,11 +4,13 @@
 
 See below for more context about the goal and backstory of this application.
 
-## GETTING STARTED
+## TL;DR
 
-A quick start guide is available [here](./tracklink).
+### GUIDE
 
-## REPO STRUCTURE
+A quick start guide to deploy the current development build of this software is available [here](./tracklink).
+
+### REPO STRUCTURE
 | Folder | Description |
 |--|--|
 | archive | Files and snapshots of past builds from previous phases of development no longer applicable to the current build phase |
@@ -16,19 +18,23 @@ A quick start guide is available [here](./tracklink).
 | tests | A sandbox of tools to test functionality and run unit tests |
 | **tracklink** | **Current working directory for active development** |
 
-## Tech Stack
+## DEVELOPMENT
+
+### TECH STACK
 - FRONTEND: React, NextJS, MaterialUI
 - BACKEND: FastAPI, Postgres, Express(?)
 - NOTE: The whole stack is containerized with Docker
 
-## Roadmap
+### ROADMAP
 1. 🟢 DESIGN MOCKUP - Design frontend skeleton and implement basic client-side functionality
 2. 🟡 SIMPLE BACKEND - Build API endpoints and integrate database and file server
 3. 🔴 STACK INTEGRATION - Connect frontend to API endpoints and finish building out frontend components dependent on dynamic content
 4. 🔴 PERMISSIONS - Build out authorization/authentication for user sessions and enforce access control through a permissions system (frontend and backend)
 5. ...
 
-## ABOUT ME
+## CONTEXT
+
+### INSPIRATION
 
 **Hi, I'm Dan**, an overly vertically integrated music producer, engineer, vocalist, songwriter, and everything in between. I've been making music for over fifteen years and have spent much of that experience collaborating with fellow musicians.
 
@@ -36,7 +42,7 @@ Through this experience, I have learned that project management can strangle pro
 
 Well, guess what? I occasionally pretend to be a web developer. Through this time, this small thought slowly blossomed into a full-scale platform while I iterated through my own development of the platform I have christened Tracklink.
 
-## MISSION
+### MISSION
 
 **Tracklink** seeks to offer music producers, engineers and artists a full suite of integrated project management functions in one simple, optimized platform. I have noticed over the course of my own collaboration that musicians have to bend over backwards by using a multitude of different platforms and tools to share ideas and files. My goal with this software is to eliminate the management disaster incurred from using so many platforms.
 
