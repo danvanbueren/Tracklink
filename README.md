@@ -2,7 +2,7 @@
 
 **Tracklink** is a project management solution for music artists, producers and engineers.
 
-See below for more context about the goal and backstory of this application.
+[See below](#context) for more context about the goal and backstory of this application.
 
 ## TL;DR
 
