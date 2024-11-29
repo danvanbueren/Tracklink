@@ -9,7 +9,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-USERNAME = 'user'
+USERNAME = 'username'
 PASSWORD = 'password'
 HOST = 'database'
 PORT = 5432
