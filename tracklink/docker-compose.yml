@@ -40,7 +40,7 @@ services:
     ports:
       - "5430:5432"
     environment:
-      POSTGRES_USER: user
+      POSTGRES_USER: username
       POSTGRES_PASSWORD: password
       POSTGRES_DB: tracklink
     volumes:

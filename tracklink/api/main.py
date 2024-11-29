@@ -1,18 +1,21 @@
+# TODO: When deploying production build, remove localhost from origins array
+
 import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.routes import user
+
+from app.database import engine
+from app.models import Base
+from app.routes import user, testFileUpDown
 
 app = FastAPI()
 
+Base.metadata.create_all(bind=engine)
 
-# REMOVE LOCALHOST FOR PRODUCTION!
 origins = [
     "http://localhost:3000",
     "https://tracklink.app",
 ]
-
-# Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -26,10 +29,9 @@ app.add_middleware(
 async def root():
     return 'Running'
 
-
 app.include_router(user.router, prefix="/user")
 
+app.include_router(testFileUpDown.router, prefix="/test/file")
 
-# Run uvicorn
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)

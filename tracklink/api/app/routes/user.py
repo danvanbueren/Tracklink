@@ -6,7 +6,7 @@ router = APIRouter()
 async def create_user():
     return 'create'
 
-@router.post("/read")
+@router.get("/read")
 async def read_user():
     return 'read'
 
@@ -14,6 +14,6 @@ async def read_user():
 async def update_user():
     return 'update'
 
-@router.post("/delete")
+@router.delete("/delete")
 async def delete_user():
     return 'delete'
