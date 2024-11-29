@@ -37,7 +37,7 @@ Temporary Items
 # End of https://www.toptal.com/developers/gitignore/api/macos
 
 .idea/
-Jim/backend_fastapi/wheels/
+uploaded_files/
 venv/
 data/
 .env
