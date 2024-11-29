@@ -1,3 +1,11 @@
+# app/routes/user.py
+# Copyright © 2024 Daniel Van Bueren. All rights reserved.
+#
+# This software is part of Tracklink and is protected by its license:
+# https://github.com/danvanbueren/Tracklink/blob/main/LICENSE
+
+"""User management endpoints."""
+
 from fastapi import APIRouter
 
 router = APIRouter()
@@ -6,7 +14,7 @@ router = APIRouter()
 async def create_user():
     return 'create'
 
-@router.get("/read")
+@router.get("/read/{uuid}")
 async def read_user():
     return 'read'
 

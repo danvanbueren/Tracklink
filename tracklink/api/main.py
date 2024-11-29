@@ -1,3 +1,11 @@
+# main.py
+# Copyright © 2024 Daniel Van Bueren. All rights reserved.
+#
+# This software is part of Tracklink and is protected by its license:
+# https://github.com/danvanbueren/Tracklink/blob/main/LICENSE
+
+"""API entrypoint and initialization."""
+
 # TODO: When deploying production build, remove localhost from origins array
 
 import uvicorn
@@ -23,7 +31,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 
 @app.get("/")
 async def root():

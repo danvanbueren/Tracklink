@@ -1,6 +1,13 @@
+# app/database.py
+# Copyright © 2024 Daniel Van Bueren. All rights reserved.
+#
+# This software is part of Tracklink and is protected by its license:
+# https://github.com/danvanbueren/Tracklink/blob/main/LICENSE
+
+"""Configuration for database."""
+
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy.orm import Session
 
 USERNAME = 'user'
 PASSWORD = 'password'
@@ -9,15 +16,5 @@ PORT = 5432
 DATABASE = 'tracklink'
 URL = f'postgresql://{USERNAME}:{PASSWORD}@{HOST}:{PORT}/{DATABASE}'
 
-print('Connecting to ' + URL)
 engine = create_engine(URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
-def get_db():
-    db: Session = SessionLocal()
-    try:
-        print('yield db')
-        yield db
-    finally:
-        db.close()
-        print('close db')

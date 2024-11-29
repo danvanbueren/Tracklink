@@ -1,3 +1,11 @@
+# app/routes/testFileUpDown.py
+# Copyright © 2024 Daniel Van Bueren. All rights reserved.
+#
+# This software is part of Tracklink and is protected by its license:
+# https://github.com/danvanbueren/Tracklink/blob/main/LICENSE
+
+"""Development-only file upload and download endpoints."""
+
 from fastapi import APIRouter, File, UploadFile, HTTPException, Query
 from fastapi.responses import FileResponse
 import os
@@ -5,12 +13,13 @@ import shutil
 
 from app.database import SessionLocal
 from app.fileserver import UPLOAD_DIRECTORY
-from app.models import FileMeta
+from app.models import FileMetadataTable
 
 router = APIRouter()
 
 @router.post("/create/")
 async def upload_file(file: UploadFile = File(...)):
+    # Upload file
     file_path = os.path.join(UPLOAD_DIRECTORY, file.filename)
     try:
         with open(file_path, "wb") as f:
@@ -20,7 +29,7 @@ async def upload_file(file: UploadFile = File(...)):
 
     # Save metadata to database
     db = SessionLocal()
-    file_meta = FileMeta(filename=file.filename, filepath=file_path)
+    file_meta = FileMetadataTable(filename=file.filename, filepath=file_path)
     db.add(file_meta)
     db.commit()
     db.refresh(file_meta)
@@ -37,7 +46,7 @@ def list_files(skip: int = Query(0, ge=0), limit: int = Query(10, ge=1)):
     - `limit`: Maximum number of files to return.
     """
     db = SessionLocal()
-    files = db.query(FileMeta).offset(skip).limit(limit).all()
+    files = db.query(FileMetadataTable).offset(skip).limit(limit).all()
     db.close()
 
     if not files:
@@ -49,7 +58,7 @@ def list_files(skip: int = Query(0, ge=0), limit: int = Query(10, ge=1)):
 @router.get("/read/{file_id}")
 def download_files(file_id: int):
     db = SessionLocal()
-    file_meta = db.query(FileMeta).filter(FileMeta.id == file_id).first()
+    file_meta = db.query(FileMetadataTable).filter(FileMetadataTable.id == file_id).first()
     db.close()
     if not file_meta:
         raise HTTPException(status_code=404, detail="File not found")
@@ -58,7 +67,7 @@ def download_files(file_id: int):
 @router.delete("/delete/{file_id}")
 def delete_file(file_id: int):
     db = SessionLocal()
-    file_meta = db.query(FileMeta).filter(FileMeta.id == file_id).first()
+    file_meta = db.query(FileMetadataTable).filter(FileMetadataTable.id == file_id).first()
 
     if not file_meta:
         db.close()
