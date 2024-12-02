@@ -38,7 +38,5 @@ async def root():
 
 app.include_router(user.router, prefix="/user")
 
-app.include_router(testFileUpDown.router, prefix="/test/file")
-
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)

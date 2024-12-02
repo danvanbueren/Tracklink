@@ -15,9 +15,6 @@ from app.database import SessionLocal
 from app.fileserver import UPLOAD_DIRECTORY
 from app.models import FileMetadataTable
 
-router = APIRouter()
-
-@router.post("/create/")
 async def upload_file(file: UploadFile = File(...)):
     # Upload file
     file_path = os.path.join(UPLOAD_DIRECTORY, file.filename)
@@ -37,8 +34,6 @@ async def upload_file(file: UploadFile = File(...)):
 
     return {"id": file_meta.id, "filename": file_meta.filename}
 
-
-@router.get("/read/")
 def list_files(skip: int = Query(0, ge=0), limit: int = Query(10, ge=1)):
     """
     List all files with optional pagination.
@@ -54,8 +49,6 @@ def list_files(skip: int = Query(0, ge=0), limit: int = Query(10, ge=1)):
 
     return [{"id": file.id, "filename": file.filename, "uploaded_at": file.uploaded_at} for file in files]
 
-
-@router.get("/read/{file_id}")
 def download_files(file_id: int):
     db = SessionLocal()
     file_meta = db.query(FileMetadataTable).filter(FileMetadataTable.id == file_id).first()
@@ -64,7 +57,6 @@ def download_files(file_id: int):
         raise HTTPException(status_code=404, detail="File not found")
     return FileResponse(path=file_meta.filepath, filename=file_meta.filename)
 
-@router.delete("/delete/{file_id}")
 def delete_file(file_id: int):
     db = SessionLocal()
     file_meta = db.query(FileMetadataTable).filter(FileMetadataTable.id == file_id).first()
