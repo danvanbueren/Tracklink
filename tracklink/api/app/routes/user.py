@@ -7,8 +7,8 @@
 """User management endpoints."""
 
 from fastapi import APIRouter, HTTPException
-from app.database import SessionLocal
-from app.models import UsersTable
+from app.config_database import SessionLocal
+from app.database_models import UsersTable
 
 router = APIRouter()
 

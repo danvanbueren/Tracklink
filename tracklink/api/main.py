@@ -12,8 +12,8 @@ import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.database import engine
-from app.models import Base
+from app.config_database import engine
+from app.database_models import Base
 from app.routes import user, testFileUpDown
 
 app = FastAPI()

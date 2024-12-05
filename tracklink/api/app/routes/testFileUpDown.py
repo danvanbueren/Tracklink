@@ -11,9 +11,9 @@ from fastapi.responses import FileResponse
 import os
 import shutil
 
-from app.database import SessionLocal
-from app.fileserver import UPLOAD_DIRECTORY
-from app.models import FileMetadataTable
+from app.config_database import SessionLocal
+from app.config_fileserver import UPLOAD_DIRECTORY
+from app.database_models import FileMetadataTable
 
 async def upload_file(file: UploadFile = File(...)):
     # Upload file

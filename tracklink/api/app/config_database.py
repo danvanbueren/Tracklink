@@ -1,4 +1,4 @@
-# app/database.py
+# app/config_database.py
 # Copyright © 2024 Daniel Van Bueren. All rights reserved.
 #
 # This software is part of Tracklink and is protected by its license:
