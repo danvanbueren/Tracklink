@@ -24,7 +24,7 @@ async def create_user(email: str, password: str, display_name: str):
 
     return {"id": row.id}
 
-@router.get("/read/{uuid}")
+@router.get("/read/{user_id}")
 async def read_user(user_id: int):
     db = SessionLocal()
     users = db.query(UsersTable).filter(UsersTable.id == user_id).first()
