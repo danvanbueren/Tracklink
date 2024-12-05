@@ -14,7 +14,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.config_database import engine
 from app.database_models import Base
-from app.routes import user, testFileUpDown
+from app.routes import user, authentication
 
 app = FastAPI()
 
@@ -37,6 +37,8 @@ async def root():
     return 'Running'
 
 app.include_router(user.router, prefix="/user")
+
+app.include_router(authentication.router, prefix="/authentication")
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
