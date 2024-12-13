@@ -6,31 +6,44 @@
 
 """Base definitions for database tables."""
 
-from sqlalchemy import Column, Integer, String, DateTime, Boolean
+from sqlalchemy import Column, Integer, String, DateTime, Boolean, ForeignKey, Enum
 from sqlalchemy.ext.declarative import declarative_base
-from datetime import datetime, timezone
+from sqlalchemy.sql import func
+import enum
 
 Base = declarative_base()
 
+class PrivacyType(enum.Enum):
+    PUBLIC = "public"
+    FRIENDS_OF_FRIENDS = "friends_of_friends"
+    FRIENDS = "friends"
+    PRIVATE = "private"
+
+class BaseModel(Base):
+    __abstract__ = True
+    created_at = Column(DateTime, default=func.now(), nullable=False)
+    updated_at = Column(DateTime, default=func.now(), onupdate=func.now(), nullable=False)
+
 # Root Users Table
-class UsersTable(Base):
+class UsersTable(BaseModel):
     __tablename__ = "users_table"
-    pkey_id = Column(Integer, primary_key=True, index=True, autoincrement=True) #Int
-    email = Column(String, unique=True, index=True) #String
-    password_hash = Column(String) #String
-    display_name = Column(String, unique=True, index=True) #String
-    last_active = Column(DateTime, default=datetime.now(timezone.utc)) #DateTime
-    default_privacy_type = Column(String, index=True)  # String: private, public, friends, friends_of_friends
+    pkey_id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    email = Column(String(255), unique=True, index=True, nullable=False)
+    password_hash = Column(String(255), nullable=False)
+    display_name = Column(String(100), unique=True, index=True, nullable=False)
+    last_active = Column(DateTime, default=func.now(), nullable=False, index=True)
+    default_privacy_type = Column(Enum(PrivacyType), default=PrivacyType.FRIENDS, nullable=False)
+    disabled = Column(Boolean, default=False, nullable=False)
 
 # Friend Requests Table (Joins to Users Table)
-class FriendRequestsTable(Base):
+class FriendRequestsTable(BaseModel):
     __tablename__ = "friend_requests_table"
-    pkey_id = Column(Integer, primary_key=True, index=True, autoincrement=True)  # Int
-    fkey_request_owner = Column(Integer, index=True, nullable=False)  # Int
-    fkey_request_recipient = Column(Integer, index=True, nullable=False)  # Int
-    request_accepted = Column(Boolean, index=True, nullable=False)
-    request_sent = Column(DateTime, default=datetime.now(timezone.utc))  # DateTime
-    response_recorded = Column(DateTime)  # DateTime
+    pkey_id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    fkey_request_owner = Column(Integer, ForeignKey("users_table.pkey_id"), index=True, nullable=False)
+    fkey_request_recipient = Column(Integer, ForeignKey("users_table.pkey_id"), index=True, nullable=False)
+    request_response = Column(Boolean, index=True, nullable=True)
+    owner_requested_at = Column(DateTime, default=func.now(), nullable=False)
+    recipient_responded_at = Column(DateTime, nullable=True)
 
 # Access Reset Table (Joins to Users Table)
 class AccessResetTable(Base):
@@ -62,7 +75,7 @@ class TrackContentTable(Base):
     fkey_track = Column(Integer, index=True, nullable=False)  # Int
     fkey_owner = Column(Integer, index=True, nullable=False)  # Int
     fkey_internal_recursive = Column(Integer, index=True)  # Int
-    created = Column(DateTime, default=datetime.now(timezone.utc), nullable=False)  # DateTime
+    created = Column(DateTime, default=func.now(), nullable=False)  # DateTime
     content_type = Column(String, index=True, nullable=False)  # String: system_comment, user_comment, stem_group, stem_group_part, stem_solo, bounce, cover_art,
     content_filepath = Column(String)  # String
     content_text = Column(String)  # String
@@ -72,4 +85,4 @@ class FileMetadataTable(Base):
     pkey_id = Column(Integer, primary_key=True, index=True, autoincrement=True) #Int
     filename = Column(String, index=True, nullable=False)
     filepath = Column(String, nullable=False)
-    uploaded_at = Column(DateTime, default=datetime.now(timezone.utc))
+    uploaded_at = Column(DateTime, default=func.now())

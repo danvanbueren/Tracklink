@@ -5,18 +5,21 @@
 # https://github.com/danvanbueren/Tracklink/blob/main/LICENSE
 
 """Authentication boilerplate."""
-from datetime import timedelta, datetime
 
-from fastapi import Depends, HTTPException, status
+from datetime import timedelta, datetime, timezone
+
+from fastapi import Depends, HTTPException
 from fastapi.security import OAuth2PasswordBearer
 from jose import jwt
 from passlib.context import CryptContext
+from sqlalchemy.orm import Session
 
+from app.config_database import get_db
+from app.database_models import UsersTable
 from app.pydantic_models import UserInDB, TokenData
 
 # FOR DEVELOPMENT PURPOSES, NOT USING SECRET KEY
 # CHANGE TO .ENV SECRET FOR DEPLOYMENT!!
-
 
 # from decouple import config
 #
@@ -29,18 +32,6 @@ SECRET_KEY = "dd91a87bb8b2cd5478d84316c6813cb10096598e5a0ec2cf48c7ff8e051451ae"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
-# simulate db first, connect later
-# hashed password is "password"
-db = {
-    "username": {
-        "username": "username",
-        "full_name": "Some User",
-        "email": "user@gmail.com",
-        "hashed_password": "$2b$12$JvquHmsNp12ePjioElhwTOaTvR3N86bV1.nHAoXctuUG2X65wrFdS",
-        "disabled": False
-    }
-}
-
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="authentication/token")
 
@@ -50,19 +41,24 @@ def verify_password(plain_password, hashed_password):
 def get_password_hash(password):
     return pwd_context.hash(password)
 
-def get_user(db, username: str):
-    if username in db:
-        user_data = db[username]
-        return UserInDB(**user_data)
+def get_user(email: str, db: Session = Depends(get_db)):
+    try:
+        user_data = db.query(UsersTable).filter(UsersTable.email == email).first()
 
-def authenticate_user(db, username: str, password: str):
-    user = get_user(db, username)
+        if user_data is None:
+            raise HTTPException(status_code=404, detail="User not found")
+        return user_data
+    except Exception as e:
+        raise HTTPException(status_code=503, detail="Unable to connect to database") from e
+
+def authenticate_user(email: str, password: str):
+    user = get_user(email)
 
     if not user:
-        return False
+        raise HTTPException(status_code=404, detail="User not found")
 
-    if not verify_password(password, user.hashed_password):
-        return False
+    if not verify_password(password, user.password_hash):
+        raise HTTPException(status_code=401, detail="Failed to authenticate")
 
     return user
 
@@ -70,9 +66,9 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None):
     to_encode = data.copy()
 
     if expires_delta:
-        expire = datetime.utcnow() + expires_delta
+        expire = datetime.now(timezone.utc) + expires_delta
     else:
-        expire = datetime.utcnow() + timedelta(minutes=15)
+        expire = datetime.now(timezone.utc) + timedelta(minutes=15)
 
     to_encode.update({"exp": expire})
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
@@ -80,23 +76,21 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None):
     return encoded_jwt
 
 async def get_current_user(token: str = Depends(oauth2_scheme)):
-    credential_exception = HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Could not validate credentials", headers={"WWW-Authenticate": "Bearer"})
-
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        username: str = payload.get("sub")
+        email: str = payload.get("sub")
 
-        if username is None:
-            raise credential_exception
+        if email is None:
+            raise HTTPException(status_code=401, detail="Failed to authenticate")
 
-        token_data = TokenData(username=username)
+        token_data = TokenData(email=email)
     except:
-        raise credential_exception
+        raise HTTPException(status_code=401, detail="Failed to authenticate")
 
-    user = get_user(db, username=token_data.username)
+    user = get_user(email=token_data.email)
 
     if user is None:
-        raise credential_exception
+        raise HTTPException(status_code=401, detail="Failed to authenticate")
 
     return user
 

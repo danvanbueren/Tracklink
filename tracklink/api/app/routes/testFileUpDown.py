@@ -6,7 +6,7 @@
 
 """Development-only file upload and download endpoints."""
 
-from fastapi import APIRouter, File, UploadFile, HTTPException, Query
+from fastapi import File, UploadFile, HTTPException, Query
 from fastapi.responses import FileResponse
 import os
 import shutil

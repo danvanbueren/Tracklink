@@ -5,35 +5,10 @@
 # https://github.com/danvanbueren/Tracklink/blob/main/LICENSE
 
 """Base definitions for API requests and responses."""
+from datetime import datetime
+from typing import List
 
 from pydantic import BaseModel
-
-class CreateUserRequest(BaseModel):
-    username: str
-    email: str
-    password: str
-
-class CreateUserResponse(BaseModel):
-    actionSuccess: bool
-    uuid: str
-
-class ReadUserRequest(BaseModel):
-    uuid: str
-
-class ReadUserResponse(BaseModel):
-    uuid: str
-    username: str
-    email: str
-
-class UpdateUserRequest(BaseModel):
-    username: str
-    email: str
-    password: str
-
-class DeleteUserRequest(BaseModel):
-    username: str
-    email: str
-    password: str
 
 # Authentication
 
@@ -42,7 +17,7 @@ class Token(BaseModel):
     token_type: str
 
 class TokenData(BaseModel):
-    username: str | None = None
+    email: str | None = None
 
 class User(BaseModel):
     username: str
@@ -52,3 +27,15 @@ class User(BaseModel):
 
 class UserInDB(User):
     hashed_password: str
+    pkey_id: int
+
+# Friends
+
+class Friend(BaseModel):
+    user_id: int
+    last_active: datetime
+    display_name: str
+    avatar_filepath: str
+
+class FriendsList(BaseModel):
+    friends: List[Friend]

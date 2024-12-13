@@ -9,12 +9,13 @@
 # TODO: When deploying production build, remove localhost from origins array
 
 import uvicorn
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
+from sqlalchemy.orm import Session
 
-from app.config_database import engine
-from app.database_models import Base
-from app.routes import user, authentication
+from app.config_database import engine, get_db
+from app.database_models import Base, UsersTable
+from app.routes import user, authentication, friends
 
 app = FastAPI()
 
@@ -33,12 +34,12 @@ app.add_middleware(
 )
 
 @app.get("/")
-async def root():
+async def api_status():
     return 'Running'
 
 app.include_router(user.router, prefix="/user")
-
-app.include_router(authentication.router, prefix="/authentication")
+app.include_router(authentication.router, prefix="/auth")
+app.include_router(friends.router, prefix="/friends")
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
