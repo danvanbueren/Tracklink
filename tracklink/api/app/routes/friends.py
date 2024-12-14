@@ -7,6 +7,8 @@
 """Friend request and list endpoints."""
 
 from fastapi import APIRouter, HTTPException, Depends
+from sqlalchemy import and_
+from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 
 from app.authentication import get_current_active_user
@@ -20,13 +22,10 @@ router = APIRouter()
 async def testtest(current_user: User = Depends(get_current_active_user)):
     return current_user
 
-
-
 @router.get("/list")
 async def read_friends(db: Session = Depends(get_db), current_user: User = Depends(get_current_active_user)):
     try:
-
-        current_user_id = current_user.email
+        current_user_id = current_user.pkey_id
 
         friends = (
             db.query(UsersTable)
@@ -34,7 +33,7 @@ async def read_friends(db: Session = Depends(get_db), current_user: User = Depen
             .filter(
                 and_(
                     FriendRequestsTable.fkey_request_owner == current_user_id,
-                    FriendRequestsTable.request_accepted == True
+                    FriendRequestsTable.request_response == True
                 )
             )
             .all()
