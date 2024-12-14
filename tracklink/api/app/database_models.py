@@ -5,7 +5,6 @@
 # https://github.com/danvanbueren/Tracklink/blob/main/LICENSE
 
 """Base definitions for database tables."""
-
 from sqlalchemy import Column, Integer, String, DateTime, Boolean, ForeignKey, Enum
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.sql import func
