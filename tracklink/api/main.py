@@ -14,7 +14,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 
 from app.config_database import engine, get_db
-from app.database_models import Base, UsersTable
+from app.database_models import Base
 from app.routes import user, authentication, friends
 
 app = FastAPI()
@@ -34,8 +34,24 @@ app.add_middleware(
 )
 
 @app.get("/")
-async def api_status():
-    return 'Running'
+async def api_status(db: Session = Depends(get_db)):
+    try:
+        postgres_status = db.is_active
+    except:
+        postgres_status = False
+
+    if postgres_status:
+        postgres_status = 'running'
+    else:
+        postgres_status = 'stopped'
+
+    return {
+        'api_status': {
+            'uvicorn': 'running',
+            'fastapi': 'running',
+            'db_post': postgres_status,
+        }
+    }
 
 app.include_router(user.router, prefix="/user")
 app.include_router(authentication.router, prefix="/auth")
