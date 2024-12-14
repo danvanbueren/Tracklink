@@ -7,6 +7,7 @@
 """User management endpoints."""
 
 from fastapi import APIRouter, HTTPException, Depends
+from pydantic import BaseModel, EmailStr
 from sqlalchemy.orm import Session
 
 from app.authentication import get_current_active_user, get_password_hash
@@ -16,10 +17,20 @@ from app.pydantic_models import User
 
 router = APIRouter()
 
+# Request body schema
+class CreateUserRequest(BaseModel):
+    email: EmailStr
+    password: str
+    display_name: str
+
 @router.post("/create")
-async def create_user(email: str, password: str, display_name: str, db: Session = Depends(get_db)):
+async def create_user(user: CreateUserRequest, db: Session = Depends(get_db)):
     try:
-        row = UsersTable(email=email, password_hash=get_password_hash(password), display_name=display_name)
+        row = UsersTable(
+            email=user.email,
+            password_hash=get_password_hash(user.password),
+            display_name=user.display_name
+        )
         db.add(row)
         db.commit()
         db.refresh(row)
@@ -54,6 +65,6 @@ async def list_users_devtool(db: Session = Depends(get_db)):
 async def update_user_display_name(new_display_name: str, current_user: User = Depends(get_current_active_user)):
     raise HTTPException(status_code=501, detail="Endpoint not yet implemented")
 
-@router.delete("/delete")
-async def delete_user():
+@router.delete("/delete/{user_id}")
+async def delete_user(user_id: int, db: Session = Depends(get_db)):
     raise HTTPException(status_code=501, detail="Endpoint not yet implemented")

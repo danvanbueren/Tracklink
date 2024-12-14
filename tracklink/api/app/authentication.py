@@ -12,7 +12,8 @@ from fastapi import Depends, HTTPException
 from fastapi.security import OAuth2PasswordBearer
 from jose import jwt
 from passlib.context import CryptContext
-from sqlalchemy.orm import Session
+from pydantic import EmailStr
+import json
 
 from app.config_database import get_db
 from app.database_models import UsersTable
@@ -41,15 +42,17 @@ def verify_password(plain_password, hashed_password):
 def get_password_hash(password):
     return pwd_context.hash(password)
 
-def get_user(email: str, db: Session = Depends(get_db)):
+def get_user(email: EmailStr):
     try:
+        db = next(get_db())
         user_data = db.query(UsersTable).filter(UsersTable.email == email).first()
 
         if user_data is None:
             raise HTTPException(status_code=404, detail="User not found")
         return user_data
     except Exception as e:
-        raise HTTPException(status_code=503, detail="Unable to connect to database") from e
+        print(f"Error in get_user: {e}")  # Replace with proper logging
+        raise HTTPException(status_code=503, detail=str(e))
 
 def authenticate_user(email: str, password: str):
     user = get_user(email)
@@ -63,7 +66,16 @@ def authenticate_user(email: str, password: str):
     return user
 
 def create_access_token(data: dict, expires_delta: timedelta | None = None):
+    if not isinstance(data, dict):
+        raise ValueError("create_access_token() :: `data` object must be of type `dict`")
+
     to_encode = data.copy()
+
+    try:
+        json.dumps(to_encode)  # Validate if data is JSON serializable
+    except (TypeError, ValueError) as e:
+        print(f"Non-serializable data encountered: {e}")  # Detailed logging
+        raise ValueError("to_encode contains non-serializable data")
 
     if expires_delta:
         expire = datetime.now(timezone.utc) + expires_delta
