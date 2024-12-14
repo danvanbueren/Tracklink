@@ -51,8 +51,19 @@ async def read_friends(db: Session = Depends(get_db), current_user: User = Depen
             for friend in friends
         ]
 
-    except Exception as e:
-        raise HTTPException(status_code=503, detail="Unable to connect to database") from e
+
+    except HTTPException as http_error:
+        raise http_error
+    except SQLAlchemyError as db_error:
+        raise HTTPException(
+            status_code=503,
+            detail="A database error occurred while processing your request. Please try again later."
+        ) from db_error
+    except Exception as unexpected_error:
+        raise HTTPException(
+            status_code=500,
+            detail="An unexpected error occurred. Please contact support if this persists."
+        ) from unexpected_error
 
 @router.post("/request/add/{user_id}")
 async def create_friend_request(user_id: int):
