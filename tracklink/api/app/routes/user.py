@@ -23,11 +23,11 @@ class CreateUserRequest(BaseModel):
     display_name: str
 
 @router.post("/create")
-async def create_user(user: CreateUserRequest):
+async def create_new_user(user: CreateUserRequest):
     try:
         db = next(get_db())
         row = UsersTable(
-            email=user.email,
+            email=str(user.email),
             password_hash=get_password_hash(user.password),
             display_name=user.display_name
         )
