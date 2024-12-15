@@ -18,7 +18,7 @@ from app.pydantic_models import User
 router = APIRouter()
 
 @router.get("/list")
-async def read_friends(current_user: User = Depends(get_current_active_user)):
+async def get_friends_of_current_user(current_user: User = Depends(get_current_active_user)):
     try:
         db = next(get_db())
         current_user_id = current_user.pkey_id
@@ -61,8 +61,8 @@ async def read_friends(current_user: User = Depends(get_current_active_user)):
             detail="An unexpected error occurred. Please contact support if this persists."
         ) from unexpected_error
 
-@router.post("/request/add/{user_id}")
-async def create_friend_request(user_id: int, current_user: User = Depends(get_current_active_user)):
+@router.post("/request/create/{user_id}")
+async def create_new_friend_request(user_id: int, current_user: User = Depends(get_current_active_user)):
     try:
         db = next(get_db())
         current_user_id = current_user.pkey_id
@@ -74,8 +74,8 @@ async def create_friend_request(user_id: int, current_user: User = Depends(get_c
                             detail="An unexpected error occurred. Please contact support if this persists.") from unexpected_error
 
 # respond to friend request
-@router.post("/request/response/{friend_request_id}/{decision_bool}")
-async def create_friend_request(friend_request_id: int, decision_bool: bool, current_user: User = Depends(get_current_active_user)):
+@router.post("/request/respond/{friend_request_id}/{decision_bool}")
+async def respond_to_pending_friend_request(friend_request_id: int, decision_bool: bool, current_user: User = Depends(get_current_active_user)):
     try:
         db = next(get_db())
         current_user_id = current_user.pkey_id

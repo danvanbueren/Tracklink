@@ -51,8 +51,10 @@ async def read_user(user_id: int, db: Session = Depends(get_db)):
         }
     except Exception as e:
         raise HTTPException(status_code=503, detail="Unable to connect to database") from e
+
+# TODO: delete devtool for production
 @router.get("/list")
-async def list_users_devtool(db: Session = Depends(get_db)):
+async def list_all_users_devtool(db: Session = Depends(get_db)):
     try:
         users = db.query(UsersTable).all()
         if not users:
@@ -62,9 +64,9 @@ async def list_users_devtool(db: Session = Depends(get_db)):
         raise HTTPException(status_code=503, detail="Unable to connect to database") from e
 
 @router.post("/update/display_name/{new_display_name}")
-async def update_user_display_name(new_display_name: str, current_user: User = Depends(get_current_active_user)):
+async def update_current_user_display_name(new_display_name: str, current_user: User = Depends(get_current_active_user)):
     raise HTTPException(status_code=501, detail="Endpoint not yet implemented")
 
 @router.delete("/delete/{user_id}")
-async def delete_user(user_id: int, db: Session = Depends(get_db)):
+async def delete_current_user(user_id: int, db: Session = Depends(get_db)):
     raise HTTPException(status_code=501, detail="Endpoint not yet implemented")
