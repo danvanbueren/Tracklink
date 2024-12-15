@@ -57,7 +57,7 @@ class TracksTable(Base):
     pkey_id = Column(Integer, primary_key=True, index=True, autoincrement=True) #Int
     fkey_owner = Column(Integer, index=True, nullable=False) #Int
     track_name = Column(String, index=True, nullable=False) #String
-    privacy_type = Column(String, index=True, nullable=False) #String: private, public, friends, friends_of_friends
+    privacy_type = Column(Enum(PrivacyType), default=PrivacyType.FRIENDS, nullable=False)
 
 # Track Contributors Table (Joins to Tracks Table)
 class TrackContributorsTable(Base):
