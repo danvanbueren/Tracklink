@@ -11,7 +11,7 @@ from fastapi import APIRouter, HTTPException, Depends
 
 from app.authentication import get_current_active_user
 from app.config_database import get_db
-from app.database_models import TracksTable, PrivacyType
+from app.database_models import TracksTable, PrivacyType, UsersTable
 from app.pydantic_models import User
 
 router = APIRouter()
@@ -25,7 +25,7 @@ async def create_user(track_name: str, explicit_privacy_type: Optional[PrivacyTy
         db = next(get_db())
         current_user_id = current_user.pkey_id
 
-        user_default_privacy_type = PrivacyType.PRIVATE
+        user_default_privacy_type = db.query(UsersTable).filter(UsersTable.pkey_id == current_user_id).first().default_privacy_type
 
         row = TracksTable(
             fkey_owner=current_user_id,
