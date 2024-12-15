@@ -1,4 +1,4 @@
-# app/routes/friends.py
+# app/routes/friend.py
 # Copyright © 2024 Daniel Van Bueren. All rights reserved.
 #
 # This software is part of Tracklink and is protected by its license:
@@ -10,7 +10,7 @@ from fastapi import APIRouter, HTTPException, Depends
 from sqlalchemy import and_
 from sqlalchemy.exc import SQLAlchemyError
 
-from app.authentication import get_current_active_user
+from app.authenticationLogic import get_current_active_user
 from app.config_database import get_db
 from app.database_models import UsersTable, FriendRequestsTable
 from app.pydantic_models import User

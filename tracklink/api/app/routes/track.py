@@ -1,4 +1,4 @@
-# app/routes/tracks.py
+# app/routes/track.py
 # Copyright © 2024 Daniel Van Bueren. All rights reserved.
 #
 # This software is part of Tracklink and is protected by its license:
@@ -9,7 +9,7 @@ from typing import Optional
 
 from fastapi import APIRouter, HTTPException, Depends
 
-from app.authentication import get_current_active_user
+from app.authenticationLogic import get_current_active_user
 from app.config_database import get_db
 from app.database_models import TracksTable, PrivacyType, UsersTable
 from app.pydantic_models import User

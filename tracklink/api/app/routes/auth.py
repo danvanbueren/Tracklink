@@ -1,4 +1,4 @@
-# app/routes/authentication.py
+# app/routes/authenticationLogic.py
 # Copyright © 2024 Daniel Van Bueren. All rights reserved.
 #
 # This software is part of Tracklink and is protected by its license:
@@ -10,7 +10,7 @@ from datetime import timedelta
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 
-from app.authentication import authenticate_user, ACCESS_TOKEN_EXPIRE_MINUTES, create_access_token, get_current_active_user
+from app.authenticationLogic import authenticate_user, ACCESS_TOKEN_EXPIRE_MINUTES, create_access_token, get_current_active_user
 from app.pydantic_models import Token, User
 
 router = APIRouter()
