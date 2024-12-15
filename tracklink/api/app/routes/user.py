@@ -54,7 +54,7 @@ async def read_user(user_id: int):
         raise e
 
 # TODO: delete devtool for production
-@router.get("/list")
+@router.get("/DEVTOOL_LIST_DEVTOOL")
 async def list_all_users_devtool():
     try:
         db = next(get_db())

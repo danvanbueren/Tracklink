@@ -40,7 +40,7 @@ async def create_new_track(track_name: str, explicit_privacy_type: Optional[Priv
         raise e
 
 # TODO: delete devtool for production
-@router.get("/list")
+@router.get("/DEVTOOL_LIST_DEVTOOL")
 async def list_all_tracks_devtool():
     try:
         db = next(get_db())
