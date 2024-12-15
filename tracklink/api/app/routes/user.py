@@ -9,7 +9,7 @@
 from fastapi import APIRouter, HTTPException, Depends
 from pydantic import BaseModel, EmailStr
 
-from app.authenticationLogic import get_current_active_user, get_password_hash
+from app.authLogic import get_current_active_user, get_password_hash
 from app.config_database import get_db
 from app.database_models import UsersTable
 from app.pydantic_models import User

@@ -10,7 +10,7 @@ from fastapi import APIRouter, HTTPException, Depends
 from sqlalchemy import and_
 from sqlalchemy.exc import SQLAlchemyError
 
-from app.authenticationLogic import get_current_active_user
+from app.authLogic import get_current_active_user
 from app.config_database import get_db
 from app.database_models import UsersTable, FriendRequestsTable
 from app.pydantic_models import User
