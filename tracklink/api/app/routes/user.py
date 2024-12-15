@@ -36,7 +36,7 @@ async def create_new_user(user: CreateUserRequest):
         db.refresh(row)
         return {"detail": "Created user", "id": row.pkey_id}
     except Exception as e:
-        raise HTTPException(status_code=503, detail="Unable to connect to database") from e
+        raise e
 
 @router.get("/read/{user_id}")
 async def read_user(user_id: int):
@@ -51,19 +51,22 @@ async def read_user(user_id: int):
             'display_name': users.display_name,
         }
     except Exception as e:
-        raise HTTPException(status_code=503, detail="Unable to connect to database") from e
+        raise e
 
 # TODO: delete devtool for production
 @router.get("/list")
 async def list_all_users_devtool():
     try:
         db = next(get_db())
+
         users = db.query(UsersTable).all()
+
         if not users:
             raise HTTPException(status_code=404, detail="No users found")
+
         return users
     except Exception as e:
-        raise HTTPException(status_code=503, detail="Unable to connect to database") from e
+        raise e
 
 @router.post("/update/display_name/{new_display_name}")
 async def update_current_user_display_name(new_display_name: str, current_user: User = Depends(get_current_active_user)):
@@ -73,8 +76,8 @@ async def update_current_user_display_name(new_display_name: str, current_user: 
 
         raise HTTPException(status_code=501, detail="Endpoint not yet implemented")
 
-    except Exception as unexpected_error:
-        raise HTTPException(status_code=500, detail="An unexpected error occurred. Please contact support if this persists.") from unexpected_error
+    except Exception as e:
+        raise e
 
 @router.delete("/delete")
 async def delete_current_user(current_user: User = Depends(get_current_active_user)):
@@ -84,5 +87,5 @@ async def delete_current_user(current_user: User = Depends(get_current_active_us
 
         raise HTTPException(status_code=501, detail="Endpoint not yet implemented")
 
-    except Exception as unexpected_error:
-        raise HTTPException(status_code=500, detail="An unexpected error occurred. Please contact support if this persists.") from unexpected_error
+    except Exception as e:
+        raise e

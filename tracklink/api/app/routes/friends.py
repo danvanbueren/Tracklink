@@ -22,7 +22,6 @@ async def get_friends_of_current_user(current_user: User = Depends(get_current_a
     try:
         db = next(get_db())
         current_user_id = current_user.pkey_id
-
         friends = (
             db.query(UsersTable)
             .join(FriendRequestsTable, FriendRequestsTable.fkey_request_recipient == UsersTable.pkey_id)
@@ -34,10 +33,8 @@ async def get_friends_of_current_user(current_user: User = Depends(get_current_a
             )
             .all()
         )
-
         if not friends:
             raise HTTPException(status_code=404, detail="No friends found")
-
         return [
             {
                 "pkey_id": friend.pkey_id,
@@ -46,20 +43,8 @@ async def get_friends_of_current_user(current_user: User = Depends(get_current_a
             }
             for friend in friends
         ]
-
-
-    except HTTPException as http_error:
-        raise http_error
-    except SQLAlchemyError as db_error:
-        raise HTTPException(
-            status_code=503,
-            detail="A database error occurred while processing your request. Please try again later."
-        ) from db_error
-    except Exception as unexpected_error:
-        raise HTTPException(
-            status_code=500,
-            detail="An unexpected error occurred. Please contact support if this persists."
-        ) from unexpected_error
+    except Exception as e:
+        raise e
 
 @router.post("/request/create/{user_id}")
 async def create_new_friend_request(user_id: int, current_user: User = Depends(get_current_active_user)):
@@ -68,10 +53,8 @@ async def create_new_friend_request(user_id: int, current_user: User = Depends(g
         current_user_id = current_user.pkey_id
 
         raise HTTPException(status_code=501, detail="Endpoint not yet implemented")
-
-    except Exception as unexpected_error:
-        raise HTTPException(status_code=500,
-                            detail="An unexpected error occurred. Please contact support if this persists.") from unexpected_error
+    except Exception as e:
+        raise e
 
 # respond to friend request
 @router.post("/request/respond/{friend_request_id}/{decision_bool}")
@@ -81,10 +64,8 @@ async def respond_to_pending_friend_request(friend_request_id: int, decision_boo
         current_user_id = current_user.pkey_id
 
         raise HTTPException(status_code=501, detail="Endpoint not yet implemented")
-
-    except Exception as unexpected_error:
-        raise HTTPException(status_code=500,
-                            detail="An unexpected error occurred. Please contact support if this persists.") from unexpected_error
+    except Exception as e:
+        raise e
 
 # get list of friend requests
 @router.get("/requests")
@@ -94,6 +75,5 @@ async def get_list_of_open_friend_requests(current_user: User = Depends(get_curr
         current_user_id = current_user.pkey_id
 
         raise HTTPException(status_code=501, detail="Endpoint not yet implemented")
-
-    except Exception as unexpected_error:
-        raise HTTPException(status_code=500, detail="An unexpected error occurred. Please contact support if this persists.") from unexpected_error
+    except Exception as e:
+        raise e

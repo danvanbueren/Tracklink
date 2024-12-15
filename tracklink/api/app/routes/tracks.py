@@ -36,5 +36,17 @@ async def create_new_track(track_name: str, explicit_privacy_type: Optional[Priv
         db.commit()
         db.refresh(row)
         return {"detail": "Created track", "id": row.pkey_id}
-    except Exception as unexpected_error:
-        raise HTTPException(status_code=500, detail="An unexpected error occurred. Please contact support if this persists.") from unexpected_error
+    except Exception as e:
+        raise e
+
+# TODO: delete devtool for production
+@router.get("/list")
+async def list_all_tracks_devtool():
+    try:
+        db = next(get_db())
+        tracks = db.query(TracksTable).all()
+        if not tracks:
+            raise HTTPException(status_code=404, detail="No tracks found")
+        return tracks
+    except Exception as e:
+        raise e
