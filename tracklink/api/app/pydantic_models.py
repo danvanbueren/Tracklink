@@ -5,8 +5,6 @@
 # https://github.com/danvanbueren/Tracklink/blob/main/LICENSE
 
 """Base definitions for API requests and responses."""
-from datetime import datetime
-from typing import List
 
 from pydantic import BaseModel
 
@@ -28,14 +26,3 @@ class User(BaseModel):
 class UserInDB(User):
     hashed_password: str
     pkey_id: int
-
-# Friends
-
-class Friend(BaseModel):
-    user_id: int
-    last_active: datetime
-    display_name: str
-    avatar_filepath: str
-
-class FriendsList(BaseModel):
-    friends: List[Friend]
