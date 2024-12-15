@@ -15,7 +15,7 @@ from sqlalchemy.orm import Session
 
 from app.config_database import engine, get_db
 from app.database_models import Base
-from app.routes import user, authentication, friends
+from app.routes import user, authentication, friends, tracks
 
 app = FastAPI()
 
@@ -56,6 +56,7 @@ async def api_status(db: Session = Depends(get_db)):
 app.include_router(user.router, prefix="/user")
 app.include_router(authentication.router, prefix="/auth")
 app.include_router(friends.router, prefix="/friend")
+app.include_router(tracks.router, prefix="/track")
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
