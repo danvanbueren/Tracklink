@@ -17,7 +17,7 @@ from app.pydantic_models import User
 router = APIRouter()
 
 @router.post("/create")
-async def create_user(track_name: str, explicit_privacy_type: Optional[PrivacyType] = None, current_user: User = Depends(get_current_active_user)):
+async def create_new_track(track_name: str, explicit_privacy_type: Optional[PrivacyType] = None, current_user: User = Depends(get_current_active_user)):
     try:
         if not track_name.strip():
             raise HTTPException(status_code=400, detail="Track name must not be empty.")
