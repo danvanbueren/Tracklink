@@ -8,7 +8,6 @@
 
 from fastapi import APIRouter, HTTPException, Depends
 from pydantic import BaseModel, EmailStr
-from sqlalchemy.orm import Session
 
 from app.authentication import get_current_active_user, get_password_hash
 from app.config_database import get_db
@@ -24,8 +23,9 @@ class CreateUserRequest(BaseModel):
     display_name: str
 
 @router.post("/create")
-async def create_user(user: CreateUserRequest, db: Session = Depends(get_db)):
+async def create_user(user: CreateUserRequest):
     try:
+        db = next(get_db())
         row = UsersTable(
             email=user.email,
             password_hash=get_password_hash(user.password),
@@ -39,8 +39,9 @@ async def create_user(user: CreateUserRequest, db: Session = Depends(get_db)):
         raise HTTPException(status_code=503, detail="Unable to connect to database") from e
 
 @router.get("/read/{user_id}")
-async def read_user(user_id: int, db: Session = Depends(get_db)):
+async def read_user(user_id: int):
     try:
+        db = next(get_db())
         users = db.query(UsersTable).filter(UsersTable.pkey_id == user_id).first()
         if not users:
             raise HTTPException(status_code=404, detail="User not found")
@@ -54,8 +55,9 @@ async def read_user(user_id: int, db: Session = Depends(get_db)):
 
 # TODO: delete devtool for production
 @router.get("/list")
-async def list_all_users_devtool(db: Session = Depends(get_db)):
+async def list_all_users_devtool():
     try:
+        db = next(get_db())
         users = db.query(UsersTable).all()
         if not users:
             raise HTTPException(status_code=404, detail="No users found")
