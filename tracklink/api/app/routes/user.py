@@ -65,8 +65,22 @@ async def list_all_users_devtool(db: Session = Depends(get_db)):
 
 @router.post("/update/display_name/{new_display_name}")
 async def update_current_user_display_name(new_display_name: str, current_user: User = Depends(get_current_active_user)):
-    raise HTTPException(status_code=501, detail="Endpoint not yet implemented")
+    try:
+        db = next(get_db())
+        current_user_id = current_user.pkey_id
 
-@router.delete("/delete/{user_id}")
-async def delete_current_user(user_id: int, db: Session = Depends(get_db)):
-    raise HTTPException(status_code=501, detail="Endpoint not yet implemented")
+        raise HTTPException(status_code=501, detail="Endpoint not yet implemented")
+
+    except Exception as unexpected_error:
+        raise HTTPException(status_code=500, detail="An unexpected error occurred. Please contact support if this persists.") from unexpected_error
+
+@router.delete("/delete")
+async def delete_current_user(current_user: User = Depends(get_current_active_user)):
+    try:
+        db = next(get_db())
+        current_user_id = current_user.pkey_id
+
+        raise HTTPException(status_code=501, detail="Endpoint not yet implemented")
+
+    except Exception as unexpected_error:
+        raise HTTPException(status_code=500, detail="An unexpected error occurred. Please contact support if this persists.") from unexpected_error
