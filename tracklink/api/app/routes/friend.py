@@ -10,7 +10,7 @@ from fastapi import APIRouter, HTTPException, Depends
 from sqlalchemy import and_
 from sqlalchemy.exc import SQLAlchemyError
 
-from app.authLogic import get_user_from_session
+from app.authLogic import get_user_from_token
 from app.config_database import get_db
 from app.database_models import UsersTable, FriendRequestsTable
 from app.pydantic_models import User
@@ -18,7 +18,7 @@ from app.pydantic_models import User
 router = APIRouter()
 
 @router.get("/list")
-async def get_friends_of_current_user(current_user: User = Depends(get_user_from_session)):
+async def get_friends_of_current_user(current_user: User = Depends(get_user_from_token)):
     try:
         db = next(get_db())
         current_user_id = current_user.pkey_id
@@ -47,7 +47,7 @@ async def get_friends_of_current_user(current_user: User = Depends(get_user_from
         raise e
 
 @router.post("/request/create/{user_id}")
-async def create_new_friend_request(user_id: int, current_user: User = Depends(get_user_from_session)):
+async def create_new_friend_request(user_id: int, current_user: User = Depends(get_user_from_token)):
     try:
         db = next(get_db())
         current_user_id = current_user.pkey_id
@@ -58,7 +58,7 @@ async def create_new_friend_request(user_id: int, current_user: User = Depends(g
 
 # respond to friend request
 @router.post("/request/respond/{friend_request_id}/{decision_bool}")
-async def respond_to_pending_friend_request(friend_request_id: int, decision_bool: bool, current_user: User = Depends(get_user_from_session)):
+async def respond_to_pending_friend_request(friend_request_id: int, decision_bool: bool, current_user: User = Depends(get_user_from_token)):
     try:
         db = next(get_db())
         current_user_id = current_user.pkey_id
@@ -69,7 +69,7 @@ async def respond_to_pending_friend_request(friend_request_id: int, decision_boo
 
 # get list of friend requests
 @router.get("/requests")
-async def get_list_of_open_friend_requests(current_user: User = Depends(get_user_from_session)):
+async def get_list_of_open_friend_requests(current_user: User = Depends(get_user_from_token)):
     try:
         db = next(get_db())
         current_user_id = current_user.pkey_id

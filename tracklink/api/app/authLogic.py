@@ -94,7 +94,7 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None):
 
     return encoded_jwt
 
-async def get_user_from_session_including_disabled(token: str = Depends(oauth2_scheme)):
+async def get_user_from_token_including_disabled(token: str = Depends(oauth2_scheme)):
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         email: str = payload.get("sub")
@@ -113,7 +113,7 @@ async def get_user_from_session_including_disabled(token: str = Depends(oauth2_s
 
     return user
 
-async def get_user_from_session(current_user: UserInDB = Depends(get_user_from_session_including_disabled)):
+async def get_user_from_token(current_user: UserInDB = Depends(get_user_from_token_including_disabled)):
     if current_user.disabled:
         raise HTTPException(status_code=400, detail="Inactive user")
 

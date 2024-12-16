@@ -11,7 +11,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy import inspect
 
-from app.authLogic import authenticate_user, ACCESS_TOKEN_EXPIRE_MINUTES, create_access_token, get_user_from_session
+from app.authLogic import authenticate_user, ACCESS_TOKEN_EXPIRE_MINUTES, create_access_token, get_user_from_token
 from app.pydantic_models import Token, User
 
 router = APIRouter()
@@ -34,7 +34,7 @@ async def create_token_from_login(form_data: OAuth2PasswordRequestForm = Depends
     return result
 
 @router.get("/session/validate", summary="Check if the current session is still valid.")
-async def validate_session(current_user: User = Depends(get_user_from_session)):
+async def validate_session(current_user: User = Depends(get_user_from_token)):
 
     valid_until = '?'
 
@@ -48,5 +48,5 @@ async def validate_session(current_user: User = Depends(get_user_from_session)):
     }
 
 @router.get("/current", response_model=User)
-async def get_current_user_information(current_user: User = Depends(get_user_from_session)):
+async def get_current_user_information(current_user: User = Depends(get_user_from_token)):
     return current_user
