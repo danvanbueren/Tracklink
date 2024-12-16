@@ -74,7 +74,28 @@ async def update_current_user_display_name(new_display_name: str, current_user: 
         db = next(get_db())
         current_user_id = current_user.pkey_id
 
-        raise HTTPException(status_code=501, detail="Endpoint not yet implemented")
+        # Check if the new display name already exists
+        existing_user = db.query(UsersTable).filter(UsersTable.display_name == new_display_name).first()
+        if existing_user:
+            raise HTTPException(status_code=400, detail="update_current_user_display_name() :: Display name already in use")
+
+        # Update the display name in the database
+        user = db.query(UsersTable).filter(UsersTable.pkey_id == current_user_id).first()
+
+        if not user:
+            raise HTTPException(status_code=404, detail="update_current_user_display_name() :: User not found")
+
+        old_display_name = user.display_name
+        user.display_name = new_display_name
+        db.commit()
+        db.refresh(user)
+
+        return {
+            "detail": "Display name updated",
+            "id": current_user_id,
+            "old_display_name": old_display_name,
+            "new_display_name": new_display_name
+        }
 
     except Exception as e:
         raise e
