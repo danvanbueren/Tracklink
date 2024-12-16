@@ -9,7 +9,7 @@
 from fastapi import APIRouter, HTTPException, Depends
 from pydantic import BaseModel, EmailStr
 
-from app.authLogic import get_current_active_user, get_password_hash
+from app.authLogic import get_user_from_session, get_password_hash
 from app.config_database import get_db
 from app.database_models import UsersTable
 from app.pydantic_models import User
@@ -69,7 +69,7 @@ async def list_all_users_devtool():
         raise e
 
 @router.post("/update/display_name/{new_display_name}")
-async def update_current_user_display_name(new_display_name: str, current_user: User = Depends(get_current_active_user)):
+async def update_current_user_display_name(new_display_name: str, current_user: User = Depends(get_user_from_session)):
     try:
         db = next(get_db())
         current_user_id = current_user.pkey_id
@@ -80,7 +80,7 @@ async def update_current_user_display_name(new_display_name: str, current_user: 
         raise e
 
 @router.delete("/delete")
-async def delete_current_user(current_user: User = Depends(get_current_active_user)):
+async def delete_current_user(current_user: User = Depends(get_user_from_session)):
     try:
         db = next(get_db())
         current_user_id = current_user.pkey_id

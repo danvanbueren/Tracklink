@@ -9,7 +9,7 @@ from typing import Optional
 
 from fastapi import APIRouter, HTTPException, Depends
 
-from app.authLogic import get_current_active_user
+from app.authLogic import get_user_from_session
 from app.config_database import get_db
 from app.database_models import TracksTable, PrivacyType, UsersTable
 from app.pydantic_models import User
@@ -17,7 +17,7 @@ from app.pydantic_models import User
 router = APIRouter()
 
 @router.post("/create")
-async def create_new_track(track_name: str, explicit_privacy_type: Optional[PrivacyType] = None, current_user: User = Depends(get_current_active_user)):
+async def create_new_track(track_name: str, explicit_privacy_type: Optional[PrivacyType] = None, current_user: User = Depends(get_user_from_session)):
     try:
         if not track_name.strip():
             raise HTTPException(status_code=400, detail="Track name must not be empty.")

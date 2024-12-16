@@ -7,12 +7,12 @@
 """Authentication boilerplate."""
 
 from datetime import timedelta, datetime, timezone
+from typing import Optional
 
 from fastapi import Depends, HTTPException
 from fastapi.security import OAuth2PasswordBearer
 from jose import jwt
 from passlib.context import CryptContext
-from pydantic import EmailStr
 import json
 
 from app.config_database import get_db
@@ -28,7 +28,6 @@ from app.pydantic_models import UserInDB, TokenData
 # ALGORITHM = config("ALGORITHM")
 # ACCESS_TOKEN_EXPIRE_MINUTES = config("ACCESS_TOKEN_EXPIRE_MINUTES", cast=int)
 
-
 SECRET_KEY = "dd91a87bb8b2cd5478d84316c6813cb10096598e5a0ec2cf48c7ff8e051451ae"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
@@ -42,20 +41,28 @@ def verify_password(plain_password, hashed_password):
 def get_password_hash(password):
     return pwd_context.hash(password)
 
-def get_user(email: EmailStr):
+def get_user(pkey_id: Optional[int] = None, email: Optional[str] = None, display_name: Optional[str] = None):
     try:
         db = next(get_db())
-        user_data = db.query(UsersTable).filter(UsersTable.email == email).first()
+
+        if pkey_id:
+            user_data = db.query(UsersTable).filter(UsersTable.pkey_id == pkey_id).first()
+        elif email:
+            user_data = db.query(UsersTable).filter(UsersTable.email == email).first()
+        elif display_name:
+            user_data = db.query(UsersTable).filter(UsersTable.display_name == display_name).first()
+        else:
+            raise HTTPException(status_code=500, detail="Programmatic error: No user data provided")
 
         if user_data is None:
             raise HTTPException(status_code=404, detail="User not found")
+
         return user_data
     except Exception as e:
-        print(f"Error in get_user: {e}")  # Replace with proper logging
-        raise HTTPException(status_code=503, detail=str(e))
+        raise e
 
 def authenticate_user(email: str, password: str):
-    user = get_user(email)
+    user = get_user(email=email)
 
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
@@ -87,7 +94,7 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None):
 
     return encoded_jwt
 
-async def get_current_user(token: str = Depends(oauth2_scheme)):
+async def get_user_from_session_including_disabled(token: str = Depends(oauth2_scheme)):
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         email: str = payload.get("sub")
@@ -106,7 +113,7 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
 
     return user
 
-async def get_current_active_user(current_user: UserInDB = Depends(get_current_user)):
+async def get_user_from_session(current_user: UserInDB = Depends(get_user_from_session_including_disabled)):
     if current_user.disabled:
         raise HTTPException(status_code=400, detail="Inactive user")
 
