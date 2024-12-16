@@ -38,8 +38,8 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/token")
 def verify_password(plain_password, hashed_password):
     return pwd_context.verify(plain_password, hashed_password)
 
-def get_password_hash(password):
-    return pwd_context.hash(password)
+def get_password_hash(plain_password):
+    return pwd_context.hash(plain_password)
 
 def get_user(pkey_id: Optional[int] = None, email: Optional[str] = None, display_name: Optional[str] = None):
     try:

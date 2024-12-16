@@ -12,12 +12,14 @@ import enum
 
 Base = declarative_base()
 
+# PrivacyType Enum: PUBLIC, FRIENDS_OF_FRIENDS, FRIENDS, PRIVATE
 class PrivacyType(enum.Enum):
     PUBLIC = "public"
     FRIENDS_OF_FRIENDS = "friends_of_friends"
     FRIENDS = "friends"
     PRIVATE = "private"
 
+# Abstract Base: created_at, updated_at
 class BaseModel(Base):
     __abstract__ = True
     created_at = Column(DateTime, default=func.now(), nullable=False)
@@ -79,6 +81,7 @@ class TrackContentTable(Base):
     content_filepath = Column(String)  # String
     content_text = Column(String)  # String
 
+# Temp File Metadata Table For Testing
 class FileMetadataTable(Base):
     __tablename__ = "file_metadata"
     pkey_id = Column(Integer, primary_key=True, index=True, autoincrement=True) #Int
