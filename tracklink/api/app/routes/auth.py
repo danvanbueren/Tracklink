@@ -36,7 +36,7 @@ async def create_token_from_login(form_data: OAuth2PasswordRequestForm = Depends
 
     return result
 
-@router.get("/session/validate", summary="Check if the current session is still valid.")
+@router.get("/session/validate")
 async def validate_and_extend_session(current_user: User = Depends(get_user_from_token)):
     try:
         now = datetime.now(timezone.utc)
@@ -68,6 +68,6 @@ async def validate_and_extend_session(current_user: User = Depends(get_user_from
     except Exception as e:
         raise e
 
-@router.get("/current", response_model=User)
+@router.get("/current")
 async def get_current_user_information(current_user: User = Depends(get_user_from_token)):
     return current_user
