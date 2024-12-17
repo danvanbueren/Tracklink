@@ -2,7 +2,7 @@ import {Box, Button, IconButton, TextField, Typography} from "@mui/material";
 import * as React from "react";
 import SettingsIcon from '@mui/icons-material/Settings';
 import Grid from "@mui/material/Grid2";
-import DarkModeIcon from '@mui/icons-material/DarkMode';
+import LogoutIcon from '@mui/icons-material/Logout';
 import {useRoute} from "@/context/RouteContext";
 
 export default function Header(props) {
@@ -70,21 +70,6 @@ export default function Header(props) {
                                 width: '100%',
                             }}
                         >
-                            <IconButton
-                                color='white'
-                                onClick={() => {alert('TODO: onClick function')}}
-                                sx={{
-                                    marginRight: '1rem',
-
-                                    color: 'white',
-                                    transition: 'color 0.3s ease',
-                                    '&:hover': {
-                                        color: 'primary.main',
-                                    },
-                                }}
-                            >
-                                <DarkModeIcon />
-                            </IconButton>
 
                             <IconButton
                                 onClick={() => navigate('/settings')}
@@ -101,6 +86,23 @@ export default function Header(props) {
                             >
                                 <SettingsIcon />
                             </IconButton>
+
+                            <IconButton
+                                color='white'
+                                onClick={() => {alert('TODO: onClick function')}}
+                                sx={{
+                                    marginRight: '1rem',
+
+                                    color: 'white',
+                                    transition: 'color 0.3s ease',
+                                    '&:hover': {
+                                        color: 'primary.main',
+                                    },
+                                }}
+                            >
+                                <LogoutIcon />
+                            </IconButton>
+
                         </Box>
                     </Grid>
                 </Grid>
