@@ -20,7 +20,7 @@ import UserPage from "@/components/views/authenticated/UserPage";
 import SocialPage from "@/components/views/authenticated/SocialPage";
 export default function ViewportInnerRouter({children}) {
 
-    const { currentRoute, slug, navigate } = useRoute();
+    const { currentRoute, slug } = useRoute();
 
     const routeComponents = {
         '/': slug ? <HomePage slug={slug} /> : <HomePage />,

@@ -11,9 +11,6 @@ import ViewportOuterWrapper from "@/components/containers/ViewportOuterWrapper";
 import {RouteProvider} from "@/context/RouteContext";
 import {AudioPlayerProvider} from "@/context/AudioPlayerContext";
 
-// Replace this with authentication logic to control whether app layout is displayed or fallback to external site
-const auth = true;
-
 // Implement toggleable dark mode
 const darkTheme = createTheme({
     palette: {
@@ -41,22 +38,13 @@ export default function RootLayout({ children }) {
                     maxHeight: '100vh',
                 }}
             >
-                {auth ?
-                    <GlobalStyleProvider>
-                        <RouteProvider>
-                            <AudioPlayerProvider>
-                                <ViewportOuterWrapper>
-                                    {children}
-                                </ViewportOuterWrapper>
-                            </AudioPlayerProvider>
-                        </RouteProvider>
-                    </GlobalStyleProvider>
-                    :
-                    <>
-                        <h1>NO AUTH</h1>
-                        {children}
-                    </>
-                }
+                <GlobalStyleProvider>
+                    <RouteProvider>
+                        <AudioPlayerProvider>
+                            <ViewportOuterWrapper />
+                        </AudioPlayerProvider>
+                    </RouteProvider>
+                </GlobalStyleProvider>
             </Box>
         </ThemeProvider>
         </body>

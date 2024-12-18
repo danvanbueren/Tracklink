@@ -8,6 +8,18 @@ export const RouteProvider = ({ children }) => {
     const [currentRoute, setCurrentRoute] = useState('/');
     const [slug, setSlug] = useState(null);
     const [isHydrated, setIsHydrated] = useState(false);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+    const navigate = (route) => {
+        const [base, slugPart] = route.split('/').filter(Boolean);
+        setCurrentRoute(`/${base || ''}`);
+        setSlug(slugPart || null);
+        window.history.pushState({}, '', route);
+    };
+
+    const refreshAuth = () => {
+        setIsAuthenticated(false);
+    }
 
     useEffect(() => {
         const path = window.location.pathname;
@@ -16,13 +28,6 @@ export const RouteProvider = ({ children }) => {
         setSlug(slugPart || null);
         setIsHydrated(true);
     }, []);
-
-    const navigate = (route) => {
-        const [base, slugPart] = route.split('/').filter(Boolean);
-        setCurrentRoute(`/${base || ''}`);
-        setSlug(slugPart || null);
-        window.history.pushState({}, '', route);
-    };
 
     useEffect(() => {
         const handlePopState = () => {
@@ -41,7 +46,14 @@ export const RouteProvider = ({ children }) => {
     }
 
     return (
-        <RouteContext.Provider value={{ currentRoute, slug, navigate }}>
+        <RouteContext.Provider
+            value={{
+                currentRoute,
+                slug,
+                navigate,
+                isAuthenticated
+            }}
+        >
             {children}
         </RouteContext.Provider>
     );
