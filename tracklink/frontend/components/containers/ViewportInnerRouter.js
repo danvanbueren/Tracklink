@@ -1,28 +1,33 @@
 import {Card} from "@mui/material";
 import * as React from "react";
 import {useRoute} from "@/context/RouteContext";
-import HomePage from "@/components/views/authenticated/HomePage";
-import NotFoundPage from "@/components/views/noauth/NotFoundPage";
-import AddFriendPage from "@/components/views/authenticated/AddFriendPage";
-import ArchivePage from "@/components/views/authenticated/ArchivePage";
-import CollabPage from "@/components/views/authenticated/CollabPage";
-import NewPage from "@/components/views/authenticated/NewPage";
-import ProjectsPage from "@/components/views/authenticated/ProjectsPage";
-import QueuePage from "@/components/views/authenticated/QueuePage";
-import RecentPage from "@/components/views/authenticated/RecentPage";
-import SearchPage from "@/components/views/authenticated/SearchPage";
-import SettingsPage from "@/components/views/authenticated/SettingsPage";
-import StarredPage from "@/components/views/authenticated/StarredPage";
-import TrackPage from "@/components/views/authenticated/TrackPage";
-import TracksPage from "@/components/views/authenticated/TracksPage";
-import TrashPage from "@/components/views/authenticated/TrashPage";
-import UserPage from "@/components/views/authenticated/UserPage";
-import SocialPage from "@/components/views/authenticated/SocialPage";
+import HomePage from "@/components/views/auth/HomePage";
+import NotFoundPage from "@/components/views/unauth/NotFoundPage";
+import AddFriendPage from "@/components/views/auth/AddFriendPage";
+import ArchivePage from "@/components/views/auth/ArchivePage";
+import CollabPage from "@/components/views/auth/CollabPage";
+import NewPage from "@/components/views/auth/NewPage";
+import ProjectsPage from "@/components/views/auth/ProjectsPage";
+import QueuePage from "@/components/views/auth/QueuePage";
+import RecentPage from "@/components/views/auth/RecentPage";
+import SearchPage from "@/components/views/auth/SearchPage";
+import SettingsPage from "@/components/views/auth/SettingsPage";
+import StarredPage from "@/components/views/auth/StarredPage";
+import TrackPage from "@/components/views/auth/TrackPage";
+import TracksPage from "@/components/views/auth/TracksPage";
+import TrashPage from "@/components/views/auth/TrashPage";
+import UserPage from "@/components/views/auth/UserPage";
+import SocialPage from "@/components/views/auth/SocialPage";
+import LandingPage from "@/components/views/unauth/LandingPage";
+import LoginPage from "@/components/views/unauth/LoginPage";
+import RegisterPage from "@/components/views/unauth/RegisterPage";
+import ResetPasswordPage from "@/components/views/unauth/ResetPasswordPage";
+
 export default function ViewportInnerRouter({children}) {
 
-    const { currentRoute, slug } = useRoute();
+    const { currentRoute, slug, isAuthenticated } = useRoute();
 
-    const routeComponents = {
+    const authRoutes = {
         '/': slug ? <HomePage slug={slug} /> : <HomePage />,
         '/addfriend': slug ? <AddFriendPage slug={slug} /> : <AddFriendPage />,
         '/archive': slug ? <ArchivePage slug={slug} /> : <ArchivePage />,
@@ -41,21 +46,40 @@ export default function ViewportInnerRouter({children}) {
         '/user': slug ? <UserPage slug={slug} /> : <UserPage />,
     };
 
-    const content = routeComponents[currentRoute] || ( slug ? <NotFoundPage slug={slug} /> : <NotFoundPage /> );
+    const unauthRoutes = {
+        '/': slug ? <LandingPage slug={slug} /> : <LandingPage />,
+        '/login': slug ? <LoginPage slug={slug} /> : <LoginPage />,
+        '/register': slug ? <RegisterPage slug={slug} /> : <RegisterPage />,
+        '/resetpassword': slug ? <ResetPasswordPage slug={slug} /> : <ResetPasswordPage />,
+    };
 
-    return (
-        <>
-            <Card
-                sx={{
-                    minWidth: '100%',
-                    borderRadius: '20px',
-                    paddingX: '20px',
-                    paddingY: '15px',
-                    overflow: 'auto',
-                }}
-            >
+    if (isAuthenticated) {
+        const content = authRoutes[currentRoute] || ( slug ? <NotFoundPage slug={slug} /> : <NotFoundPage /> );
+
+        return (
+            <>
+                <Card
+                    sx={{
+                        minWidth: '100%',
+                        borderRadius: '20px',
+                        paddingX: '20px',
+                        paddingY: '15px',
+                        overflow: 'auto',
+                    }}
+                >
+                    {content}
+                </Card>
+            </>
+        )
+    } else {
+        const content = unauthRoutes[currentRoute] || ( slug ? <NotFoundPage slug={slug} /> : <NotFoundPage /> );
+
+        return (
+            <>
                 {content}
-            </Card>
-        </>
-    )
+            </>
+        )
+    }
+
+
 }

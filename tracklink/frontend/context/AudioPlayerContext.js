@@ -1,12 +1,17 @@
 'use client'
 
 import React, {createContext, useContext, useState, useRef, useEffect} from 'react';
+import {useRoute} from "@/context/RouteContext";
 
 const AudioPlayerContext = createContext();
 
 export const useAudioPlayer = () => useContext(AudioPlayerContext);
 
 export const AudioPlayerProvider = ({ children }) => {
+
+    const {
+        isAuthenticated
+    } = useRoute();
 
     const ref = useRef(new Audio());
 

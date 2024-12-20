@@ -8,6 +8,7 @@ export const RouteProvider = ({ children }) => {
     const [currentRoute, setCurrentRoute] = useState('/');
     const [slug, setSlug] = useState(null);
     const [isHydrated, setIsHydrated] = useState(false);
+
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
     const navigate = (route) => {
