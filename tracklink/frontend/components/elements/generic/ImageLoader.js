@@ -2,10 +2,13 @@ import React from "react";
 import { Box, Skeleton } from "@mui/material";
 
 export default function ImageLoader({
-                                        src = "https://picsum.photos/400/400",
+                                        src = [
+                                            "https://picsum.photos/400",
+                                            "https://picsum.photos/4000",
+                                        ],
                                         title = "Image",
-                                        width = "100%",
-                                        height = "100%",
+                                        width = "1280px",
+                                        height = "720px",
                                         objectFit = "cover"
                                     }) {
 
