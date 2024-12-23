@@ -8,7 +8,7 @@ import {useRoute} from "@/context/RouteContext";
 export default function Header(props) {
 
     // Routing
-    const { navigate, currentRoute } = useRoute();
+    const { navigate, currentRoute, logoutAuth } = useRoute();
 
     return (
         <>
@@ -89,7 +89,7 @@ export default function Header(props) {
 
                             <IconButton
                                 color='white'
-                                onClick={() => {alert('TODO: onClick function')}}
+                                onClick={() => {logoutAuth()}}
                                 sx={{
                                     marginRight: '1rem',
 

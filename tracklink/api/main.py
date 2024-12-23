@@ -21,8 +21,10 @@ app = FastAPI()
 
 Base.metadata.create_all(bind=engine)
 
+# TODO: Change for production
 origins = [
     "http://localhost:3000",
+    "http://frontend:3000",
     "https://tracklink.app",
 ]
 app.add_middleware(

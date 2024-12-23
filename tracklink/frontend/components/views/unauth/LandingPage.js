@@ -9,21 +9,6 @@ export default function LandingPage({ slug }) {
 
     const { navigate } = useRoute();
 
-    const titleRef = React.useRef(null);
-    const [titleWidth, setTitleWidth] = React.useState(0);
-    const updateTitleWidth = React.useCallback(() => {
-        if (titleRef.current) {
-            setTitleWidth(titleRef.current.offsetWidth);
-        }
-    }, []);
-    React.useEffect(() => {
-        updateTitleWidth();
-        window.addEventListener("resize", updateTitleWidth);
-        return () => {
-            window.removeEventListener("resize", updateTitleWidth);
-        };
-    }, [updateTitleWidth]);
-
     return (
         <main>
             <Grid container spacing={2}>
@@ -33,8 +18,10 @@ export default function LandingPage({ slug }) {
                         sx={{
                             padding: '0rem',
                             marginTop: '20vh',
-                            maxWidth: '80vw',
-                    }}
+                            maxWidth: '40rem',
+                            width: '80vw',
+                            minWidth: '20rem',
+                        }}
                     >
                         <ImageLoader
                             src={[
@@ -58,8 +45,7 @@ export default function LandingPage({ slug }) {
                             }}
                         >
                             <Typography
-                                variant='h3'
-                                ref={titleRef}
+                                variant='h4'
                                 sx={{
                                     fontWeight: 'bold',
                                     marginBottom: '0.5rem'
@@ -71,8 +57,7 @@ export default function LandingPage({ slug }) {
                             <Typography
                                 variant='h6'
                                 sx={{
-                                    fontSize: '1rem',
-                                    maxWidth: `${titleWidth}px`,
+                                    fontSize: 'clamp(0.8rem, 2.0vw, 1rem)',
                                 }}
                             >
                                 Tracklink is a project management solution for music artists, producers and engineers.
@@ -87,7 +72,6 @@ export default function LandingPage({ slug }) {
                                 }}
                                 sx={{
                                     marginTop: '2rem',
-                                    maxWidth: `${titleWidth}px`,
                                 }}
                             >
                                 Get Started
