@@ -118,6 +118,7 @@ export const RouteProvider = ({ children }) => {
         checkAuth().catch(err => console.error(err));
     }, [accessToken]);
 
+    // Change window location pathname
     useEffect(() => {
         const path = window.location.pathname;
         const [base, slugPart] = path.split('/').filter(Boolean);
@@ -126,6 +127,7 @@ export const RouteProvider = ({ children }) => {
         setIsHydrated(true);
     }, []);
 
+    // Pop state
     useEffect(() => {
         const handlePopState = () => {
             const path = window.location.pathname;
