@@ -1,6 +1,7 @@
 'use client';
 
-import { createContext, useContext, useState, useEffect } from 'react';
+import {createContext, useContext, useState, useEffect} from 'react';
+import {jwtDecode} from "jwt-decode";
 
 const RouteContext = createContext();
 
@@ -14,17 +15,9 @@ export const RouteProvider = ({ children }) => {
 
     // holds last access token
     const [accessToken, setAccessToken] = useState(null);
-    
-    // holds result of checkAuth()
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-    // Set access token from local storage (to avoid SSR issues)
-    useEffect(() => {
-        if (typeof window !== "undefined") {
-            const token = localStorage.getItem('access_token');
-            setAccessToken(token);
-        }
-    }, []);
+    // holds result of checkAuth()
+    const [isAuthenticated, setIsAuthenticated] = useState(null);
 
     // Nav
     const navigate = (route) => {
@@ -60,6 +53,7 @@ export const RouteProvider = ({ children }) => {
             if (response.ok && data.access_token) {
                 localStorage.setItem('access_token', data.access_token);
                 setAccessToken(data.access_token)
+                navigate('/');
                 return true
             }
         } catch (err) {
@@ -70,17 +64,25 @@ export const RouteProvider = ({ children }) => {
         return false
     }
 
+    // Logout - Clear local storage & reset auth bool and token useStates
     const logoutAuth = () => {
         setIsAuthenticated(false);
         setAccessToken('');
         localStorage.removeItem('access_token');
+        navigate('/login');
     }
 
+    // Check if current token is still valid
     const checkAuth = async () => {
+
+        // TODO: Create timer based on token expiration to prevent over-saturation of API
+
+        let logOutput = []
+
         if (!accessToken) {
-            console.log("Access token not found");
-            setIsAuthenticated(false);
-            return;
+            logOutput.push('Access token not found')
+            setIsAuthenticated(false)
+            return
         }
 
         try {
@@ -93,7 +95,7 @@ export const RouteProvider = ({ children }) => {
             });
 
             if (!response.ok) {
-                console.error("Failed to validate the session");
+                logOutput.push("Failed to validate the session");
                 setIsAuthenticated(false);
                 setAccessToken('');
                 localStorage.removeItem('access_token');
@@ -101,31 +103,40 @@ export const RouteProvider = ({ children }) => {
             }
 
             const data = await response.json();
-            console.log('checkAuth response json', {data});
+            logOutput.push('checkAuth response json:', data);
 
             // If the API returns a valid session
             if (data.token_valid) { // Assuming the server responds with { valid: true/false }
                 setIsAuthenticated(true);
-                console.log('setIsAuthenticated(true);')
+                logOutput.push('setIsAuthenticated(true)')
             } else {
                 setIsAuthenticated(false);
-                console.log('setIsAuthenticated(false);')
+                logOutput.push('setIsAuthenticated(false)')
             }
 
-            console.log('DATA DATA:: ', data)
+            logOutput.push('DATA:', data)
         } catch (error) {
-            console.error("Error while validating session", {error});
+            logOutput.push("Error while validating session:", error);
             setIsAuthenticated(false);
             setAccessToken('');
             localStorage.removeItem('access_token');
         }
+
+        console.log('checkAuth', {logOutput})
     }
 
-    // Effects
+    // Replace null with token from local storage (to avoid SSR issues)
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            const token = localStorage.getItem('access_token');
+            setAccessToken(token);
+        }
+    }, []);
 
+    // Check authentication every time the access token or current route changes
     useEffect(() => {
         checkAuth().catch(err => console.error(err));
-    }, [accessToken]);
+    }, [accessToken, currentRoute]);
 
     // Change window location pathname
     useEffect(() => {
@@ -150,7 +161,6 @@ export const RouteProvider = ({ children }) => {
     }, []);
 
     // Prevent hydration issues
-
     if (!isHydrated) {
         return null;
     }

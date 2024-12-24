@@ -25,7 +25,7 @@ import ResetPasswordPage from "@/components/views/unauth/ResetPasswordPage";
 
 export default function ViewportInnerRouter({children}) {
 
-    const { currentRoute, slug, isAuthenticated } = useRoute();
+    const { currentRoute, slug, isAuthenticated, navigate } = useRoute();
 
     const authRoutes = {
         '/': slug ? <HomePage slug={slug} /> : <HomePage />,
@@ -44,10 +44,6 @@ export default function ViewportInnerRouter({children}) {
         '/tracks': slug ? <TracksPage slug={slug} /> : <TracksPage />,
         '/trash': slug ? <TrashPage slug={slug} /> : <TrashPage />,
         '/user': slug ? <UserPage slug={slug} /> : <UserPage />,
-
-        '/login': <HomePage />,
-        '/register': <HomePage />,
-        '/resetpassword': <HomePage />,
     };
 
     const unauthRoutes = {
@@ -55,26 +51,9 @@ export default function ViewportInnerRouter({children}) {
         '/login': slug ? <LoginPage slug={slug} /> : <LoginPage />,
         '/register': slug ? <RegisterPage slug={slug} /> : <RegisterPage />,
         '/resetpassword': slug ? <ResetPasswordPage slug={slug} /> : <ResetPasswordPage />,
-
-        '/addfriend': <LoginPage />,
-        '/archive': <LoginPage />,
-        '/collab': <LoginPage />,
-        '/new': <LoginPage />,
-        '/projects': <LoginPage />,
-        '/queue': <LoginPage />,
-        '/recent': <LoginPage />,
-        '/search': <LoginPage />,
-        '/settings': <LoginPage />,
-        '/social': <LoginPage />,
-        '/starred': <LoginPage />,
-        '/track': <LoginPage />,
-        '/tracks': <LoginPage />,
-        '/trash': <LoginPage />,
-        '/user': <LoginPage />,
     };
-
     if (isAuthenticated) {
-        const content = authRoutes[currentRoute] || ( slug ? <NotFoundPage slug={slug} /> : <NotFoundPage /> );
+        const content = authRoutes[currentRoute] || (slug ? <NotFoundPage slug={slug}/> : <NotFoundPage/>);
 
         return (
             <>
@@ -92,7 +71,7 @@ export default function ViewportInnerRouter({children}) {
             </>
         )
     } else {
-        const content = unauthRoutes[currentRoute] || ( slug ? <NotFoundPage slug={slug} /> : <NotFoundPage /> );
+        const content = unauthRoutes[currentRoute] || null;
 
         return (
             <>
@@ -100,6 +79,4 @@ export default function ViewportInnerRouter({children}) {
             </>
         )
     }
-
-
 }
