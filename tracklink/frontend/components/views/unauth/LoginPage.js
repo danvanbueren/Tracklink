@@ -215,7 +215,7 @@ export default function LoginPage({ slug }) {
                                 variant='h4'
                                 sx={{
                                     fontWeight: 'bold',
-                                    marginBottom: '0.5rem'
+                                    marginBottom: '1rem'
                                 }}
                             >
                                 Sign In

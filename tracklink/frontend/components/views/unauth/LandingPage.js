@@ -48,16 +48,17 @@ export default function LandingPage({ slug }) {
                                 variant='h4'
                                 sx={{
                                     fontWeight: 'bold',
-                                    marginBottom: '0.5rem'
+                                    marginBottom: '1rem'
                                 }}
                             >
                                 Welcome to Tracklink
                             </Typography>
 
                             <Typography
-                                variant='h6'
                                 sx={{
                                     fontSize: 'clamp(0.8rem, 2.0vw, 1rem)',
+                                    maxWidth: '80%',
+                                    marginBottom: '2rem',
                                 }}
                             >
                                 Tracklink is a project management solution for music artists, producers and engineers.
@@ -71,10 +72,10 @@ export default function LandingPage({ slug }) {
                                     navigate('login')
                                 }}
                                 sx={{
-                                    marginTop: '2rem',
+                                    marginY: '0.5rem',
                                 }}
                             >
-                                Get Started
+                                Log In
                             </Button>
                         </CardContent>
                     </Card>
