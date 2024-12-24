@@ -13,9 +13,18 @@ export const RouteProvider = ({ children }) => {
     const [isHydrated, setIsHydrated] = useState(false);
 
     // holds last access token
-    const [accessToken, setAccessToken] = useState(localStorage.getItem('access_token'));
+    const [accessToken, setAccessToken] = useState(null);
+    
     // holds result of checkAuth()
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+    // Set access token from local storage (to avoid SSR issues)
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            const token = localStorage.getItem('access_token');
+            setAccessToken(token);
+        }
+    }, []);
 
     // Nav
     const navigate = (route) => {
