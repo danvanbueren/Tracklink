@@ -29,10 +29,10 @@ export const RouteProvider = ({ children }) => {
 
     // Auth
     const loginAuth = async (username, password) => {
-        const params = new URLSearchParams(); // Prepare URL-encoded body
+        const params = new URLSearchParams();
         params.append("grant_type", "password");
-        params.append("username", username); // Replace with the actual user input
-        params.append("password", password); // Replace with the actual user input
+        params.append("username", username);
+        params.append("password", password);
         params.append("scope", "");
         params.append("client_id", "");
         params.append("client_secret", "");
