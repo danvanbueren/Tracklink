@@ -68,7 +68,8 @@ def get_user(pkey_id: Optional[int] = None, email: Optional[str] = None, display
             raise HTTPException(status_code=500, detail="get_user() :: Programmatic error: No user data provided")
 
         if user_data is None:
-            raise HTTPException(status_code=404, detail="get_user() :: User not found")
+            print("get_user() :: User not found")
+            return None
 
         return user_data
     except Exception as e:
