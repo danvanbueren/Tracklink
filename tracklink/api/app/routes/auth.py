@@ -19,7 +19,10 @@ router = APIRouter()
 
 @router.post("/token", response_model=Token)
 async def create_token_from_login(form_data: OAuth2PasswordRequestForm = Depends()):
-    user = authenticate_user(form_data.username, form_data.password)
+    try:
+        user = authenticate_user(form_data.username, form_data.password)
+    except HTTPException:
+        raise HTTPException(status_code=500, detail="create_token_from_login() :: Failed to authenticate")
 
     if not user:
         raise HTTPException(status_code=401, detail="create_token_from_login() :: Failed to authenticate")
