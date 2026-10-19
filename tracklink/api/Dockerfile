@@ -1,5 +1,5 @@
 # Use an official Python image
-FROM python:3.14-slim
+FROM python:3.15-slim
 
 # Install dependencies
 COPY requirements.txt .
